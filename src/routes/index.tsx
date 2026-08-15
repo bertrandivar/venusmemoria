@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Splash } from "@/components/venus/Splash";
 import { Nav } from "@/components/venus/Nav";
-import { Hero, Collections, Services, About, Footer } from "@/components/venus/Sections";
+import { Hero, Collections, Gallery, Services, About, Footer } from "@/components/venus/Sections";
 import { Contact } from "@/components/venus/Contact";
 
 export const Route = createFileRoute("/")({
@@ -51,6 +51,7 @@ function Index() {
         <main>
           <Hero />
           <Collections />
+          <Gallery />
           <Services />
           <About />
           <Contact />
