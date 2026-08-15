@@ -20,14 +20,14 @@ export function Splash({ onEnter, hidden }: SplashProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Effet Parallaxe au survol du curseur
+  // Effet Parallaxe subtil au survol
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { clientX, clientY } = e;
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
     setMousePos({
-      x: (clientX - centerX) / 45,
-      y: (clientY - centerY) / 45,
+      x: (clientX - centerX) / 60,
+      y: (clientY - centerY) / 60,
     });
   };
 
@@ -49,15 +49,14 @@ export function Splash({ onEnter, hidden }: SplashProps) {
     };
     window.addEventListener("resize", handleResize);
 
-    // Création des particules dorées
-    const particles: Particle[] = Array.from({ length: 45 }, () => ({
+    const particles: Particle[] = Array.from({ length: 50 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 2.5 + 1,
-      speedX: (Math.random() - 0.5) * 0.4,
-      speedY: -Math.random() * 0.6 - 0.2, // Remontent doucement vers le haut
+      size: Math.random() * 2 + 1,
+      speedX: (Math.random() - 0.5) * 0.3,
+      speedY: -Math.random() * 0.5 - 0.1,
       opacity: Math.random() * 0.8 + 0.2,
-      fadeSpeed: Math.random() * 0.01 + 0.005,
+      fadeSpeed: Math.random() * 0.008 + 0.003,
     }));
 
     const render = () => {
@@ -72,17 +71,15 @@ export function Splash({ onEnter, hidden }: SplashProps) {
           p.fadeSpeed = -p.fadeSpeed;
         }
 
-        // Réinitialisation si la particule sort de l'écran
         if (p.y < 0) {
           p.y = height;
           p.x = Math.random() * width;
         }
 
-        // Dessin des étincelles dorées
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(212, 175, 55, ${Math.max(0, p.opacity)})`;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 8;
         ctx.shadowColor = "#D4AF37";
         ctx.fill();
       });
@@ -106,57 +103,50 @@ export function Splash({ onEnter, hidden }: SplashProps) {
       onClick={onEnter}
       onMouseMove={handleMouseMove}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onEnter()}
-      className={`fixed inset-0 z-50 flex cursor-pointer flex-col items-center justify-center overflow-hidden bg-slate-950 px-6 transition-all duration-1000 ${
+      className={`fixed inset-0 z-50 flex h-screen w-screen cursor-pointer flex-col items-center justify-between overflow-hidden bg-black px-6 py-12 transition-all duration-1000 ${
         hidden ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      {/* Fond céleste nocturne avec nuages et halo doré */}
+      {/* Image de fond occupant tout l'écran avec effet de mouvement léger */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-[#090D16] via-[#0F1829] to-[#080B12] transition-transform duration-300 ease-out scale-105"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-out scale-105"
         style={{
-          transform: `translate(${mousePos.x * 0.8}px, ${mousePos.y * 0.8}px)`,
+          backgroundImage: `url(${logoNight})`,
+          transform: `translate(${mousePos.x}px, ${mousePos.y}px) scale(1.05)`,
         }}
       >
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#D4AF37]/20 via-transparent to-transparent blur-3xl" />
+        {/* Voile sombre dégradé pour garantir une lisibilité parfaite des textes */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80" />
       </div>
 
-      {/* Canvas des lucioles dorées */}
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
+      {/* Canvas des lucioles dorées en surimpression */}
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-10" />
 
-      {/* Contenu central réactif avec effet de parallaxe */}
-      <div
-        className="relative z-10 flex flex-col items-center text-center transition-transform duration-200 ease-out max-w-4xl"
-        style={{
-          transform: `translate(${-mousePos.x * 0.5}px, ${-mousePos.y * 0.5}px)`,
-        }}
-      >
-        {/* Logo VENUS */}
-        <div className="relative mb-6 drop-shadow-[0_10px_25px_rgba(212,175,55,0.25)]">
-         <img
-  src={logoNight}
-  alt="VENUS - The Creation Aura"
-  width={760}
-  height={760}
-  className="w-[min(85vw,680px)] object-contain drop-shadow-[0_10px_25px_rgba(212,175,55,0.3)] transition-transform duration-700 hover:scale-105"
-/>
-        </div>
+      {/* Spacer pour équilibrer le haut */}
+      <div className="relative z-20 w-full" />
 
-        {/* Ligne dorée décorative */}
-        <div className="h-[1px] w-32 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-6" />
-
-        {/* Accroche poétique */}
-        <h1 className="text-center font-serif text-2xl leading-relaxed tracking-wide text-[#F3EAD8] italic md:text-4xl lg:text-5xl drop-shadow-md">
+      {/* Bloc Central : Slogan principal */}
+      <div className="relative z-20 flex max-w-4xl flex-col items-center text-center px-4">
+        <div className="mb-4 h-[1px] w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
+        <h1 className="font-serif text-2xl leading-relaxed tracking-wide text-[#FDFBF7] italic md:text-4xl lg:text-5xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
           “Là où vos plus précieux souvenirs deviennent éternels.”
         </h1>
+        <div className="mt-4 h-[1px] w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
+      </div>
 
-        {/* Bouton d'entrée interactif */}
-        <div className="mt-12 group inline-flex items-center gap-3 rounded-full border border-[#D4AF37]/50 bg-[#0F1829]/60 px-8 py-3.5 text-sm tracking-widest text-[#D4AF37] uppercase backdrop-blur-md transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#090D16] hover:shadow-[0_0_25px_rgba(212,175,55,0.4)]">
-          <span>Entrer dans l'Atelier</span>
+      {/* Bas de page : Bouton d'entrée professionnel */}
+      <div className="relative z-20 flex flex-col items-center gap-3">
+        <button
+          type="button"
+          onClick={onEnter}
+          className="group inline-flex items-center gap-3 rounded-full border border-[#D4AF37]/60 bg-[#090D16]/80 px-8 py-3.5 text-xs tracking-[0.2em] text-[#D4AF37] uppercase backdrop-blur-md transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black hover:shadow-[0_0_25px_rgba(212,175,55,0.5)]"
+        >
+          <span>Entrer dans l'Univers VENUS</span>
           <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-        </div>
+        </button>
 
-        <span className="mt-6 text-xs tracking-wider text-[#A3B1C6]/70 animate-pulse font-light">
-          Cliquez n'importe où pour commencer l'exploration
+        <span className="text-[11px] tracking-widest text-slate-300/80 animate-pulse uppercase">
+          Cliquez n'importe où pour explorer
         </span>
       </div>
     </div>
