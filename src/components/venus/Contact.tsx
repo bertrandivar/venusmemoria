@@ -31,14 +31,41 @@ export function Contact() {
             Chaque création débute par une conversation. Partagez-nous votre souvenir,
             nous lui donnerons une forme éternelle.
           </p>
-          <dl className="mt-10 space-y-4 text-sm">
+          <dl className="mt-10 space-y-5 text-sm">
             <div>
               <dt className="eyebrow">Atelier</dt>
               <dd className="mt-1 text-foreground">Bujumbura, Burundi — sur rendez-vous</dd>
             </div>
             <div>
-              <dt className="eyebrow">Réseaux</dt>
-              <dd className="mt-1 text-foreground">@VenusMemoria</dd>
+              <dt className="eyebrow">Suivez-nous</dt>
+              <dd className="mt-2 flex flex-wrap gap-4 text-xs font-light text-gold uppercase tracking-wider">
+                <a
+                  href="https://www.instagram.com/venusmemoria?igsh=bHZqcTRwaG9hM251"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Instagram (@venusmemoria)
+                </a>
+                <span>|</span>
+                <a
+                  href="https://facebook.com" /* Coller votre lien Facebook ici */
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Facebook
+                </a>
+                <span>|</span>
+                <a
+                  href="https://tiktok.com" /* Coller votre lien TikTok ici */
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  TikTok
+                </a>
+              </dd>
             </div>
             <div>
               <dt className="eyebrow">Email</dt>
