@@ -20,10 +20,10 @@ export function Hero() {
           Explorer nos collections
         </a>
         <a
-          href="#services"
+          href="#galerie"
           className="border border-gold px-9 py-4 text-[0.65rem] tracking-[0.3em] text-foreground uppercase transition-colors hover:bg-secondary"
         >
-          Nos Services
+          Découvrir la Galerie
         </a>
       </div>
     </section>
@@ -108,6 +108,66 @@ export function Collections() {
   );
 }
 
+/* --- NOUVELLE SECTION GALERIE DE PORTRAITS ET OEUVRES REALISEES --- */
+const galleryItems = [
+  {
+    title: "Portrait Fine Art Sur Toile",
+    category: "Gamme Prestige",
+    image: portrait,
+    description: "Huile sur toile et détails appliqués à la feuille d'or 24 carats.",
+  },
+  {
+    title: "Écrin d'Inclusion en Résine",
+    category: "Résine Art",
+    image: resin,
+    description: "Conservation de souvenirs familiaux dans une résine cristal ultra-claire.",
+  },
+  {
+    title: "Portrait de Famille Signature",
+    category: "Gamme Standard",
+    image: portrait,
+    description: "Création faite main célébrant les liens précieux.",
+  },
+];
+
+export function Gallery() {
+  return (
+    <section id="galerie" className="border-t border-border/60 bg-background py-28">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="text-center">
+          <span className="eyebrow">Galerie D'Exposition</span>
+          <h2 className="mt-4 text-4xl md:text-5xl">Portraits & Œuvres Réalisées</h2>
+          <div className="rule-gold mx-auto my-8 w-24" />
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-muted-foreground">
+            Aperçu de nos dernières pièces créées sur-mesure au sein de notre atelier.
+          </p>
+        </div>
+
+        <div className="mt-16 grid gap-10 md:grid-cols-3">
+          {galleryItems.map((item, index) => (
+            <article key={index} className="group card-lux overflow-hidden p-0 border border-border/60 transition-all hover:border-gold">
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity group-hover:opacity-75" />
+                <div className="absolute bottom-0 p-6 text-left">
+                  <span className="text-[0.65rem] tracking-[0.25em] text-gold uppercase">{item.category}</span>
+                  <h3 className="mt-2 font-serif text-2xl text-foreground">{item.title}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{item.description}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const services = [
   {
     title: "Event Face Painting",
@@ -151,7 +211,7 @@ export function About() {
         <div className="rule-gold mx-auto my-8 w-24" />
         <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
           VENUS est un atelier d'art dédié à la mémoire. Chaque œuvre naît d'une histoire
-          confiée, travaillée à la main avec des matériaux nobles, jusqu'à devenir une
+          confiée, travaillée à la hand avec des matériaux nobles, jusqu'à devenir une
           pièce unique que le temps ne peut plus effacer.
         </p>
       </div>
@@ -164,7 +224,41 @@ export function Footer() {
     <footer className="mx-auto max-w-7xl px-6 py-14 text-center">
       <div className="rule-gold mb-8" />
       <p className="font-display text-sm tracking-[0.35em] uppercase">Venus — The Creation Aura</p>
-      <p className="mt-3 text-xs text-muted-foreground">@VenusMemoria · Bujumbura, Burundi</p>
+      <p className="mt-2 text-xs text-muted-foreground">Bujumbura, Burundi</p>
+
+      {/* RÉSALS SOCIAUX OFFICIELS */}
+      <div className="mt-6 flex justify-center gap-6 text-xs tracking-widest text-gold uppercase">
+        <a
+          href="https://www.instagram.com/venusmemoria?igsh=bHZqcTRwaG9hM251"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          Instagram
+        </a>
+        <span>•</span>
+        <a
+          href="https://facebook.com" /* REMPLACER PAR VOTRE LIEN FACEBOOK QUAND DISPONIBLE */
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          Facebook
+        </a>
+        <span>•</span>
+        <a
+          href="https://tiktok.com" /* REMPLACER PAR VOTRE LIEN TIKTOK QUAND DISPONIBLE */
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          TikTok
+        </a>
+      </div>
+
+      <p className="mt-6 text-[10px] text-muted-foreground/60">
+        © {new Date().getFullYear()} VENUS Memoria. Tous droits réservés.
+      </p>
     </footer>
   );
 }
