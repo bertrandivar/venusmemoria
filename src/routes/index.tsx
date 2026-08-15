@@ -21,6 +21,13 @@ export const Route = createFileRoute("/")({
           "Des créations artistiques sur-mesure pour figer vos moments les plus précieux.",
       },
     ],
+    links: [
+      {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/favicon.ico",
+      },
+    ],
   }),
   component: Index,
 });
