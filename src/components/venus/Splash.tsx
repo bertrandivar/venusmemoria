@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "@/assets/venus-logo.jpg.asset.json";
+import logoNight from "@/assets/venus-night.webp";
 
 interface SplashProps {
   onEnter: () => void;
@@ -132,13 +132,13 @@ export function Splash({ onEnter, hidden }: SplashProps) {
       >
         {/* Logo VENUS */}
         <div className="relative mb-6 drop-shadow-[0_10px_25px_rgba(212,175,55,0.25)]">
-          <img
-            src={logo.url}
-            alt="VENUS - The Creation Aura"
-            width={760}
-            height={760}
-            className="w-[min(85vw,680px)] filter brightness-110 drop-shadow-lg transition-transform duration-700 hover:scale-105"
-          />
+         <img
+  src={logoNight}
+  alt="VENUS - The Creation Aura"
+  width={760}
+  height={760}
+  className="w-[min(85vw,680px)] object-contain drop-shadow-[0_10px_25px_rgba(212,175,55,0.3)] transition-transform duration-700 hover:scale-105"
+/>
         </div>
 
         {/* Ligne dorée décorative */}
