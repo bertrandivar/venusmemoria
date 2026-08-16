@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  category: "outils" | "decor" | "kits";
+  category: "outils Artistiques" | "decor" | "kits";
   price: number; // Prix en BIF ou USD (ex: BIF)
   currency: string;
   image: string;
