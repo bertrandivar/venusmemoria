@@ -52,7 +52,7 @@ export const PRODUCTS: Product[] = [
     description: "Coffret de 8 pinceaux de haute précision pour peinture à l'huile et acrylique.",
     details: ["8 pinceaux de tailles variées", "Manche ergonomique en bois verni"],
     specs: "Poils synthétiques Fine Art",
-    stockQuantity: 12;
+    stockQuantity: 12,
     badge: "Populaire",
   },
   {
