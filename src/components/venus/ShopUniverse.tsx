@@ -97,55 +97,86 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
               </div>
             ) : (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className="flex flex-col justify-between rounded-lg border border-[#1C1B18]/15 bg-[#F0EFDF] p-4 shadow-sm transition-all hover:border-[#1C1B18] hover:shadow-md"
-                  >
-                    <div>
-                      <div
-                        onClick={() => setSelectedProduct(product)}
-                        className="relative aspect-square cursor-pointer overflow-hidden rounded border border-[#1C1B18]/10 bg-black/5"
-                      >
-                        <img
-                          src={product.images[0]}
-                          alt={product.name}
-                          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                        />
-                        {product.badge && (
-                          <span className="absolute top-2 left-2 rounded bg-[#1C1B18] px-2 py-0.5 text-[10px] font-bold text-[#F0EFDF] uppercase">
-                            {product.badge}
-                          </span>
-                        )}
+                {filteredProducts.map((product) => {
+                  const isSoldOut = product.stockQuantity === 0;
+
+                  return (
+                    <div
+                      key={product.id}
+                      className={`flex flex-col justify-between rounded-lg border border-[#1C1B18]/15 bg-[#F0EFDF] p-4 shadow-sm transition-all ${
+                        isSoldOut ? "opacity-75" : "hover:border-[#1C1B18] hover:shadow-md"
+                      }`}
+                    >
+                      <div>
+                        {/* Image & Badges */}
+                        <div
+                          onClick={() => setSelectedProduct(product)}
+                          className="relative aspect-square cursor-pointer overflow-hidden rounded border border-[#1C1B18]/10 bg-black/5"
+                        >
+                          <img
+                            src={product.images[0]}
+                            alt={product.name}
+                            className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                          />
+                          
+                          {/* Affichage adaptatif des badges */}
+                          {isSoldOut ? (
+                            <span className="absolute top-2 left-2 rounded bg-red-700 px-2 py-0.5 text-[10px] font-bold text-white uppercase">
+                              Rupture
+                            </span>
+                          ) : product.badge ? (
+                            <span className="absolute top-2 left-2 rounded bg-[#1C1B18] px-2 py-0.5 text-[10px] font-bold text-[#F0EFDF] uppercase">
+                              {product.badge}
+                            </span>
+                          ) : null}
+                        </div>
+
+                        {/* Titre & Prix */}
+                        <h4
+                          onClick={() => setSelectedProduct(product)}
+                          className="mt-3 font-serif text-base font-bold text-[#1C1B18] cursor-pointer hover:underline"
+                        >
+                          {product.name}
+                        </h4>
+                        
+                        <p className="mt-1 text-sm font-extrabold text-[#1C1B18]">
+                          {product.price.toLocaleString()} {product.currency}
+                        </p>
+
+                        {/* Quantité restante en stock */}
+                        <p className="mt-1 text-[11px] font-semibold">
+                          {isSoldOut ? (
+                            <span className="text-red-700">Épuisé</span>
+                          ) : (
+                            <span className="text-[#1C1B18]/70">En stock : {product.stockQuantity} dispo</span>
+                          )}
+                        </p>
                       </div>
 
-                      <h4
-                        onClick={() => setSelectedProduct(product)}
-                        className="mt-3 font-serif text-base font-bold text-[#1C1B18] cursor-pointer hover:underline"
-                      >
-                        {product.name}
-                      </h4>
-                      <p className="mt-1 text-sm font-extrabold text-[#1C1B18]">
-                        {product.price.toLocaleString()} {product.currency}
-                      </p>
-                    </div>
+                      {/* Actions */}
+                      <div className="mt-4 flex gap-2 pt-2 border-t border-[#1C1B18]/10">
+                        <button
+                          onClick={() => setSelectedProduct(product)}
+                          className="flex-1 rounded border border-[#1C1B18] py-2 text-[11px] font-bold uppercase text-[#1C1B18] hover:bg-[#1C1B18] hover:text-[#F0EFDF] transition-colors"
+                        >
+                          Détails
+                        </button>
 
-                    <div className="mt-5 flex gap-2 pt-2 border-t border-[#1C1B18]/10">
-                      <button
-                        onClick={() => setSelectedProduct(product)}
-                        className="flex-1 rounded border border-[#1C1B18] py-2 text-[11px] font-bold uppercase text-[#1C1B18] hover:bg-[#1C1B18] hover:text-[#F0EFDF] transition-colors"
-                      >
-                        Détails
-                      </button>
-                      <button
-                        onClick={() => onAddToCart(product)}
-                        className="flex-1 rounded bg-[#1C1B18] py-2 text-[11px] font-bold uppercase text-[#F0EFDF] hover:opacity-90 transition-opacity"
-                      >
-                        Ajouter
-                      </button>
+                        <button
+                          disabled={isSoldOut}
+                          onClick={() => onAddToCart(product)}
+                          className={`flex-1 rounded py-2 text-[11px] font-bold uppercase transition-all ${
+                            isSoldOut
+                              ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                              : "bg-[#1C1B18] text-[#F0EFDF] hover:opacity-90"
+                          }`}
+                        >
+                          {isSoldOut ? "Épuisé" : "Ajouter"}
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </main>
