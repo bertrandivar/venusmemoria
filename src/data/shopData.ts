@@ -1,95 +1,88 @@
 export interface Product {
   id: string;
   name: string;
-  category: "pinceaux" | "crayons" | "vases" | "supports";
-  subcategory?: string;
+  category: "pencils" | "erasers" | "brushes" | "vases" | "decor";
   price: number;
   currency: string;
-  image: string;
+  images: string[]; // 3 à 5 images par produit
   description: string;
-  specs?: string; // Ex: "Taille n°2 • Poils synthétiques extra-fins"
+  details: string[];
+  specs?: string;
+  stock: boolean;
   badge?: string;
 }
 
 export const SHOP_CATEGORIES = [
-  { id: "pinceaux", label: "Pinceaux & Brosses", description: "Pinceaux de précision, brosses à lavis et éventails pour l'huile et l'acrylique." },
-  { id: "crayons", label: "Crayons & Fusains", description: "Crayons graphite, fusains compressés et sanguines de haute qualité." },
-  { id: "vases", label: "Vases & Décor d'Art", description: "Pièces uniques sculptées en résine cristal et céramique faite main." },
-  { id: "supports", label: "Chevalets & Accessoires", description: "Supports de travail, palettes en bois noble et accessoires d'atelier." },
+  { id: "all", label: "Tous les Articles", icon: "✨" },
+  { id: "brushes", label: "Pinceaux & Brosses", icon: "🖌️" },
+  { id: "pencils", label: "Crayons & Fusains", icon: "✏️" },
+  { id: "erasers", label: "Gommes & Estompes", icon: "🧹" },
+  { id: "vases", label: "Vases d'Art", icon: "🏺" },
+  { id: "decor", label: "Objets de Décoration", icon: "🖼️" },
 ];
 
 export const PRODUCTS: Product[] = [
-  // --- PINCEAUX ---
-  {
-    id: "pinceau-precision-00",
-    name: "Pinceau de Précision Micro-Détail (N° 00)",
-    category: "pinceaux",
-    subcategory: "Pinceaux de Précision",
-    price: 8000,
-    currency: "BIF",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800",
-    description: "Pinceau ultra-fin idéal pour la réalisation des détails minutieux sur portraits et miniatures.",
-    specs: "Taille N° 00 • Fibre Synthétique Haute Densité",
-  },
-  {
-    id: "pinceau-precision-2",
-    name: "Pinceau Rond Fine Art (N° 2)",
-    category: "pinceaux",
-    subcategory: "Pinceaux de Précision",
-    price: 12000,
-    currency: "BIF",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800",
-    description: "Pinceau polyvalent pour les contours et le remplissage fin.",
-    specs: "Taille N° 2 • Manche ergonomique en bois verni",
-  },
   {
     id: "set-pinceaux-gold",
-    name: "Coffret Signature Gold Edition (Set de 8)",
-    category: "pinceaux",
-    subcategory: "Coffrets & Sets",
+    name: "Set Signature Pinceaux Fine Art (Gold Edition)",
+    category: "brushes",
     price: 65000,
     currency: "BIF",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800",
-    description: "Gamme complète comprenant brosses plates, pinceaux ronds et éventails dans un étui de protection.",
-    specs: "8 Pinceaux d'Atelier • Étui inclus",
-    badge: "Recommandé",
+    images: [
+      "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800",
+      "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800",
+      "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800",
+    ],
+    description: "Conçu aussi bien pour les artistes chevronnés que pour les passionnés d'art exigeants. Ce coffret réunit la précision du geste et la noblesse des poils synthétiques de qualité supérieure.",
+    details: [
+      "8 pinceaux de tailles variées (Ronds, Plates, Éventail)",
+      "Manche en bois d'ébène avec virole dorée",
+      "Résistance exceptionnelle aux solvants",
+      "Livré dans son étui de rangement en velours noir"
+    ],
+    specs: "Poils synthétiques Fine Art • Virolles laiton doré",
+    stock: true,
+    badge: "Incontournable",
   },
-
-  // --- CRAYONS ---
-  {
-    id: "crayon-graphite-2b",
-    name: "Crayon Graphite Extra-Tendre 2B",
-    category: "crayons",
-    subcategory: "Crayons d'Art",
-    price: 3500,
-    currency: "BIF",
-    image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800",
-    description: "Mine fluide permettant des ombrages riches et profonds.",
-    specs: "Gradation 2B",
-  },
-  {
-    id: "coffret-fusains-pro",
-    name: "Coffret Fusains & Sanguines d'Atelier (12 Pièces)",
-    category: "crayons",
-    subcategory: "Coffrets & Sets",
-    price: 32000,
-    currency: "BIF",
-    image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800",
-    description: "Assortiment complet de batons de fusain naturel et crayons de croquis.",
-    specs: "12 Pièces • Boîte métallique",
-  },
-
-  // --- VASES & DÉCOR ---
   {
     id: "vase-resine-dore",
     name: "Vase Sculptural Résine & Éclats d'Or",
     category: "vases",
-    subcategory: "Créations Résine",
     price: 120000,
     currency: "BIF",
-    image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800",
-    description: "Pièce maîtresse unique faite hand en résine cristal avec feuilles d'or 24k incrustées.",
-    specs: "Hauteur 28 cm • Pièce Unique",
+    images: [
+      "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800",
+      "https://images.unsplash.com/photo-1612196808214-b7e239e5f6b7?q=80&w=800",
+      "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?q=80&w=800",
+    ],
+    description: "Une œuvre d'art fonctionnelle qui capte la lumière. Façonné à la main dans notre atelier de Bujumbura, chaque vase présente une disposition unique d'éclats d'or.",
+    details: [
+      "Résine cristal ultra-transparente anti-jaunissement",
+      "Inclusions de feuilles d'or 24 carats",
+      "Finition polie à la main à l'atelier",
+      "Pièce unique numérotée"
+    ],
+    specs: "Hauteur: 28 cm • Poids: 1.4 kg",
+    stock: true,
     badge: "Pièce Unique",
+  },
+  {
+    id: "crayons-graphite-boite",
+    name: "Coffret Crayons Graphite & Fusains de Précision",
+    category: "pencils",
+    price: 35000,
+    currency: "BIF",
+    images: [
+      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800",
+      "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800",
+    ],
+    description: "Sélection complète pour réaliser des croquis, ombrages profonds et portraits hyperréalistes.",
+    details: [
+      "Gradations de 2B à 9B + Fusains naturels",
+      "Mines hautement résistantes à la casse",
+      "Bois de cèdre certifié"
+    ],
+    specs: "Coffret métallique de 12 pièces",
+    stock: true,
   },
 ];
