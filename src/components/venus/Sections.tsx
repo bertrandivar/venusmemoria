@@ -1,5 +1,126 @@
+import { useState, useEffect } from "react";
 import portrait from "@/assets/portrait.jpg";
 import resin from "@/assets/resin.jpg";
+
+/* --- COMPOSANT MODALE EVENT FACE PAINTING --- */
+const FACE_PAINTING_IMAGES = [
+  "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000",
+  "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000",
+];
+
+function FacePaintingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % FACE_PAINTING_IMAGES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  const handleBookWhatsApp = () => {
+    const phoneNumber = "257XXXXXXXX"; // Remplacez par votre numéro WhatsApp (ex: 25761234567)
+    const text = encodeURIComponent(
+      "Bonjour Venus Memoria ! 🎨 Je souhaite réserver votre service d'Event Face Painting.\n\n" +
+      "- Type d’événement (Anniversaire, Gala, Festival, Corporate) : \n" +
+      "- Date prévue : \n" +
+      "- Lieu / Ville : \n" +
+      "- Nombre d'invités estimé : "
+    );
+    window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-fadeIn">
+      <div 
+        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-xl border border-gold/40 p-6 shadow-2xl md:p-8"
+        style={{ backgroundColor: "#1C1B18", color: "#F0EFDF" }}
+      >
+        {/* Bouton Fermer */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-20 text-2xl font-bold text-gold transition-opacity hover:opacity-70"
+        >
+          ✕
+        </button>
+
+        {/* Carrousel d'images (Slider) */}
+        <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-lg border border-gold/30 bg-black/40">
+          {FACE_PAINTING_IMAGES.map((img, idx) => (
+            <img
+              key={idx}
+              src={img}
+              alt={`Event Face Painting Venus ${idx + 1}`}
+              className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${
+                idx === currentSlide ? "opacity-100 scale-105" : "opacity-0 scale-100"
+              }`}
+            />
+          ))}
+
+          {/* Indicateurs / Puces */}
+          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 z-10">
+            {FACE_PAINTING_IMAGES.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-2 rounded-full transition-all ${
+                  idx === currentSlide ? "w-6 bg-gold" : "w-2 bg-white/50"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Contenu descriptif */}
+        <div className="mt-6 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gold/20 pb-3">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-gold">
+              Event Face Painting
+            </h2>
+            <span className="rounded bg-gold/20 border border-gold/40 px-3 py-1 text-[10px] font-bold text-gold uppercase tracking-widest">
+              Service Sur-Mesure
+            </span>
+          </div>
+
+          <p className="text-xs md:text-sm leading-relaxed text-muted-foreground">
+            Transformez vos événements en véritables œuvres d'art vivantes. Que ce soit pour un anniversaire, un festival, une réception privée ou une soirée d'entreprise, nos artistes créent des maquillages éphémères spectaculaires et personnalisés.
+          </p>
+
+          {/* Arguments clés & Réassurance */}
+          <div className="grid gap-4 md:grid-cols-2 pt-2">
+            <div className="rounded border border-gold/20 bg-secondary/20 p-3.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gold mb-1">🌿 Produit Sûr & Hypoallergénique</h4>
+              <p className="text-[11px] text-muted-foreground">
+                Peintures cosmétiques de haute qualité, testées dermatologiquement, sans danger pour la peau et faciles à enlever à l'eau.
+              </p>
+            </div>
+
+            <div className="rounded border border-gold/20 bg-secondary/20 p-3.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gold mb-1">✨ Tout Type d'Événement</h4>
+              <p className="text-[11px] text-muted-foreground">
+                Thématiques variées : super-héros, féerie, motifs néon/UV pour soirées nocturnes et animations corporate.
+              </p>
+            </div>
+          </div>
+
+          {/* Bouton de Réservation WhatsApp */}
+          <div className="mt-8 pt-4 border-t border-gold/20">
+            <button
+              onClick={handleBookWhatsApp}
+              className="w-full rounded bg-[#25D366] py-4 text-xs md:text-sm font-bold tracking-[0.15em] text-white uppercase shadow-lg transition-all hover:bg-[#20ba5a] flex items-center justify-center gap-2"
+            >
+              <span>💬 Réserver / Demander un devis sur WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Hero() {
   return (
@@ -108,7 +229,6 @@ export function Collections() {
   );
 }
 
-/* --- NOUVELLE SECTION GALERIE DE PORTRAITS ET OEUVRES REALISEES --- */
 const galleryItems = [
   {
     title: "Portrait Fine Art Sur Toile",
@@ -168,18 +288,9 @@ export function Gallery() {
   );
 }
 
-const services = [
-  {
-    title: "Event Face Painting",
-    text: "Maquillage artistique professionnel pour événements corporate, réceptions privées et anniversaires. Une signature visuelle sur chaque visage.",
-  },
-  {
-    title: "Art Academy & Ateliers",
-    text: "Programmes d'initiation et de perfectionnement pour écoles, ainsi que des camps artistiques pendant les vacances.",
-  },
-];
-
 export function Services() {
+  const [isFacePaintingOpen, setIsFacePaintingOpen] = useState(false);
+
   return (
     <section id="services" className="mx-auto max-w-7xl px-6 py-28">
       <div className="text-center">
@@ -188,14 +299,38 @@ export function Services() {
         <div className="rule-gold mx-auto my-8 w-24" />
       </div>
       <div className="grid gap-8 md:grid-cols-2">
-        {services.map((s) => (
-          <article key={s.title} className="card-lux p-12">
-            <h3 className="text-3xl">{s.title}</h3>
-            <div className="rule-gold my-7 w-16" />
-            <p className="text-sm leading-relaxed text-muted-foreground">{s.text}</p>
-          </article>
-        ))}
+        {/* Carte Event Face Painting Cliquable */}
+        <article 
+          onClick={() => setIsFacePaintingOpen(true)}
+          className="card-lux p-12 cursor-pointer transition-all duration-300 hover:border-gold hover:-translate-y-1 group"
+        >
+          <div className="flex items-center justify-between">
+            <h3 className="text-3xl group-hover:text-gold transition-colors">Event Face Painting</h3>
+            <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-80 group-hover:opacity-100">
+              Découvrir →
+            </span>
+          </div>
+          <div className="rule-gold my-7 w-16" />
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Maquillage artistique professionnel pour événements corporate, réceptions privées et anniversaires. Une signature visuelle sur chaque visage.
+          </p>
+        </article>
+
+        {/* Carte Art Academy & Ateliers */}
+        <article className="card-lux p-12">
+          <h3 className="text-3xl">Art Academy & Ateliers</h3>
+          <div className="rule-gold my-7 w-16" />
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Programmes d'initiation et de perfectionnement pour écoles, ainsi que des camps artistiques pendant les vacances.
+          </p>
+        </article>
       </div>
+
+      {/* Modale interactive Face Painting */}
+      <FacePaintingModal
+        isOpen={isFacePaintingOpen}
+        onClose={() => setIsFacePaintingOpen(false)}
+      />
     </section>
   );
 }
@@ -211,7 +346,7 @@ export function About() {
         <div className="rule-gold mx-auto my-8 w-24" />
         <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
           VENUS est un atelier d'art dédié à la mémoire. Chaque œuvre naît d'une histoire
-          confiée, travaillée à la hand avec des matériaux nobles, jusqu'à devenir une
+          confiée, travaillée à la main avec des matériaux nobles, jusqu'à devenir une
           pièce unique que le temps ne peut plus effacer.
         </p>
       </div>
@@ -226,7 +361,7 @@ export function Footer() {
       <p className="font-display text-sm tracking-[0.35em] uppercase">Venus — The Creation Aura</p>
       <p className="mt-2 text-xs text-muted-foreground">Bujumbura, Burundi</p>
 
-      {/* RÉSALS SOCIAUX OFFICIELS */}
+      {/* RÉSEAUX SOCIAUX OFFICIELS */}
       <div className="mt-6 flex justify-center gap-6 text-xs tracking-widest text-gold uppercase">
         <a
           href="https://www.instagram.com/venusmemoria?igsh=bHZqcTRwaG9hM251"
@@ -238,7 +373,7 @@ export function Footer() {
         </a>
         <span>•</span>
         <a
-          href="https://facebook.com" /* REMPLACER PAR VOTRE LIEN FACEBOOK QUAND DISPONIBLE */
+          href="https://facebook.com"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:underline"
@@ -247,7 +382,7 @@ export function Footer() {
         </a>
         <span>•</span>
         <a
-          href="https://tiktok.com" /* REMPLACER PAR VOTRE LIEN TIKTOK QUAND DISPONIBLE */
+          href="https://tiktok.com"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:underline"
