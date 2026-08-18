@@ -19,11 +19,10 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
     }
   }, [product]);
 
-  // Fonction pour envoyer une demande de disponibilité sur WhatsApp
   const handleInquire = () => {
-    const phoneNumber = "257XXXXXXXX"; // Remplacez par votre numéro WhatsApp sans le +
+    const phoneNumber = "257XXXXXXXX"; // Remplacez par votre numéro WhatsApp
     const message = encodeURIComponent(
-      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité future du produit : "${product.name}". Quand sera-t-il à nouveau disponible ?`
+      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité future du produit : "${product.name}".`
     );
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
   };
@@ -45,28 +44,29 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
         <div className="grid gap-8 md:grid-cols-2">
           {/* Galerie Images */}
           <div className="space-y-4">
-            <div className="aspect-square overflow-hidden rounded border border-[#1C1B18]/15 bg-[#F0EFDF]">
+            {/* Conteneur image principale ajusté avec object-contain */}
+            <div className="aspect-square overflow-hidden rounded border border-[#1C1B18]/15 bg-white/40 p-2 flex items-center justify-center">
               <img
                 src={selectedImage || product.images[0]}
                 alt={product.name}
-                className="h-full w-full object-cover transition-all duration-300"
+                className="h-full w-full object-contain transition-all duration-300"
               />
             </div>
 
-            {/* Vignettes */}
+            {/* Vignettes ajustées */}
             {product.images.length > 1 && (
               <div className="flex gap-3 overflow-x-auto pb-2">
                 {product.images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(img)}
-                    className={`h-16 w-16 shrink-0 overflow-hidden rounded border transition-all ${
+                    className={`h-16 w-16 shrink-0 overflow-hidden rounded border bg-white/30 p-1 transition-all ${
                       selectedImage === img
                         ? "border-[#1C1B18] ring-2 ring-[#1C1B18]"
                         : "border-[#1C1B18]/20 opacity-70 hover:opacity-100"
                     }`}
                   >
-                    <img src={img} alt="" className="h-full w-full object-cover" />
+                    <img src={img} alt="" className="h-full w-full object-contain" />
                   </button>
                 ))}
               </div>
@@ -76,7 +76,6 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
           {/* Détails du Produit */}
           <div className="flex flex-col justify-between">
             <div className="space-y-3">
-              {/* Statut / Badge */}
               {isSoldOut ? (
                 <span className="inline-block rounded bg-amber-800 px-2.5 py-1 text-[10px] font-bold text-white uppercase tracking-wider">
                   Rupture de stock
@@ -109,7 +108,6 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 {product.description}
               </p>
 
-              {/* Caractéristiques */}
               {product.details && product.details.length > 0 && (
                 <div className="mt-6 space-y-2">
                   <h4 className="text-xs uppercase tracking-widest text-[#1C1B18] font-bold">
@@ -123,7 +121,6 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 </div>
               )}
 
-              {/* Spécifications */}
               {product.specs && (
                 <p className="mt-4 text-xs text-[#1C1B18]/80 italic">
                   <span className="font-bold uppercase not-italic">Spécifications : </span>
@@ -132,7 +129,6 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               )}
             </div>
 
-            {/* Actions : Ajouter ou Demander la disponibilité */}
             <div className="mt-8 pt-4 border-t border-[#1C1B18]/15">
               {isSoldOut ? (
                 <button
