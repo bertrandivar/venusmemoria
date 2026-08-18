@@ -58,7 +58,7 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
         <div className="mb-8 flex justify-center">
           <input
             type="text"
-            placeholder="🔍 Rechercher un produit (pinceaux, crayons, vase...)"
+            placeholder="🔍 Rechercher un produit..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full max-w-md rounded-md border border-[#1C1B18]/20 bg-[#F0EFDF] px-4 py-3 text-sm text-[#1C1B18] placeholder-[#1C1B18]/60 outline-none focus:border-[#1C1B18] focus:ring-1 focus:ring-[#1C1B18]"
@@ -104,7 +104,7 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
                     <div
                       key={product.id}
                       className={`flex flex-col justify-between rounded-lg border border-[#1C1B18]/15 bg-[#F0EFDF] p-4 shadow-sm transition-all ${
-                        isSoldOut ? "opacity-75" : "hover:border-[#1C1B18] hover:shadow-md"
+                        isSoldOut ? "opacity-90" : "hover:border-[#1C1B18] hover:shadow-md"
                       }`}
                     >
                       <div>
@@ -119,10 +119,10 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
                             className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                           />
                           
-                          {/* Affichage adaptatif des badges */}
+                          {/* Badges */}
                           {isSoldOut ? (
-                            <span className="absolute top-2 left-2 rounded bg-red-700 px-2 py-0.5 text-[10px] font-bold text-white uppercase">
-                              Rupture
+                            <span className="absolute top-2 left-2 rounded bg-amber-800 px-2 py-0.5 text-[10px] font-bold text-white uppercase">
+                              Épuisé
                             </span>
                           ) : product.badge ? (
                             <span className="absolute top-2 left-2 rounded bg-[#1C1B18] px-2 py-0.5 text-[10px] font-bold text-[#F0EFDF] uppercase">
@@ -143,10 +143,10 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
                           {product.price.toLocaleString()} {product.currency}
                         </p>
 
-                        {/* Quantité restante en stock */}
+                        {/* Indication Stock */}
                         <p className="mt-1 text-[11px] font-semibold">
                           {isSoldOut ? (
-                            <span className="text-red-700">Épuisé</span>
+                            <span className="text-amber-900">Rupture temporaire</span>
                           ) : (
                             <span className="text-[#1C1B18]/70">En stock : {product.stockQuantity} dispo</span>
                           )}
@@ -162,17 +162,21 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
                           Détails
                         </button>
 
-                        <button
-                          disabled={isSoldOut}
-                          onClick={() => onAddToCart(product)}
-                          className={`flex-1 rounded py-2 text-[11px] font-bold uppercase transition-all ${
-                            isSoldOut
-                              ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                              : "bg-[#1C1B18] text-[#F0EFDF] hover:opacity-90"
-                          }`}
-                        >
-                          {isSoldOut ? "Épuisé" : "Ajouter"}
-                        </button>
+                        {isSoldOut ? (
+                          <button
+                            onClick={() => setSelectedProduct(product)}
+                            className="flex-1 rounded bg-[#1C1B18]/10 border border-[#1C1B18]/30 py-2 text-[10px] font-bold uppercase text-[#1C1B18] hover:bg-[#1C1B18] hover:text-[#F0EFDF] transition-all"
+                          >
+                            Se renseigner
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => onAddToCart(product)}
+                            className="flex-1 rounded bg-[#1C1B18] py-2 text-[11px] font-bold uppercase text-[#F0EFDF] hover:opacity-90 transition-all"
+                          >
+                            Ajouter
+                          </button>
+                        )}
                       </div>
                     </div>
                   );
