@@ -1,7 +1,9 @@
 import type { Product } from "../shopData";
 
 // 1. Imports des images de vos gommes
-import electricEraserImg from "@/assets/gommes/electric-eraser.webp";
+import gloveF1 from "@assets/electric-eraser/electric-eraser1.webp";
+import gloveF2 from "@assets/electric-eraser/electric-eraser2.webp";
+import gloveF3 from "@assets/electric-eraser/electric-eraser3.webp";
 import faberEraserImg from "@/assets/gommes/faber-kneaded.webp";
 
 export const ERASER_PRODUCTS: Product[] = [
