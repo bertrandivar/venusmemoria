@@ -1,6 +1,6 @@
 // Importation des produits de chaque catégorie
 import { GLOVES_PRODUCTS } from "./products/gants";
-import { ERASER_PRODUCTS } from "./products/gomme";
+import { ERASER_PRODUCTS } from "./products/gommes";
 import { BRUSH_PRODUCTS } from "./products/pinceaux";
 import { VASE_PRODUCTS } from "./products/vases";
 
