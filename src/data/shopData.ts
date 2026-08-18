@@ -1,5 +1,6 @@
 // Importation des produits de chaque catégorie
 import { GLOVES_PRODUCTS } from "./products/gants";
+import { ERASER_PRODUCTS } from "./products/gomme";
 import { BRUSH_PRODUCTS } from "./products/pinceaux";
 import { VASE_PRODUCTS } from "./products/vases";
 
@@ -42,4 +43,5 @@ export const PRODUCTS: Product[] = [
   ...GLOVES_PRODUCTS,
   ...BRUSH_PRODUCTS,
   ...VASE_PRODUCTS,
+  ...ERASER_PRODUCTS,
 ];
