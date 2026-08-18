@@ -4,7 +4,6 @@ const mainLinks = [
   { label: "Accueil", href: "#accueil" },
   { label: "Collections", href: "#collections" },
   { label: "Galerie", href: "#galerie" },
-  { label: "Boutique", href: "#boutique" },
 ];
 
 const secondaryLinks = [
@@ -15,11 +14,12 @@ const secondaryLinks = [
 
 interface NavProps {
   onLogoClick: () => void;
+  onOpenShop?: () => void;
   cartCount?: number;
   onOpenCart?: () => void;
 }
 
-export function Nav({ onLogoClick, cartCount = 0, onOpenCart }: NavProps) {
+export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -42,18 +42,24 @@ export function Nav({ onLogoClick, cartCount = 0, onOpenCart }: NavProps) {
             <li key={l.href}>
               <a
                 href={l.href}
-                className={`text-xs tracking-[0.2em] uppercase transition-colors hover:text-gold ${
-                  l.href === "#boutique"
-                    ? "text-gold font-semibold"
-                    : "text-foreground/80"
-                }`}
+                className="text-xs tracking-[0.2em] text-foreground/80 uppercase transition-colors hover:text-gold"
               >
                 {l.label}
               </a>
             </li>
           ))}
 
-          {/* Menu déroulant ou sous-liens pour les pages secondaires */}
+          {/* Bouton Boutique déclenchant l'ouverture du second univers */}
+          <li>
+            <button
+              onClick={onOpenShop}
+              className="text-xs tracking-[0.2em] font-semibold text-gold uppercase transition-colors hover:text-foreground"
+            >
+              Boutique
+            </button>
+          </li>
+
+          {/* Sous-liens pour les pages secondaires */}
           {secondaryLinks.map((l) => (
             <li key={l.href}>
               <a
@@ -66,9 +72,9 @@ export function Nav({ onLogoClick, cartCount = 0, onOpenCart }: NavProps) {
           ))}
         </ul>
 
-        {/* Actions à droite : Icône/Badge Panier + CTA principal */}
+        {/* Actions à droite : Icône/Badge Panier + CTA principal + Bouton Mobile */}
         <div className="flex items-center gap-5">
-          {/* Bouton Panier épuré */}
+          {/* Bouton Panier */}
           <button
             onClick={onOpenCart}
             className="relative flex items-center justify-center p-2 text-foreground transition-colors hover:text-gold"
@@ -103,8 +109,73 @@ export function Nav({ onLogoClick, cartCount = 0, onOpenCart }: NavProps) {
           >
             Commander
           </a>
+
+          {/* Bouton Menu Hamburger (Mobile) */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 text-foreground lg:hidden"
+            aria-label="Toggle menu"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {mobileMenuOpen ? (
+                <path d="M18 6 6 18M6 6l12 12" />
+              ) : (
+                <path d="M4 12h16M4 6h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
       </nav>
+
+      {/* Menu Mobile déroulant */}
+      {mobileMenuOpen && (
+        <div className="border-b border-border/60 bg-background px-6 py-6 lg:hidden">
+          <ul className="flex flex-col gap-4">
+            {mainLinks.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm tracking-[0.2em] text-foreground uppercase"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenShop?.();
+                }}
+                className="text-sm tracking-[0.2em] font-bold text-gold uppercase"
+              >
+                Boutique
+              </button>
+            </li>
+            {secondaryLinks.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm tracking-[0.2em] text-muted-foreground uppercase"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </header>
   );
 }
