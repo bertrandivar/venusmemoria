@@ -13,16 +13,23 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const isSoldOut = product.stockQuantity === 0;
 
-  // Réinitialise l'image sélectionnée si le produit change
   useEffect(() => {
     if (product?.images?.length) {
       setSelectedImage(product.images[0]);
     }
   }, [product]);
 
+  // Fonction pour envoyer une demande de disponibilité sur WhatsApp
+  const handleInquire = () => {
+    const phoneNumber = "257XXXXXXXX"; // Remplacez par votre numéro WhatsApp sans le +
+    const message = encodeURIComponent(
+      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité future du produit : "${product.name}". Quand sera-t-il à nouveau disponible ?`
+    );
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      {/* Fenêtre principale avec le fond crème du site */}
       <div 
         className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-lg border border-[#1C1B18]/20 p-6 shadow-2xl md:p-10"
         style={{ backgroundColor: "#C3C2A9" }}
@@ -46,7 +53,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               />
             </div>
 
-            {/* Vignettes (Thumbnails) */}
+            {/* Vignettes */}
             {product.images.length > 1 && (
               <div className="flex gap-3 overflow-x-auto pb-2">
                 {product.images.map((img, idx) => (
@@ -69,9 +76,9 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
           {/* Détails du Produit */}
           <div className="flex flex-col justify-between">
             <div className="space-y-3">
-              {/* Badges de statut */}
+              {/* Statut / Badge */}
               {isSoldOut ? (
-                <span className="inline-block rounded bg-red-700 px-2.5 py-1 text-[10px] font-bold text-white uppercase tracking-wider">
+                <span className="inline-block rounded bg-amber-800 px-2.5 py-1 text-[10px] font-bold text-white uppercase tracking-wider">
                   Rupture de stock
                 </span>
               ) : product.badge ? (
@@ -88,12 +95,11 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 {product.price.toLocaleString()} {product.currency}
               </p>
 
-              {/* Indicateur de stock */}
               <p className="text-xs font-semibold">
                 {isSoldOut ? (
-                  <span className="text-red-700">Cet article est actuellement indisponible</span>
+                  <span className="text-amber-900">Cet article est actuellement épuisé</span>
                 ) : (
-                  <span className="text-[#1C1B18]/70">En stock : {product.stockQuantity} unités</span>
+                  <span className="text-[#1C1B18]/70">En stock : {product.stockQuantity} pièces</span>
                 )}
               </p>
 
@@ -126,22 +132,26 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               )}
             </div>
 
-            {/* Actions (Bouton Doré gardé à l'identique, désactivé si Sold Out) */}
+            {/* Actions : Ajouter ou Demander la disponibilité */}
             <div className="mt-8 pt-4 border-t border-[#1C1B18]/15">
-              <button
-                disabled={isSoldOut}
-                onClick={() => {
-                  onAddToCart(product);
-                  onClose();
-                }}
-                className={`w-full rounded py-4 text-xs font-bold tracking-[0.2em] uppercase transition-all shadow-md ${
-                  isSoldOut
-                    ? "bg-gray-400 text-gray-200 cursor-not-allowed shadow-none"
-                    : "bg-[#D4AF37] text-[#1C1B18] hover:bg-[#c4a02e] hover:shadow-lg"
-                }`}
-              >
-                {isSoldOut ? "Épuisé" : "Ajouter au Panier"}
-              </button>
+              {isSoldOut ? (
+                <button
+                  onClick={handleInquire}
+                  className="w-full rounded bg-[#1C1B18] py-4 text-xs font-bold tracking-[0.15em] text-[#F0EFDF] uppercase transition-all hover:bg-[#2C2B26] shadow-md flex items-center justify-center gap-2"
+                >
+                  <span>💬 Demander la disponibilité</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    onAddToCart(product);
+                    onClose();
+                  }}
+                  className="w-full rounded bg-[#D4AF37] py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md"
+                >
+                  Ajouter au Panier
+                </button>
+              )}
             </div>
           </div>
         </div>
