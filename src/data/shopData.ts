@@ -1,3 +1,9 @@
+// 1. Import des images de gants depuis src/assets/Art Glove Two Finger/
+import gloveF1 from "@/assets/Art Glove Two Finger/f1.webp";
+import gloveF2 from "@/assets/Art Glove Two Finger/F2.webp";
+import gloveF3 from "@/assets/Art Glove Two Finger/f3.webp";
+import gloveF4 from "@/assets/Art Glove Two Finger/f4.webp";
+
 export interface Product {
   id: string;
   name: string;
@@ -16,7 +22,7 @@ export interface Product {
   description: string;
   details?: string[];
   specs?: string;
-  stock: boolean;
+  stockQuantity: number;
   badge?: string;
 }
 
@@ -46,21 +52,26 @@ export const PRODUCTS: Product[] = [
     description: "Coffret de 8 pinceaux de haute précision pour peinture à l'huile et acrylique.",
     details: ["8 pinceaux de tailles variées", "Manche ergonomique en bois verni"],
     specs: "Poils synthétiques Fine Art",
-    stock: true,
+    stockQuantity: 12;
     badge: "Populaire",
   },
   {
-    id: "gant-dessin-digital",
+   id: "gant-artiste-2-doigts",
     name: "Gant d'Artiste 2 Doigts (Anti-Frottement)",
     category: "gants",
-    price: 15000,
+    price: 5500,
     currency: "BIF",
-    images: [
-      "/src/assets/Art Glove Two Finger/f3.webp",
+    images: [gloveF1, gloveF2, gloveF3, gloveF4],
+   description:
+      "Gant professionnel réduisant les frottements sur tablette graphique et papier. Offre un confort optimal pour le dessin.",
+    details: [
+      "Tissu respirant et très doux",
+      "Évite les traces d'huile et de transpiration",
+      "Convient aux gauchers et droitier(e)s",
     ],
-    description: "Gant confortable empêchant les traces de paume lors du dessin sur papier ou tablette graphique.",
-    details: ["Matière Lycra respirante", "Taille adaptable (Main gauche ou droite)"],
-    stock: true,
+    specs: "Lycra haute qualité — Noir",
+   stockQuantity: 0,
+    badge: "Populaire",
   },
   {
     id: "vase-sculptural-resine",
@@ -72,7 +83,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800",
     ],
     description: "Vase décoratif fait main à Bujumbura, pièce unique avec feuille d'or 24k incrustée.",
-    stock: true,
+   stockQuantity: 12,
     badge: "Pièce Unique",
   },
 ];
