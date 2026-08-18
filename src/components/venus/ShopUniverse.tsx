@@ -21,50 +21,56 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
   });
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Barre supérieure lumineuse et lisible */}
-      <header className="sticky top-0 z-30 border-b border-border/80 bg-background/95 backdrop-blur-md px-6 py-4 shadow-sm">
+    <div 
+      className="min-h-screen transition-colors text-[#1C1B18]" 
+      style={{ backgroundColor: "#C3C2A9" }}
+    >
+      {/* En-tête supérieur de la boutique */}
+      <header 
+        className="sticky top-0 z-30 border-b border-[#1C1B18]/10 px-6 py-4 shadow-sm backdrop-blur-md"
+        style={{ backgroundColor: "#C3C2A9" }}
+      >
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <button
             onClick={onBackToHome}
-            className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-foreground uppercase hover:text-gold transition-colors"
+            className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-opacity hover:opacity-70"
           >
             ← Retourner au site
           </button>
-          <span className="font-display text-sm tracking-[0.3em] uppercase text-foreground">
-            Boutique <span className="text-gold">VENUS</span>
+          <span className="font-display text-sm tracking-[0.3em] font-bold uppercase text-[#1C1B18]">
+            Boutique <span className="underline decoration-[#F0EFDF]">VENUS</span>
           </span>
         </div>
       </header>
 
       <div className="mx-auto max-w-7xl px-6 py-10">
-        {/* Message d'accueil clair et simple */}
-        <div className="mb-8 border-b border-border/60 pb-6 text-center">
-          <h1 className="font-serif text-3xl md:text-4xl text-foreground font-semibold">
+        {/* Message d'accueil */}
+        <div className="mb-8 border-b border-[#1C1B18]/15 pb-6 text-center">
+          <h1 className="font-serif text-3xl md:text-4xl text-[#1C1B18] font-bold">
             Bienvenue dans la Boutique
           </h1>
-          <p className="mx-auto mt-2 max-w-xl text-sm md:text-base text-foreground/80 leading-relaxed">
-            Explorez nos articles pour artistes et nos créations de décoration. Sélectionnez une catégorie pour filtrer rapidement.
+          <p className="mx-auto mt-2 max-w-xl text-sm md:text-base text-[#2C2B26] leading-relaxed">
+            Explorez nos articles pour artistes et nos créations de décoration.
           </p>
         </div>
 
-        {/* Champ de recherche visible et contrasté */}
+        {/* Barre de recherche */}
         <div className="mb-8 flex justify-center">
           <input
             type="text"
             placeholder="🔍 Rechercher un produit (pinceaux, crayons, vase...)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full max-w-md rounded border border-border bg-card px-4 py-3 text-sm text-foreground outline-none focus:border-gold focus:ring-1 focus:ring-gold"
+            className="w-full max-w-md rounded-md border border-[#1C1B18]/20 bg-[#F0EFDF] px-4 py-3 text-sm text-[#1C1B18] placeholder-[#1C1B18]/60 outline-none focus:border-[#1C1B18] focus:ring-1 focus:ring-[#1C1B18]"
           />
         </div>
 
-        {/* Sidebar des catégories à gauche + Grille à droite */}
+        {/* Layout Catégories + Cartes Produit */}
         <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
           
           {/* Menu des catégories */}
           <aside className="space-y-1.5">
-            <h3 className="mb-3 text-xs font-bold tracking-[0.2em] uppercase text-gold">
+            <h3 className="mb-3 text-xs font-bold tracking-[0.2em] uppercase text-[#1C1B18]">
               Catégories d'articles
             </h3>
             {SHOP_CATEGORIES.map((cat) => (
@@ -73,20 +79,20 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`flex w-full items-center gap-3 rounded-md px-4 py-3 text-left text-xs transition-all ${
                   activeCategory === cat.id
-                    ? "bg-gold text-black font-bold shadow-md"
-                    : "bg-card border border-border/60 text-foreground hover:border-gold"
+                    ? "bg-[#1C1B18] text-[#F0EFDF] font-bold shadow-md"
+                    : "bg-[#F0EFDF]/80 border border-[#1C1B18]/15 text-[#1C1B18] hover:bg-[#F0EFDF]"
                 }`}
               >
                 <span className="text-sm">{cat.icon}</span>
-                <span className="font-medium">{cat.label}</span>
+                <span className="font-semibold">{cat.label}</span>
               </button>
             ))}
           </aside>
 
-          {/* Grille de produits clair & lisible */}
+          {/* Liste des produits */}
           <main>
             {filteredProducts.length === 0 ? (
-              <div className="rounded-lg border border-dashed border-border p-12 text-center text-sm text-muted-foreground">
+              <div className="rounded-lg border border-dashed border-[#1C1B18]/30 p-12 text-center text-sm font-medium text-[#1C1B18]/70">
                 Aucun produit ne correspond à votre recherche.
               </div>
             ) : (
@@ -94,13 +100,12 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
-                    className="flex flex-col justify-between rounded-lg border border-border bg-card p-4 transition-all hover:border-gold hover:shadow-lg"
+                    className="flex flex-col justify-between rounded-lg border border-[#1C1B18]/15 bg-[#F0EFDF] p-4 shadow-sm transition-all hover:border-[#1C1B18] hover:shadow-md"
                   >
                     <div>
-                      {/* Image cliquable */}
                       <div
                         onClick={() => setSelectedProduct(product)}
-                        className="relative aspect-square cursor-pointer overflow-hidden rounded border border-border/40 bg-black/10"
+                        className="relative aspect-square cursor-pointer overflow-hidden rounded border border-[#1C1B18]/10 bg-black/5"
                       >
                         <img
                           src={product.images[0]}
@@ -108,7 +113,7 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
                           className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                         />
                         {product.badge && (
-                          <span className="absolute top-2 left-2 rounded bg-gold px-2 py-0.5 text-[10px] font-bold text-black uppercase">
+                          <span className="absolute top-2 left-2 rounded bg-[#1C1B18] px-2 py-0.5 text-[10px] font-bold text-[#F0EFDF] uppercase">
                             {product.badge}
                           </span>
                         )}
@@ -116,25 +121,25 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
 
                       <h4
                         onClick={() => setSelectedProduct(product)}
-                        className="mt-3 font-serif text-base text-foreground font-semibold cursor-pointer hover:text-gold"
+                        className="mt-3 font-serif text-base font-bold text-[#1C1B18] cursor-pointer hover:underline"
                       >
                         {product.name}
                       </h4>
-                      <p className="mt-1 text-sm font-bold text-gold">
+                      <p className="mt-1 text-sm font-extrabold text-[#1C1B18]">
                         {product.price.toLocaleString()} {product.currency}
                       </p>
                     </div>
 
-                    <div className="mt-5 flex gap-2 pt-2 border-t border-border/40">
+                    <div className="mt-5 flex gap-2 pt-2 border-t border-[#1C1B18]/10">
                       <button
                         onClick={() => setSelectedProduct(product)}
-                        className="flex-1 rounded border border-border py-2 text-[11px] font-semibold uppercase text-foreground hover:border-gold"
+                        className="flex-1 rounded border border-[#1C1B18] py-2 text-[11px] font-bold uppercase text-[#1C1B18] hover:bg-[#1C1B18] hover:text-[#F0EFDF] transition-colors"
                       >
                         Détails
                       </button>
                       <button
                         onClick={() => onAddToCart(product)}
-                        className="flex-1 rounded bg-gold py-2 text-[11px] font-bold uppercase text-black hover:bg-white"
+                        className="flex-1 rounded bg-[#1C1B18] py-2 text-[11px] font-bold uppercase text-[#F0EFDF] hover:opacity-90 transition-opacity"
                       >
                         Ajouter
                       </button>
@@ -147,7 +152,6 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
         </div>
       </div>
 
-      {/* Modale Fiche Produit */}
       <ProductModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
