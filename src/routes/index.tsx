@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [entered, setEntered] = useState(false);
 
-  // État de bascule vers le second univers (Boutique)
+  // État de bascule vers l'univers Boutique
   const [inShopUniverse, setInShopUniverse] = useState(false);
 
   // État du panier et du tiroir latéral
@@ -59,7 +59,7 @@ function Index() {
       }
       return [...prev, { product, quantity: 1 }];
     });
-    setIsCartOpen(true); // Ouvre le panier automatiquement pour un feedback visuel
+    setIsCartOpen(true);
   };
 
   // Ajuster la quantité (+1 ou -1)
@@ -82,14 +82,14 @@ function Index() {
     setCartItems((prev) => prev.filter((item) => item.product.id !== productId));
   };
 
-  // Vider tout le panier
+  // Vider le panier
   const handleClearCart = () => {
     setCartItems([]);
   };
 
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
-  // VUE 1 : Univers Boutique séparé
+  // VUE 1 : Univers Boutique plein écran
   if (inShopUniverse) {
     return (
       <div className="min-h-screen bg-background text-foreground">
@@ -101,7 +101,6 @@ function Index() {
           onAddToCart={handleAddToCart}
         />
 
-        {/* Tiroir Panier latéral accessible depuis la boutique */}
         <CartDrawer
           isOpen={isCartOpen}
           onClose={() => setIsCartOpen(false)}
@@ -114,7 +113,7 @@ function Index() {
     );
   }
 
-  // VUE 2 : Site principal d'accueil
+  // VUE 2 : Site d'accueil principal
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Splash hidden={entered} onEnter={() => setEntered(true)} />
@@ -128,6 +127,7 @@ function Index() {
             setEntered(false);
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
+          onOpenShop={() => setInShopUniverse(true)}
           cartCount={totalCartCount}
           onOpenCart={() => setIsCartOpen(true)}
         />
@@ -136,8 +136,7 @@ function Index() {
           <Hero />
           <Collections />
           <Gallery />
-          
-          {/* Section d'invitation vers le second univers de la boutique */}
+
           <ShopTeaser onEnterShop={() => setInShopUniverse(true)} />
 
           <Services />
@@ -147,7 +146,6 @@ function Index() {
 
         <Footer />
 
-        {/* Tiroir Panier latéral */}
         <CartDrawer
           isOpen={isCartOpen}
           onClose={() => setIsCartOpen(false)}
