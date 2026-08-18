@@ -1,8 +1,7 @@
-// 1. Import des images de gants depuis src/assets/Art Glove Two Finger/
-import gloveF1 from "@/assets/art-glove-two-finger/f1.webp";
-import gloveF2 from "@/assets/art-glove-two-finger/F2.webp";
-import gloveF3 from "@/assets/art-glove-two-finger/f3.webp";
-import gloveF4 from "@/assets/art-glove-two-finger/f4.webp";
+// Importation des produits de chaque catégorie
+import { GLOVES_PRODUCTS } from "./products/gants";
+import { BRUSH_PRODUCTS } from "./products/pinceaux";
+import { VASE_PRODUCTS } from "./products/vases";
 
 export interface Product {
   id: string;
@@ -38,52 +37,9 @@ export const SHOP_CATEGORIES = [
   { id: "supports", label: "Chevalets & Accessoires", icon: "📐" },
 ];
 
+// Regroupement de tous les tableaux de produits
 export const PRODUCTS: Product[] = [
-  {
-    id: "set-pinceaux-gold",
-    name: "Set Signature Pinceaux Fine Art",
-    category: "pinceaux",
-    price: 65000,
-    currency: "BIF",
-    images: [
-      "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800",
-      "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800",
-    ],
-    description: "Coffret de 8 pinceaux de haute précision pour peinture à l'huile et acrylique.",
-    details: ["8 pinceaux de tailles variées", "Manche ergonomique en bois verni"],
-    specs: "Poils synthétiques Fine Art",
-    stockQuantity: 12,
-    badge: "Populaire",
-  },
-  {
-   id: "gant-artiste-2-doigts",
-    name: "Gant d'Artiste 2 Doigts (Anti-Frottement)",
-    category: "gants",
-    price: 5500,
-    currency: "BIF",
-    images: [gloveF1, gloveF2, gloveF3, gloveF4],
-   description:
-      "Gant professionnel réduisant les frottements sur tablette graphique et papier. Offre un confort optimal pour le dessin.",
-    details: [
-      "Tissu respirant et très doux",
-      "Évite les traces d'huile et de transpiration",
-      "Convient aux gauchers et droitier(e)s",
-    ],
-    specs: "Lycra haute qualité — Noir",
-   stockQuantity: 0,
-    badge: "Populaire",
-  },
-  {
-    id: "vase-sculptural-resine",
-    name: "Vase Sculptural Résine & Éclats d'Or",
-    category: "vases",
-    price: 120000,
-    currency: "BIF",
-    images: [
-      "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800",
-    ],
-    description: "Vase décoratif fait main à Bujumbura, pièce unique avec feuille d'or 24k incrustée.",
-   stockQuantity: 12,
-    badge: "Pièce Unique",
-  },
+  ...GLOVES_PRODUCTS,
+  ...BRUSH_PRODUCTS,
+  ...VASE_PRODUCTS,
 ];
