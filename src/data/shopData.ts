@@ -1,8 +1,8 @@
 // 1. Import des images de gants depuis src/assets/Art Glove Two Finger/
-import gloveF1 from "@/assets/Art Glove Two Finger/f1.webp";
-import gloveF2 from "@/assets/Art Glove Two Finger/F2.webp";
-import gloveF3 from "@/assets/Art Glove Two Finger/f3.webp";
-import gloveF4 from "@/assets/Art Glove Two Finger/f4.webp";
+import gloveF1 from "@/assets/art-glove-two-finger/f1.webp";
+import gloveF2 from "@/assets/art-glove-two-finger/F2.webp";
+import gloveF3 from "@/assets/art-glove-two-finger/f3.webp";
+import gloveF4 from "@/assets/art-glove-two-finger/f4.webp";
 
 export interface Product {
   id: string;
