@@ -12,119 +12,129 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Filtrage combiné par catégorie et recherche
   const filteredProducts = PRODUCTS.filter((product) => {
     const matchesCategory = activeCategory === "all" || product.category === activeCategory;
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
   return (
-    <div className="min-h-screen bg-[#070A11] text-foreground">
-      {/* Barre Supérieure d'Univers */}
-      <header className="sticky top-0 z-30 border-b border-gold/30 bg-[#070A11]/90 backdrop-blur-md px-6 py-4">
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Barre supérieure lumineuse et lisible */}
+      <header className="sticky top-0 z-30 border-b border-border/80 bg-background/95 backdrop-blur-md px-6 py-4 shadow-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <button
             onClick={onBackToHome}
-            className="flex items-center gap-2 text-xs tracking-[0.25em] text-gold uppercase hover:text-white transition-colors"
+            className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-foreground uppercase hover:text-gold transition-colors"
           >
-            ← Retourner au site principal
+            ← Retourner au site
           </button>
           <span className="font-display text-sm tracking-[0.3em] uppercase text-foreground">
-            VENUS <span className="text-gold">Boutique</span>
+            Boutique <span className="text-gold">VENUS</span>
           </span>
         </div>
       </header>
 
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        {/* Message d'Accueil de VENUS */}
-        <div className="mb-12 border-b border-border/40 pb-8 text-center">
-          <h1 className="font-serif text-3xl md:text-5xl">Bienvenue dans l'Atelier Marchand</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-xs leading-relaxed text-muted-foreground md:text-sm">
-            Que vous soyez un <span className="text-gold">artiste à la recherche d'outils de précision</span> ou un <span className="text-gold">amateur d'art souhaitant sublimer son intérieur</span>, explorez nos pièces sélectionnées avec passion.
+      <div className="mx-auto max-w-7xl px-6 py-10">
+        {/* Message d'accueil clair et simple */}
+        <div className="mb-8 border-b border-border/60 pb-6 text-center">
+          <h1 className="font-serif text-3xl md:text-4xl text-foreground font-semibold">
+            Bienvenue dans la Boutique
+          </h1>
+          <p className="mx-auto mt-2 max-w-xl text-sm md:text-base text-foreground/80 leading-relaxed">
+            Explorez nos articles pour artistes et nos créations de décoration. Sélectionnez une catégorie pour filtrer rapidement.
           </p>
         </div>
 
-        {/* Barre de Recherche */}
-        <div className="mb-10 flex justify-center">
+        {/* Champ de recherche visible et contrasté */}
+        <div className="mb-8 flex justify-center">
           <input
             type="text"
-            placeholder="Rechercher un pinceau, un vase, un crayon..."
+            placeholder="🔍 Rechercher un produit (pinceaux, crayons, vase...)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full max-w-md border-b border-gold/50 bg-transparent px-4 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-gold"
+            className="w-full max-w-md rounded border border-border bg-card px-4 py-3 text-sm text-foreground outline-none focus:border-gold focus:ring-1 focus:ring-gold"
           />
         </div>
 
-        {/* Disposition Principale : Catégories à Gauche + Produits à Droite */}
-        <div className="grid gap-10 lg:grid-cols-[250px_1fr]">
+        {/* Sidebar des catégories à gauche + Grille à droite */}
+        <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
           
-          {/* Menu des Catégories à Gauche */}
-          <aside className="space-y-2">
-            <h3 className="mb-4 text-xs tracking-[0.2em] uppercase text-gold font-semibold">Catégories</h3>
+          {/* Menu des catégories */}
+          <aside className="space-y-1.5">
+            <h3 className="mb-3 text-xs font-bold tracking-[0.2em] uppercase text-gold">
+              Catégories d'articles
+            </h3>
             {SHOP_CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex w-full items-center gap-3 rounded p-3 text-left text-xs transition-all ${
+                className={`flex w-full items-center gap-3 rounded-md px-4 py-3 text-left text-xs transition-all ${
                   activeCategory === cat.id
-                    ? "bg-gold text-black font-bold shadow-lg"
-                    : "text-muted-foreground hover:bg-secondary/40 hover:text-foreground"
+                    ? "bg-gold text-black font-bold shadow-md"
+                    : "bg-card border border-border/60 text-foreground hover:border-gold"
                 }`}
               >
-                <span>{cat.icon}</span>
-                <span>{cat.label}</span>
+                <span className="text-sm">{cat.icon}</span>
+                <span className="font-medium">{cat.label}</span>
               </button>
             ))}
           </aside>
 
-          {/* Affichage des Produits */}
+          {/* Grille de produits clair & lisible */}
           <main>
             {filteredProducts.length === 0 ? (
-              <p className="text-center text-xs text-muted-foreground py-12">Aucun article ne correspond à votre recherche.</p>
+              <div className="rounded-lg border border-dashed border-border p-12 text-center text-sm text-muted-foreground">
+                Aucun produit ne correspond à votre recherche.
+              </div>
             ) : (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
-                    className="group card-lux flex flex-col justify-between overflow-hidden border border-border/40 p-4 transition-all duration-300 hover:border-gold"
+                    className="flex flex-col justify-between rounded-lg border border-border bg-card p-4 transition-all hover:border-gold hover:shadow-lg"
                   >
                     <div>
-                      {/* Clic sur l'image ouvre la modale style Amazon */}
+                      {/* Image cliquable */}
                       <div
                         onClick={() => setSelectedProduct(product)}
-                        className="relative aspect-square cursor-pointer overflow-hidden rounded bg-black/30"
+                        className="relative aspect-square cursor-pointer overflow-hidden rounded border border-border/40 bg-black/10"
                       >
                         <img
                           src={product.images[0]}
                           alt={product.name}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                         />
-                        <span className="absolute bottom-2 right-2 bg-black/70 px-2 py-1 text-[10px] text-gold">
-                          + Photos
-                        </span>
+                        {product.badge && (
+                          <span className="absolute top-2 left-2 rounded bg-gold px-2 py-0.5 text-[10px] font-bold text-black uppercase">
+                            {product.badge}
+                          </span>
+                        )}
                       </div>
 
                       <h4
                         onClick={() => setSelectedProduct(product)}
-                        className="mt-4 font-serif text-base text-foreground cursor-pointer hover:text-gold transition-colors"
+                        className="mt-3 font-serif text-base text-foreground font-semibold cursor-pointer hover:text-gold"
                       >
                         {product.name}
                       </h4>
-                      <p className="mt-1 text-xs text-gold font-mono">{product.price.toLocaleString()} {product.currency}</p>
+                      <p className="mt-1 text-sm font-bold text-gold">
+                        {product.price.toLocaleString()} {product.currency}
+                      </p>
                     </div>
 
-                    <div className="mt-6 flex gap-2">
+                    <div className="mt-5 flex gap-2 pt-2 border-t border-border/40">
                       <button
                         onClick={() => setSelectedProduct(product)}
-                        className="flex-1 border border-border/60 py-2 text-[0.6rem] uppercase tracking-wider text-muted-foreground hover:border-gold hover:text-foreground"
+                        className="flex-1 rounded border border-border py-2 text-[11px] font-semibold uppercase text-foreground hover:border-gold"
                       >
-                        Aperçu
+                        Détails
                       </button>
                       <button
                         onClick={() => onAddToCart(product)}
-                        className="flex-1 bg-gold py-2 text-[0.6rem] uppercase tracking-wider font-bold text-black hover:bg-white"
+                        className="flex-1 rounded bg-gold py-2 text-[11px] font-bold uppercase text-black hover:bg-white"
                       >
                         Ajouter
                       </button>
@@ -137,7 +147,7 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
         </div>
       </div>
 
-      {/* Fiche Produit Détaillée style Amazon */}
+      {/* Modale Fiche Produit */}
       <ProductModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
