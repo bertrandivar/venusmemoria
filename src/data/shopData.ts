@@ -56,7 +56,7 @@ export const PRODUCTS: Product[] = [
     price: 15000,
     currency: "BIF",
     images: [
-      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800",
+      "/src/assets/Art Glove Two Finger/f3.webp",
     ],
     description: "Gant confortable empêchant les traces de paume lors du dessin sur papier ou tablette graphique.",
     details: ["Matière Lycra respirante", "Taille adaptable (Main gauche ou droite)"],
