@@ -4,7 +4,8 @@ import { Splash } from "@/components/venus/Splash";
 import { Nav } from "@/components/venus/Nav";
 import { Hero, Collections, Gallery, Services, About, Footer } from "@/components/venus/Sections";
 import { Contact } from "@/components/venus/Contact";
-import { Shop } from "@/components/venus/Shop";
+import { ShopTeaser } from "@/components/venus/ShopTeaser";
+import { ShopUniverse } from "@/components/venus/ShopUniverse";
 import { CartDrawer, type CartItem } from "@/components/venus/CartDrawer";
 import type { Product } from "@/data/shopData";
 
@@ -38,6 +39,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [entered, setEntered] = useState(false);
 
+  // État de bascule vers le second univers (Boutique)
+  const [inShopUniverse, setInShopUniverse] = useState(false);
+
   // État du panier et du tiroir latéral
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -55,7 +59,7 @@ function Index() {
       }
       return [...prev, { product, quantity: 1 }];
     });
-    setIsCartOpen(true); // Ouvre le panier automatiquement pour un feedback visuel immédiat
+    setIsCartOpen(true); // Ouvre le panier automatiquement pour un feedback visuel
   };
 
   // Ajuster la quantité (+1 ou -1)
@@ -85,6 +89,32 @@ function Index() {
 
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
+  // VUE 1 : Univers Boutique séparé
+  if (inShopUniverse) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <ShopUniverse
+          onBackToHome={() => {
+            setInShopUniverse(false);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          onAddToCart={handleAddToCart}
+        />
+
+        {/* Tiroir Panier latéral accessible depuis la boutique */}
+        <CartDrawer
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          items={cartItems}
+          onUpdateQuantity={handleUpdateQuantity}
+          onRemoveItem={handleRemoveItem}
+          onClearCart={handleClearCart}
+        />
+      </div>
+    );
+  }
+
+  // VUE 2 : Site principal d'accueil
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Splash hidden={entered} onEnter={() => setEntered(true)} />
@@ -106,7 +136,10 @@ function Index() {
           <Hero />
           <Collections />
           <Gallery />
-          <Shop onAddToCart={handleAddToCart} />
+          
+          {/* Section d'invitation vers le second univers de la boutique */}
+          <ShopTeaser onEnterShop={() => setInShopUniverse(true)} />
+
           <Services />
           <About />
           <Contact />
