@@ -23,7 +23,7 @@ export const GLOVES_PRODUCTS: Product[] = [
       "Convient aux gauchers et droitier(e)s",
     ],
     specs: "Lycra haute qualité — Noir",
-    stockQuantity: 10,
+    stockQuantity: 0,
     badge: "Populaire",
   },
 ];
