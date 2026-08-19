@@ -6,10 +6,12 @@ interface FacePaintingModalProps {
 }
 
 // Remplacez ces liens par vos vraies photos dans src/assets/
-const GALLERY_IMAGES = [
-  "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1600",
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600",
-  "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1600",
+const FACE_PAINTING_IMAGES = [
+  "/kids1.webp",
+  "/kids2.webp",
+  "/kids3.webp",
+  "/kids4.webp",
+  "/kids5.webp",
 ];
 
 export function FacePaintingModal({ isOpen, onClose }: FacePaintingModalProps) {
