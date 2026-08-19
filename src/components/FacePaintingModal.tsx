@@ -5,7 +5,7 @@ interface FacePaintingModalProps {
   onClose: () => void;
 }
 
-// Remplacez ces liens par vos vraies photos dans src/assets/
+// Vos images importées dans le dossier public
 const FACE_PAINTING_IMAGES = [
   "/kids1.webp",
   "/kids2.webp",
@@ -21,7 +21,7 @@ export function FacePaintingModal({ isOpen, onClose }: FacePaintingModalProps) {
   useEffect(() => {
     if (!isOpen) return;
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % GALLERY_IMAGES.length);
+      setCurrentSlide((prev) => (prev + 1) % FACE_PAINTING_IMAGES.length);
     }, 6000);
     return () => clearInterval(timer);
   }, [isOpen]);
@@ -59,9 +59,9 @@ export function FacePaintingModal({ isOpen, onClose }: FacePaintingModalProps) {
       {/* Conteneur Principal */}
       <div className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-12">
         
-        {/* GRAND SLIDER EN HAUT (Hauteur XL avec effet Dissolve Lent) */}
+        {/* GRAND SLIDER EN HAUT (Hauteur XL avec effet Dissolve) */}
         <div className="relative h-[450px] md:h-[600px] w-full overflow-hidden rounded-2xl border border-[#D4AF37]/30 shadow-xl bg-[#1C1B18]/5">
-          {GALLERY_IMAGES.map((img, idx) => (
+          {FACE_PAINTING_IMAGES.map((img, idx) => (
             <div
               key={idx}
               className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
@@ -82,7 +82,7 @@ export function FacePaintingModal({ isOpen, onClose }: FacePaintingModalProps) {
 
           {/* Indicateurs / Puces Éléganes */}
           <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center gap-3">
-            {GALLERY_IMAGES.map((_, idx) => (
+            {FACE_PAINTING_IMAGES.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
