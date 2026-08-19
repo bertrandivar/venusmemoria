@@ -5,29 +5,29 @@ interface FacePaintingModalProps {
   onClose: () => void;
 }
 
-// Remplacez ces images par vos propres réalisations dans src/assets/
+// Remplacez ces liens par vos vraies photos dans src/assets/
 const GALLERY_IMAGES = [
-  "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000",
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000",
-  "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000",
+  "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1600",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600",
+  "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1600",
 ];
 
 export function FacePaintingModal({ isOpen, onClose }: FacePaintingModalProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Défilement automatique du carrousel toutes les 3,5 secondes
+  // Transition plus lente : changement toutes les 6 secondes (6000ms)
   useEffect(() => {
     if (!isOpen) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % GALLERY_IMAGES.length);
-    }, 3500);
+    }, 6000);
     return () => clearInterval(timer);
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   const handleBookWhatsApp = () => {
-    const phoneNumber = "257XXXXXXXX"; // Remplacez par votre numéro WhatsApp sans le '+'
+    const phoneNumber = "257XXXXXXXX"; // Remplacez par votre numéro WhatsApp
     const text = encodeURIComponent(
       "Bonjour Venus Memoria ! 🎨 Je souhaite réserver votre service d'Event Face Painting pour un événement.\n\n" +
       "- Type d'événement (Anniversaire, Gala, Festival, Corporate) : \n" +
@@ -38,88 +38,122 @@ export function FacePaintingModal({ isOpen, onClose }: FacePaintingModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-fadeIn">
-      <div 
-        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-xl border border-[#D4AF37]/40 p-6 shadow-2xl md:p-8"
-        style={{ backgroundColor: "#FAF8F5", color: "#1C1B18" }}
-      >
-        {/* Bouton Fermer */}
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#FDFBF7] text-[#1C1B18] animate-fadeIn">
+      {/* Barre Supérieure Fixe / Navigation */}
+      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-[#1C1B18]/10 bg-[#FDFBF7]/90 px-6 py-4 backdrop-blur-md md:px-12">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-lg font-bold text-[#1C1B18] transition-colors hover:bg-black/10 hover:text-[#D4AF37]"
+          className="flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-[#1C1B18] transition-colors hover:text-[#D4AF37]"
         >
-          ✕
+          <span className="text-lg">←</span>
+          <span>Retour aux services</span>
         </button>
 
-        {/* Carrousel d'images (Slider) */}
-        <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-lg border border-[#1C1B18]/10 bg-black/5">
+        <span className="font-serif text-sm md:text-base font-semibold tracking-wide text-[#1C1B18]/70">
+          VENUS MEMORIA — ATELIER
+        </span>
+      </div>
+
+      {/* Conteneur Principal */}
+      <div className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-12">
+        
+        {/* GRAND SLIDER EN HAUT (Hauteur XL avec effet Dissolve Lent) */}
+        <div className="relative h-[450px] md:h-[600px] w-full overflow-hidden rounded-2xl border border-[#D4AF37]/30 shadow-xl bg-[#1C1B18]/5">
           {GALLERY_IMAGES.map((img, idx) => (
-            <img
+            <div
               key={idx}
-              src={img}
-              alt={`Face Painting Venus Memoria ${idx + 1}`}
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-                idx === currentSlide ? "opacity-100 scale-105" : "opacity-0 scale-100"
+              className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                idx === currentSlide
+                  ? "opacity-100 scale-100 z-10"
+                  : "opacity-0 scale-105 z-0"
               }`}
-              style={{ transition: "opacity 0.7s ease-in-out, transform 4s ease-out" }}
-            />
+            >
+              <img
+                src={img}
+                alt={`Face Painting Venus Memoria ${idx + 1}`}
+                className="h-full w-full object-cover"
+              />
+              {/* Subtle Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            </div>
           ))}
 
-          {/* Indicateurs / Puces */}
-          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 z-10">
+          {/* Indicateurs / Puces Éléganes */}
+          <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center gap-3">
             {GALLERY_IMAGES.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
-                className={`h-2 rounded-full transition-all ${
-                  idx === currentSlide ? "w-6 bg-[#D4AF37]" : "w-2 bg-white/80"
+                className={`h-2.5 rounded-full transition-all duration-500 ${
+                  idx === currentSlide
+                    ? "w-10 bg-[#D4AF37]"
+                    : "w-2.5 bg-white/70 hover:bg-white"
                 }`}
               />
             ))}
           </div>
         </div>
 
-        {/* Contenu descriptif */}
-        <div className="mt-6 space-y-4 text-[#1C1B18]">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#1C1B18]/10 pb-3">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1C1B18]">
-              Event Face Painting
-            </h2>
-            <span className="rounded bg-[#1C1B18] px-3 py-1 text-xs font-bold text-[#FAF8F5] uppercase tracking-wider">
-              Service Sur-Mesure
+        {/* SECTION CONTENU & DETAILS */}
+        <div className="mt-10 md:mt-14 max-w-4xl mx-auto space-y-8">
+          
+          {/* En-tête du service */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1C1B18]/10 pb-6">
+            <div>
+              <span className="text-xs uppercase tracking-[0.3em] font-bold text-[#D4AF37]">
+                Service Événementiel
+              </span>
+              <h1 className="font-serif text-3xl md:text-5xl font-bold mt-1 text-[#1C1B18]">
+                Event Face Painting
+              </h1>
+            </div>
+            <span className="self-start md:self-center rounded-full bg-[#1C1B18] px-4 py-2 text-xs font-bold text-[#FAF8F5] uppercase tracking-wider shadow">
+              Sur Devis & Réservation
             </span>
           </div>
 
-          <p className="text-xs md:text-sm leading-relaxed text-[#2C2B26]">
-            Transformez vos événements en expériences visuelles inoubliables. Que ce soit pour un festival, un mariage, un anniversaire ou une soirée d'entreprise, nos artistes créent des maquillages éphémères spectaculaires adaptés à vos thématiques.
+          {/* Description principale */}
+          <p className="text-base md:text-lg leading-relaxed text-[#2C2B26]/90 font-light">
+            Transformez vos événements en véritables performances visuelles. Que ce soit pour un mariage prestige, un festival, une réception privée ou une soirée d'entreprise, nos artistes façonnent des maquillages artistiques et éphémères adaptés à vos thématiques.
           </p>
 
-          {/* Argumentaire & Engagements */}
-          <div className="grid gap-3 md:grid-cols-2 pt-2">
-            <div className="rounded-lg border border-[#1C1B18]/10 bg-white p-4 shadow-sm">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#D4AF37] mb-1">🌿 Produit Sûr & Doux</h4>
-              <p className="text-[11px] leading-relaxed text-[#2C2B26]/90">
-                Utilisation exclusive de produits de qualité cosmétique, hypoallergéniques et nettoyables simplement à l'eau.
+          {/* Cartes d'Avantages / Arguments Marketing */}
+          <div className="grid gap-6 md:grid-cols-2 pt-4">
+            <div className="rounded-xl border border-[#1C1B18]/10 bg-white p-6 shadow-sm">
+              <div className="text-2xl mb-2">🌿</div>
+              <h3 className="font-serif text-lg font-bold text-[#1C1B18] mb-2">
+                Produits Sûrs & Hypoallergéniques
+              </h3>
+              <p className="text-xs md:text-sm text-[#2C2B26]/80 leading-relaxed">
+                Utilisation exclusive de peinture de qualité cosmétique professionnelle. Douce pour la peau, non toxique et nettoyable simplement à l'eau claire.
               </p>
             </div>
 
-            <div className="rounded-lg border border-[#1C1B18]/10 bg-white p-4 shadow-sm">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#D4AF37] mb-1">✨ Pour Tous Vos Événements</h4>
-              <p className="text-[11px] leading-relaxed text-[#2C2B26]/90">
-                Concept modulable : maquillages artistiques enfants, motifs néon/UV pour soirées, et body-art d'entreprise.
+            <div className="rounded-xl border border-[#1C1B18]/10 bg-white p-6 shadow-sm">
+              <div className="text-2xl mb-2">✨</div>
+              <h3 className="font-serif text-lg font-bold text-[#1C1B18] mb-2">
+                Concepts Multi-Thématiques
+              </h3>
+              <p className="text-xs md:text-sm text-[#2C2B26]/80 leading-relaxed">
+                Animations personnalisées pour enfants et adultes : créations poétiques, effets néon/UV sous lumière noire, et body-art sur-mesure.
               </p>
             </div>
           </div>
 
-          {/* Bouton d'action "Book Us" */}
-          <div className="mt-8 pt-4 border-t border-[#1C1B18]/10">
+          {/* CTA / Bouton WhatsApp Principal */}
+          <div className="pt-8 text-center">
             <button
               onClick={handleBookWhatsApp}
-              className="w-full rounded-lg bg-[#25D366] py-4 text-xs md:text-sm font-bold tracking-[0.15em] text-white uppercase shadow-md transition-all hover:bg-[#20ba5a] hover:shadow-lg flex items-center justify-center gap-2"
+              className="w-full md:w-auto md:px-12 rounded-xl bg-[#25D366] py-5 text-sm md:text-base font-bold tracking-[0.15em] text-white uppercase shadow-lg transition-all hover:bg-[#20ba5a] hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-3 mx-auto"
             >
-              <span>💬 Réserver / Demander un devis sur WhatsApp</span>
+              <span className="text-xl">💬</span>
+              <span>Réserver / Demander un devis sur WhatsApp</span>
             </button>
+            <p className="mt-3 text-xs text-[#1C1B18]/60">
+              Réponse rapide garantie par notre équipe pour fixer les dates et détails.
+            </p>
           </div>
+
         </div>
       </div>
     </div>
