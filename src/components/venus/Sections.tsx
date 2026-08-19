@@ -213,6 +213,7 @@ export function Collections() {
           <div className="rule-gold mx-auto my-8 w-24" />
         </div>
 
+        {/* Cartes Gammes */}
         <div className="grid gap-8 md:grid-cols-3">
           {tiers.map((t) => (
             <article key={t.name} className="card-lux flex flex-col p-10 text-center">
@@ -230,34 +231,33 @@ export function Collections() {
           ))}
         </div>
 
-        <div className="mt-24 grid items-center gap-14 lg:grid-cols-2">
-          <img
-            src={portrait}
-            alt="Portrait peint à la main sur chevalet dans l'atelier"
-            width={1200}
-            height={1500}
-            loading="lazy"
-            className="w-full border border-gold/40 object-cover"
-          />
+        {/* Section Résine Art (Épurée & Sans Chevalet) */}
+        <div className="mt-24 grid items-center gap-12 lg:grid-cols-2">
           <div>
             <span className="eyebrow">Résine Art</span>
-            <h2 className="mt-4 text-4xl md:text-5xl">Précieux souvenirs, figés dans la lumière</h2>
+            <h2 className="mt-4 text-3xl md:text-5xl font-serif leading-tight">
+              Vos moments précieux, immortalisés dans la résine
+            </h2>
             <div className="rule-gold my-8 w-24" />
             <ul className="space-y-5 text-sm leading-relaxed text-muted-foreground">
-              <li>— Inclusions de naissance : première mèche, bracelet, empreinte.</li>
-              <li>— Souvenirs de mariage : bouquet préservé, dentelle, alliances.</li>
-              <li>— Objets précieux personnalisés, façonnés à la demande.</li>
+              <li>— <strong>Inclusions de naissance :</strong> première mèche, bracelet de maternité, empreinte.</li>
+              <li>— <strong>Souvenirs de mariage :</strong> fleurs du bouquet préservées, dentelle, alliances.</li>
+              <li>— <strong>Créations sur-mesure :</strong> objets de mémoire façonnés à la main selon vos envies.</li>
             </ul>
+          </div>
+
+          <div className="overflow-hidden rounded-xl border border-gold/40 shadow-lg">
             <img
               src={resin}
-              alt="Bloc de résine transparente avec fleurs séchées et éclats d'or"
+              alt="Écrin en résine transparente préservant des fleurs séchées"
               width={1200}
-              height={1500}
+              height={1000}
               loading="lazy"
-              className="mt-10 h-72 w-full border border-gold/40 object-cover"
+              className="h-[400px] w-full object-cover transition-transform duration-700 hover:scale-105"
             />
           </div>
         </div>
+
       </div>
     </section>
   );
