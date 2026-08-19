@@ -2,21 +2,22 @@ import { useState, useEffect } from "react";
 import portrait from "@/assets/portrait.jpg";
 import resin from "@/assets/resin.jpg";
 
-/* --- COMPOSANT MODALE EVENT FACE PAINTING --- */
+/* --- COMPOSANT MODALE EVENT FACE PAINTING (FORMAT PLEIN ÉCRAN CLAIR & LISIBLE) --- */
 const FACE_PAINTING_IMAGES = [
-  "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000",
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000",
-  "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000",
+  "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1600",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600",
+  "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1600",
 ];
 
 function FacePaintingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Transition lente : changement toutes les 6 secondes (6000ms) pour une vue agréable
   useEffect(() => {
     if (!isOpen) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % FACE_PAINTING_IMAGES.length);
-    }, 3500);
+    }, 6000);
     return () => clearInterval(timer);
   }, [isOpen]);
 
@@ -35,87 +36,118 @@ function FacePaintingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-fadeIn">
-      <div 
-        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-xl border border-gold/40 p-6 shadow-2xl md:p-8"
-        style={{ backgroundColor: "#1C1B18", color: "#F0EFDF" }}
-      >
-        {/* Bouton Fermer */}
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#FAF8F5] text-[#1C1B18] animate-fadeIn">
+      {/* Barre Supérieure Fixe / Navigation avec Bouton Retour */}
+      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-[#1C1B18]/10 bg-[#FAF8F5]/95 px-6 py-4 backdrop-blur-md md:px-12">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 text-2xl font-bold text-gold transition-opacity hover:opacity-70"
+          className="flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-[#1C1B18] transition-colors hover:text-[#D4AF37]"
         >
-          ✕
+          <span className="text-xl">←</span>
+          <span>Retour aux services</span>
         </button>
 
-        {/* Carrousel d'images (Slider) */}
-        <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-lg border border-gold/30 bg-black/40">
+        <span className="font-serif text-xs md:text-sm font-semibold tracking-widest text-[#1C1B18]/70 uppercase">
+          VENUS MEMORIA — ATELIER
+        </span>
+      </div>
+
+      {/* Conteneur Principal Grand Format */}
+      <div className="mx-auto max-w-5xl px-4 py-8 md:px-8 md:py-12">
+        
+        {/* GRAND SLIDER EN HAUT (Hauteur Immersive avec Dissolve Lent & Doux) */}
+        <div className="relative h-[420px] md:h-[580px] w-full overflow-hidden rounded-2xl border border-[#D4AF37]/30 shadow-2xl bg-[#1C1B18]/5">
           {FACE_PAINTING_IMAGES.map((img, idx) => (
-            <img
+            <div
               key={idx}
-              src={img}
-              alt={`Event Face Painting Venus ${idx + 1}`}
-              className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${
-                idx === currentSlide ? "opacity-100 scale-105" : "opacity-0 scale-100"
+              className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                idx === currentSlide
+                  ? "opacity-100 scale-100 z-10"
+                  : "opacity-0 scale-105 z-0"
               }`}
-            />
+            >
+              <img
+                src={img}
+                alt={`Event Face Painting Venus ${idx + 1}`}
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            </div>
           ))}
 
-          {/* Indicateurs / Puces */}
-          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 z-10">
+          {/* Indicateurs / Puces Élégantes */}
+          <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center gap-3">
             {FACE_PAINTING_IMAGES.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
-                className={`h-2 rounded-full transition-all ${
-                  idx === currentSlide ? "w-6 bg-gold" : "w-2 bg-white/50"
+                className={`h-2.5 rounded-full transition-all duration-500 ${
+                  idx === currentSlide
+                    ? "w-10 bg-[#D4AF37]"
+                    : "w-2.5 bg-white/70 hover:bg-white"
                 }`}
               />
             ))}
           </div>
         </div>
 
-        {/* Contenu descriptif */}
-        <div className="mt-6 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gold/20 pb-3">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-gold">
-              Event Face Painting
-            </h2>
-            <span className="rounded bg-gold/20 border border-gold/40 px-3 py-1 text-[10px] font-bold text-gold uppercase tracking-widest">
+        {/* SECTION CONTENU ET DESCRIPTIF */}
+        <div className="mt-8 md:mt-12 max-w-3xl mx-auto space-y-8">
+          
+          {/* En-tête du service */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1C1B18]/10 pb-6">
+            <div>
+              <span className="text-xs uppercase tracking-[0.3em] font-bold text-[#D4AF37]">
+                Service Événementiel
+              </span>
+              <h1 className="font-serif text-3xl md:text-5xl font-bold mt-1 text-[#1C1B18]">
+                Event Face Painting
+              </h1>
+            </div>
+            <span className="self-start md:self-center rounded-full bg-[#1C1B18] px-4 py-2 text-xs font-bold text-[#FAF8F5] uppercase tracking-wider shadow">
               Service Sur-Mesure
             </span>
           </div>
 
-          <p className="text-xs md:text-sm leading-relaxed text-muted-foreground">
+          {/* Description principale */}
+          <p className="text-base md:text-lg leading-relaxed text-[#2C2B26] font-light">
             Transformez vos événements en véritables œuvres d'art vivantes. Que ce soit pour un anniversaire, un festival, une réception privée ou une soirée d'entreprise, nos artistes créent des maquillages éphémères spectaculaires et personnalisés.
           </p>
 
-          {/* Arguments clés & Réassurance */}
-          <div className="grid gap-4 md:grid-cols-2 pt-2">
-            <div className="rounded border border-gold/20 bg-secondary/20 p-3.5">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gold mb-1">🌿 Produit Sûr & Hypoallergénique</h4>
-              <p className="text-[11px] text-muted-foreground">
+          {/* Cartes d'Avantages / Réassurance */}
+          <div className="grid gap-6 md:grid-cols-2 pt-2">
+            <div className="rounded-xl border border-[#1C1B18]/10 bg-white p-6 shadow-sm">
+              <div className="text-2xl mb-2">🌿</div>
+              <h3 className="font-serif text-lg font-bold text-[#1C1B18] mb-2">
+                Produit Sûr & Hypoallergénique
+              </h3>
+              <p className="text-xs md:text-sm text-[#2C2B26]/80 leading-relaxed">
                 Peintures cosmétiques de haute qualité, testées dermatologiquement, sans danger pour la peau et faciles à enlever à l'eau.
               </p>
             </div>
 
-            <div className="rounded border border-gold/20 bg-secondary/20 p-3.5">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gold mb-1">✨ Tout Type d'Événement</h4>
-              <p className="text-[11px] text-muted-foreground">
+            <div className="rounded-xl border border-[#1C1B18]/10 bg-white p-6 shadow-sm">
+              <div className="text-2xl mb-2">✨</div>
+              <h3 className="font-serif text-lg font-bold text-[#1C1B18] mb-2">
+                Tout Type d'Événement
+              </h3>
+              <p className="text-xs md:text-sm text-[#2C2B26]/80 leading-relaxed">
                 Thématiques variées : super-héros, féerie, motifs néon/UV pour soirées nocturnes et animations corporate.
               </p>
             </div>
           </div>
 
           {/* Bouton de Réservation WhatsApp */}
-          <div className="mt-8 pt-4 border-t border-gold/20">
+          <div className="pt-6 text-center">
             <button
               onClick={handleBookWhatsApp}
-              className="w-full rounded bg-[#25D366] py-4 text-xs md:text-sm font-bold tracking-[0.15em] text-white uppercase shadow-lg transition-all hover:bg-[#20ba5a] flex items-center justify-center gap-2"
+              className="w-full md:w-auto md:px-12 rounded-xl bg-[#25D366] py-5 text-sm md:text-base font-bold tracking-[0.15em] text-white uppercase shadow-lg transition-all hover:bg-[#20ba5a] hover:shadow-xl flex items-center justify-center gap-3 mx-auto"
             >
-              <span>💬 Réserver / Demander un devis sur WhatsApp</span>
+              <span className="text-xl">💬</span>
+              <span>Réserver / Demander un devis sur WhatsApp</span>
             </button>
           </div>
+
         </div>
       </div>
     </div>
