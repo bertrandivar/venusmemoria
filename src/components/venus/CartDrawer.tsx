@@ -42,7 +42,6 @@ export function CartDrawer({
     message += `\n*Total : ${totalAmount.toLocaleString()} BIF*\n\nMerci de me donner les instructions pour le paiement et la livraison.`;
 
     const encodedMessage = encodeURIComponent(message);
-    // Vous pourrez remplacer le numéro par votre numéro WhatsApp officiel (ex: 257XXXXXXXX)
     window.open(`https://wa.me/?text=${encodedMessage}`, "_blank");
   };
 
@@ -74,52 +73,64 @@ export function CartDrawer({
               <p className="mt-2 text-xs">Explorez notre boutique pour sélectionner vos articles.</p>
             </div>
           ) : (
-            items.map(({ product, quantity }) => (
-              <div
-                key={product.id}
-                className="flex items-center gap-4 rounded-lg border border-border/40 bg-secondary/20 p-3"
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="h-16 w-16 rounded object-cover border border-border/40"
-                />
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-serif text-sm truncate text-foreground">{product.name}</h4>
-                  <p className="text-xs text-gold font-mono mt-1">
-                    {product.price.toLocaleString()} {product.currency}
-                  </p>
+            items.map(({ product, quantity }) => {
+              // Récupération sécurisée de l'image (prend la 1ère du tableau ou gère un ancien format image)
+              const imageUrl =
+                product.images && product.images.length > 0
+                  ? product.images[0]
+                  : (product as unknown as { image?: string }).image || "";
 
-                  {/* Contrôle quantité */}
-                  <div className="mt-2 flex items-center gap-2">
-                    <button
-                      onClick={() => onUpdateQuantity(product.id, -1)}
-                      className="h-5 w-5 rounded border border-border bg-background text-xs text-foreground flex items-center justify-center hover:border-gold"
-                    >
-                      -
-                    </button>
-                    <span className="text-xs font-mono">{quantity}</span>
-                    <button
-                      onClick={() => onUpdateQuantity(product.id, 1)}
-                      className="h-5 w-5 rounded border border-border bg-background text-xs text-foreground flex items-center justify-center hover:border-gold"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => onRemoveItem(product.id)}
-                  className="text-xs text-muted-foreground hover:text-red-400 p-1"
+              return (
+                <div
+                  key={product.id}
+                  className="flex items-center gap-4 rounded-lg border border-border/40 bg-secondary/20 p-3"
                 >
-                  Supprimer
-                </button>
-              </div>
-            ))
+                  <img
+                    src={imageUrl}
+                    alt={product.name}
+                    className="h-16 w-16 rounded object-cover border border-border/40 bg-white/5"
+                    onError={(e) => {
+                      // Fallback si l'image est introuvable ou cassée
+                      (e.target as HTMLImageElement).src = "https://via.placeholder.com/150?text=No+Image";
+                    }}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-serif text-sm truncate text-foreground">{product.name}</h4>
+                    <p className="text-xs text-gold font-mono mt-1">
+                      {product.price.toLocaleString()} {product.currency}
+                    </p>
+
+                    {/* Contrôle quantité */}
+                    <div className="mt-2 flex items-center gap-2">
+                      <button
+                        onClick={() => onUpdateQuantity(product.id, -1)}
+                        className="h-5 w-5 rounded border border-border bg-background text-xs text-foreground flex items-center justify-center hover:border-gold"
+                      >
+                        -
+                      </button>
+                      <span className="text-xs font-mono">{quantity}</span>
+                      <button
+                        onClick={() => onUpdateQuantity(product.id, 1)}
+                        className="h-5 w-5 rounded border border-border bg-background text-xs text-foreground flex items-center justify-center hover:border-gold"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => onRemoveItem(product.id)}
+                    className="text-xs text-muted-foreground hover:text-red-400 p-1"
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              );
+            })
           )}
         </div>
 
-        {/* Pied du Panier / Choix de Finalisation */}
+        {/* Pied du Panier */}
         {items.length > 0 && (
           <div className="border-t border-border/60 pt-4 space-y-4">
             <div className="flex items-center justify-between text-base">
@@ -129,7 +140,6 @@ export function CartDrawer({
               </span>
             </div>
 
-            {/* Information Moyens de Paiement & Livraison */}
             <div className="rounded border border-gold/30 bg-gold/5 p-3 text-[11px] leading-relaxed text-muted-foreground">
               <p className="font-semibold text-gold uppercase tracking-wider mb-1">Moyens de paiement & Livraison :</p>
               <ul className="space-y-1">
@@ -139,7 +149,6 @@ export function CartDrawer({
               </ul>
             </div>
 
-            {/* Bouton de Commande WhatsApp Directe */}
             <button
               onClick={handleWhatsAppCheckout}
               className="w-full bg-gold py-3 text-xs tracking-[0.2em] font-bold text-black uppercase transition-all hover:bg-white hover:shadow-[0_0_15px_rgba(212,175,55,0.4)]"
