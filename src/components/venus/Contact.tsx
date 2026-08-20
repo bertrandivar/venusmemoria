@@ -49,7 +49,7 @@ export function Contact() {
                 </a>
                 <span>|</span>
                 <a
-                  href="https://facebook.com/profile.php?id=61593031996712"
+                  href="https://www.facebook.com/share/1XjkSfwsZU/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
