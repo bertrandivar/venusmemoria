@@ -36,9 +36,11 @@ export const SHOP_CATEGORIES = [
   { id: "cuisine", label: "Art Culinaire", icon: "🍳" },
   { id: "mode", label: "Mode & Design", icon: "✂️" },
   { id: "peinture", label: "Peintures", icon: "🎨" },
+  { id: "gommes", label: "Gommes & Estompes", icon: "🧹" },
   { id: "crayons", label: "Crayons", icon: "✏️" },
   { id: "pinceaux", label: "Pinceaux", icon: "🖌️" },
   { id: "vases", label: "Vases & Décoration", icon: "🏺" },
+  { id: "gants", label: "Gants d'Artiste", icon: "🧤" }
   { id: "supports", label: "Supports", icon: "🖼️" },
 ];
 
