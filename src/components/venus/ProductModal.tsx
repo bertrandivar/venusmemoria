@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Product } from "@/data/shopData";
-import { ProductReviews } from ".@/src/components/ProductReviews";
+import { ProductReviews } from "../ProductReviews";
 
 interface ProductModalProps {
   product: Product | null;
