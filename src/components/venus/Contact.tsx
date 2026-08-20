@@ -49,7 +49,7 @@ export function Contact() {
                 </a>
                 <span>|</span>
                 <a
-                  href="https://www.facebook.com/share/1XjkSfwsZU/"
+                  href="https://www.facebook.com/people/Venusmemoria/61593031996712/?rdid=5gnl2Wg9gRQeEmZZ&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1XjkSfwsZU%2F"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
