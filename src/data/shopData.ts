@@ -7,10 +7,14 @@ import { VASE_PRODUCTS } from "./products/vases";
 export interface Product {
   id: string;
   name: string;
-  category:
+  // Ajout des nouvelles catégories
+  category: 
+    | "beaute"
+    | "cuisine"
+    | "mode"
+    | "peinture"
     | "crayons"
     | "pinceaux"
-    | "peintures"
     | "gommes"
     | "vases"
     | "gants"
@@ -28,14 +32,14 @@ export interface Product {
 
 export const SHOP_CATEGORIES = [
   { id: "all", label: "Tous nos articles", icon: "✨" },
-  { id: "crayons", label: "Crayons & Fusains", icon: "✏️" },
-  { id: "pinceaux", label: "Pinceaux & Brosses", icon: "🖌️" },
-  { id: "peintures", label: "Peintures & Sprays", icon: "🎨" },
-  { id: "gommes", label: "Gommes & Estompes", icon: "🧹" },
-  { id: "vases", label: "Vases & Sculptures", icon: "🏺" },
-  { id: "gants", label: "Gants d'Artiste", icon: "🧤" },
-  { id: "decor", label: "Objets de Décoration", icon: "🖼️" },
-  { id: "supports", label: "Chevalets & Accessoires", icon: "📐" },
+  { id: "beaute", label: "Beauté & Make-up", icon: "💄" },
+  { id: "cuisine", label: "Art Culinaire", icon: "🍳" },
+  { id: "mode", label: "Mode & Design", icon: "✂️" },
+  { id: "peinture", label: "Peintures", icon: "🎨" },
+  { id: "crayons", label: "Crayons", icon: "✏️" },
+  { id: "pinceaux", label: "Pinceaux", icon: "🖌️" },
+  { id: "vases", label: "Vases & Décoration", icon: "🏺" },
+  { id: "supports", label: "Supports", icon: "🖼️" },
 ];
 
 // Regroupement de tous les tableaux de produits
