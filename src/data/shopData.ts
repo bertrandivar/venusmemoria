@@ -40,7 +40,7 @@ export const SHOP_CATEGORIES = [
   { id: "crayons", label: "Crayons", icon: "✏️" },
   { id: "pinceaux", label: "Pinceaux", icon: "🖌️" },
   { id: "vases", label: "Vases & Décoration", icon: "🏺" },
-  { id: "gants", label: "Gants d'Artiste", icon: "🧤" }
+  { id: "gants", label: "Gants d'Artiste", icon: "🧤" },
   { id: "supports", label: "Supports", icon: "🖼️" },
 ];
 
