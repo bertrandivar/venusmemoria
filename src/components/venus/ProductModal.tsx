@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Product } from "@/data/shopData";
+import { ProductReviews } from "./ProductReviews";
 
 interface ProductModalProps {
   product: Product | null;
@@ -44,7 +45,6 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
         <div className="grid gap-8 md:grid-cols-2">
           {/* Galerie Images */}
           <div className="space-y-4">
-            {/* Conteneur image principale ajusté avec object-contain */}
             <div className="aspect-square overflow-hidden rounded border border-[#1C1B18]/15 bg-white/40 p-2 flex items-center justify-center">
               <img
                 src={selectedImage || product.images[0]}
@@ -53,7 +53,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               />
             </div>
 
-            {/* Vignettes ajustées */}
+            {/* Vignettes */}
             {product.images.length > 1 && (
               <div className="flex gap-3 overflow-x-auto pb-2">
                 {product.images.map((img, idx) => (
@@ -150,6 +150,11 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               )}
             </div>
           </div>
+        </div>
+
+        {/* Section Avis Clients Supabase */}
+        <div className="mt-10 pt-6 border-t border-[#1C1B18]/20">
+          <ProductReviews productId={product.id} />
         </div>
       </div>
     </div>
