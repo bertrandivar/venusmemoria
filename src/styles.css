@@ -196,3 +196,12 @@
     transform: none;
   }
 }
+
+/* Anti-force-dark hack pour navigateurs mobiles agressifs */
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    background-color: oklch(0.982 0.011 91) !important;
+    color: oklch(0.24 0.055 265) !important;
+  }
+}
