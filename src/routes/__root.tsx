@@ -80,6 +80,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "viewport",
         content: "width=device-width, initial-scale=1.0",
       },
+      {
+        name: "color-scheme",
+        content: "light", // Empêche la conversion automatique en dark mode par le système
+      },
       { title: "VENUS - The Creation Aura" },
       {
         name: "description",
@@ -109,7 +113,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr">
+    <html lang="fr" style={{ colorScheme: "light" }}>
       <head>
         <HeadContent />
       </head>
