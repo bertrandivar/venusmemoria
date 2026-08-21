@@ -99,6 +99,8 @@ function Index() {
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           onAddToCart={handleAddToCart}
+          onOpenCart={() => setIsCartOpen(true)}
+          cartCount={totalCartCount}
         />
 
         <CartDrawer
@@ -115,11 +117,13 @@ function Index() {
 
   // VUE 2 : Site d'accueil principal
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground relative">
       <Splash hidden={entered} onEnter={() => setEntered(true)} />
 
       <div
-        className={`transition-opacity duration-1000 ${entered ? "opacity-100" : "opacity-0"}`}
+        className={`transition-opacity duration-1000 ${
+          entered ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none h-screen overflow-hidden"
+        }`}
         aria-hidden={!entered}
       >
         <Nav
