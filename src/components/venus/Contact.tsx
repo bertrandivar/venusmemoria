@@ -69,7 +69,7 @@ export function Contact() {
             </div>
             <div>
               <dt className="eyebrow">Email</dt>
-              <dd className="mt-1 text-foreground">contact@venus-creationaura.com</dd>
+              <dd className="mt-1 text-foreground">contact@venusmemoria.art</dd>
             </div>
           </dl>
         </div>
