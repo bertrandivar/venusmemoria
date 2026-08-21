@@ -61,35 +61,35 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="mx-auto max-w-7xl px-6 py-28">
-      <div className="grid gap-16 lg:grid-cols-[1fr_1.1fr]">
+    <section id="contact" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-28">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
         <div>
           <span className="eyebrow">Contact</span>
-          <h2 className="mt-4 text-4xl leading-tight md:text-5xl">
+          <h2 className="mt-3 text-3xl leading-tight sm:text-4xl md:text-5xl">
             Demander un devis <span className="italic text-gilded">sur-mesure</span>
           </h2>
-          <div className="rule-gold my-8 w-24" />
-          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+          <div className="rule-gold my-6 w-20 md:my-8 md:w-24" />
+          <p className="max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">
             Chaque création débute par une conversation. Partagez-nous votre souvenir,
             nous lui donnerons une forme éternelle.
           </p>
-          <dl className="mt-10 space-y-5 text-sm">
+          <dl className="mt-8 space-y-6 text-xs sm:text-sm md:mt-10">
             <div>
               <dt className="eyebrow">Atelier</dt>
               <dd className="mt-1 text-foreground">Bujumbura, Burundi — sur rendez-vous</dd>
             </div>
             <div>
               <dt className="eyebrow">Suivez-nous</dt>
-              <dd className="mt-2 flex flex-wrap gap-4 text-xs font-light text-gold uppercase tracking-wider">
+              <dd className="mt-2 flex flex-wrap items-center gap-2.5 text-[11px] font-light text-gold uppercase tracking-wider sm:gap-4 sm:text-xs">
                 <a
                   href="https://www.instagram.com/venusmemoria?igsh=bHZqcTRwaG9hM251"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
                 >
-                  Instagram (@venusmemoria)
+                  Instagram
                 </a>
-                <span>|</span>
+                <span className="opacity-50">|</span>
                 <a
                   href="https://www.facebook.com/people/Venusmemoria/61593031996712/?rdid=5gnl2Wg9gRQeEmZZ&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1XjkSfwsZU%2F"
                   target="_blank"
@@ -98,7 +98,7 @@ export function Contact() {
                 >
                   Facebook
                 </a>
-                <span>|</span>
+                <span className="opacity-50">|</span>
                 <a
                   href="https://tiktok.com"
                   target="_blank"
@@ -111,13 +111,13 @@ export function Contact() {
             </div>
             <div>
               <dt className="eyebrow">Email</dt>
-              <dd className="mt-1 text-foreground">contact@venusmemoria.art</dd>
+              <dd className="mt-1 text-foreground break-all">contact@venusmemoria.art</dd>
             </div>
           </dl>
         </div>
 
-        <form onSubmit={submit} className="card-lux space-y-7 p-8 md:p-12">
-          <div className="grid gap-7 sm:grid-cols-2">
+        <form onSubmit={submit} className="card-lux space-y-5 p-6 sm:space-y-7 md:p-12">
+          <div className="grid gap-5 sm:grid-cols-2 sm:gap-7">
             <input
               required
               placeholder="Nom complet"
@@ -134,7 +134,7 @@ export function Contact() {
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
           </div>
-          <div className="grid gap-7 sm:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2 sm:gap-7">
             <input
               placeholder="Téléphone"
               className={field}
@@ -168,7 +168,7 @@ export function Contact() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary px-8 py-4 text-[0.65rem] tracking-[0.3em] text-primary-foreground uppercase transition-colors hover:bg-gold hover:text-foreground disabled:opacity-50"
+            className="w-full bg-primary px-6 py-4 text-[0.65rem] tracking-[0.25em] text-primary-foreground uppercase transition-colors hover:bg-gold hover:text-foreground disabled:opacity-50 sm:px-8 sm:tracking-[0.3em]"
           >
             {loading
               ? "Envoi en cours..."
