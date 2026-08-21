@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PRODUCTS, SHOP_CATEGORIES, type Product } from "@/data/shopData";
 import { ProductModal } from "./ProductModal";
+import { RequestProductModal } from "@/components/RequestProductModal"; // <-- 1. IMPORT AJOUTÉ
 
 interface ShopUniverseProps {
   onBackToHome: () => void;
@@ -68,7 +69,7 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
         {/* Layout Catégories + Cartes Produit */}
         <div className="grid gap-4 sm:gap-8 lg:grid-cols-[220px_1fr] w-full min-w-0">
           
-          {/* Menu des catégories : Défilement horizontal fluide sur mobile */}
+          {/* Menu des catégories */}
           <aside className="space-y-1 w-full min-w-0">
             <h3 className="mb-1.5 text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase text-[#1C1B18]">
               Catégories
@@ -94,8 +95,20 @@ export function ShopUniverse({ onBackToHome, onAddToCart }: ShopUniverseProps) {
           {/* Liste des produits */}
           <main className="w-full min-w-0">
             {filteredProducts.length === 0 ? (
-              <div className="rounded-lg border border-dashed border-[#1C1B18]/30 p-6 text-center text-xs font-medium text-[#1C1B18]/70">
-                Aucun produit ne correspond à votre recherche.
+              /* <-- 2. BLOC D'ÉTAT VIDE MIS À JOUR --> */
+              <div className="rounded-lg border border-dashed border-[#1C1B18]/30 p-8 text-center space-y-3 bg-[#F0EFDF]/40">
+                <p className="text-xs sm:text-sm font-semibold text-[#1C1B18]">
+                  Aucun produit ne correspond à votre recherche.
+                </p>
+                <p className="text-[11px] text-[#1C1B18]/70 max-w-xs mx-auto">
+                  Vous cherchez un produit d'art en particulier non listé ?
+                </p>
+                <div className="pt-2 flex justify-center">
+                  <RequestProductModal 
+                    triggerText="✨ Demander ce produit sur-mesure" 
+                    initialProductName={searchQuery}
+                  />
+                </div>
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-3 w-full">
