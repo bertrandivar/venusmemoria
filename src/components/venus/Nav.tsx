@@ -23,21 +23,21 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/95 backdrop-blur-md">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
         {/* Logo */}
         <button
           onClick={onLogoClick}
-          className="text-left font-display text-lg tracking-[0.25em] text-foreground uppercase transition-opacity hover:opacity-70"
+          className="text-left font-display text-base sm:text-lg tracking-[0.25em] text-foreground uppercase transition-opacity hover:opacity-70"
         >
           Venus
-          <span className="block font-body text-[0.5rem] tracking-[0.4em] text-muted-foreground">
+          <span className="block font-body text-[0.45rem] sm:text-[0.5rem] tracking-[0.4em] text-muted-foreground">
             The Creation Aura
           </span>
         </button>
 
-        {/* Liens de navigation essentiels (Desktop) */}
-        <ul className="hidden items-center gap-8 lg:flex">
+        {/* Liens Desktop */}
+        <ul className="hidden items-center gap-6 lg:flex xl:gap-8">
           {mainLinks.map((l) => (
             <li key={l.href}>
               <a
@@ -49,7 +49,6 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
             </li>
           ))}
 
-          {/* Bouton Boutique déclenchant l'ouverture du second univers */}
           <li>
             <button
               onClick={onOpenShop}
@@ -59,7 +58,6 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
             </button>
           </li>
 
-          {/* Sous-liens pour les pages secondaires */}
           {secondaryLinks.map((l) => (
             <li key={l.href}>
               <a
@@ -72,8 +70,8 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
           ))}
         </ul>
 
-        {/* Actions à droite : Icône/Badge Panier + CTA principal + Bouton Mobile */}
-        <div className="flex items-center gap-5">
+        {/* Actions Droite */}
+        <div className="flex items-center gap-3 sm:gap-5">
           {/* Bouton Panier */}
           <button
             onClick={onOpenCart}
@@ -82,8 +80,8 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width="22"
+              height="22"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -96,13 +94,13 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
               <path d="M16 10a4 4 0 0 1-8 0" />
             </svg>
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-gold text-[9px] font-bold text-black">
+              <span className="absolute -top-0.5 -right-0.5 flex h-4.5 w-4.5 min-w-[18px] items-center justify-center rounded-full bg-gold px-1 text-[9px] font-bold text-black shadow-sm">
                 {cartCount}
               </span>
             )}
           </button>
 
-          {/* Bouton CTA unique */}
+          {/* CTA Desktop */}
           <a
             href="#contact"
             className="hidden sm:inline-block border border-gold px-5 py-2.5 text-[0.65rem] tracking-[0.25em] text-foreground uppercase transition-all hover:bg-gold hover:text-black"
@@ -110,10 +108,10 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
             Commander
           </a>
 
-          {/* Bouton Menu Hamburger (Mobile) */}
+          {/* Hamburger Mobile */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-foreground lg:hidden"
+            className="p-1.5 text-foreground lg:hidden focus:outline-none"
             aria-label="Toggle menu"
           >
             <svg
@@ -136,16 +134,16 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
         </div>
       </nav>
 
-      {/* Menu Mobile déroulant */}
+      {/* Menu Mobile */}
       {mobileMenuOpen && (
-        <div className="border-b border-border/60 bg-background px-6 py-6 lg:hidden">
+        <div className="border-b border-border/60 bg-background/98 px-6 py-6 lg:hidden animate-in slide-in-from-top-2 duration-200">
           <ul className="flex flex-col gap-4">
             {mainLinks.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm tracking-[0.2em] text-foreground uppercase"
+                  className="block py-1 text-sm tracking-[0.2em] text-foreground uppercase"
                 >
                   {l.label}
                 </a>
@@ -157,7 +155,7 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
                   setMobileMenuOpen(false);
                   onOpenShop?.();
                 }}
-                className="text-sm tracking-[0.2em] font-bold text-gold uppercase"
+                className="block py-1 text-left text-sm tracking-[0.2em] font-bold text-gold uppercase"
               >
                 Boutique
               </button>
@@ -167,12 +165,21 @@ export function Nav({ onLogoClick, onOpenShop, cartCount = 0, onOpenCart }: NavP
                 <a
                   href={l.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm tracking-[0.2em] text-muted-foreground uppercase"
+                  className="block py-1 text-sm tracking-[0.2em] text-muted-foreground uppercase"
                 >
                   {l.label}
                 </a>
               </li>
             ))}
+            <li className="pt-2 sm:hidden">
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-center border border-gold py-3 text-xs tracking-[0.2em] text-foreground uppercase bg-gold/10"
+              >
+                Commander
+              </a>
+            </li>
           </ul>
         </div>
       )}
