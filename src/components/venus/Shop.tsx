@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { PRODUCTS, SHOP_CATEGORIES, type Product } from "@/data/shopData";
+import { RequestProductModal } from "@/components/RequestProductModal";
 
 interface ShopProps {
   onAddToCart: (product: Product) => void;
@@ -104,10 +105,21 @@ export function Shop({ onAddToCart }: ShopProps) {
           </div>
         </div>
 
-        {/* Grille des Produits (2 colonnes mobiles avec sécurité anti-débordement) */}
+        {/* Grille des Produits ou Modal de sur-mesure si aucun résultat */}
         {filteredProducts.length === 0 ? (
-          <div className="py-16 text-center text-muted-foreground">
-            <p className="font-serif italic text-sm">Aucun article ne correspond à votre recherche.</p>
+          <div className="my-8 py-12 px-4 text-center rounded-xl bg-secondary/30 border border-gold/20 max-w-lg mx-auto space-y-4">
+            <p className="font-serif italic text-base text-foreground">
+              Aucun article ne correspond à votre recherche.
+            </p>
+            <p className="text-xs text-muted-foreground max-w-xs mx-auto">
+              Vous ne trouvez pas ce que vous cherchez ? Demandez-le nous directement !
+            </p>
+            <div className="pt-2">
+              <RequestProductModal 
+                triggerText="Demander un produit sur-mesure" 
+                triggerVariant="default" 
+              />
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 w-full">
@@ -158,7 +170,7 @@ function ProductCard({
             }}
           />
 
-          {/* Indicateurs de photos si le produit a plusieurs images (ex: F1, F2, F3...) */}
+          {/* Indicateurs de photos si le produit a plusieurs images */}
           {images.length > 1 && (
             <div className="absolute bottom-1.5 inset-x-0 flex justify-center gap-1 z-10">
               {images.map((_, idx) => (
