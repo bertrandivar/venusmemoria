@@ -22,7 +22,7 @@ export const ERASER_PRODUCTS: Product[] = [
       "Design ergonomique pour une prise en main confortable",
     ],
     specs: "Alimentation USB — Recharges incluses",
-    stockQuantity: 10,
+    stockQuantity: 0,
     badge: "Populaire",
   },
   {
@@ -44,7 +44,7 @@ export const ERASER_PRODUCTS: Product[] = [
       "Idéale pour le dessin, le croquis et le design",
     ],
     specs: "Faber-Castell — Plasticité supérieure",
-    stockQuantity: 15,
+    stockQuantity: 0,
     badge: "Essentiel",
   },
 ];
