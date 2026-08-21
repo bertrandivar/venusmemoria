@@ -78,11 +78,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       {
         name: "viewport",
-        content: "width=device-width, initial-scale=1.0",
+        content: "width=device-width, initial-scale=1.0, viewport-fit=cover",
+      },
+      {
+        name: "theme-color",
+        content: "#FAF8F5", // Harmonie de la barre du navigateur mobile avec le fond du site
       },
       {
         name: "color-scheme",
-        content: "light", // Empêche la conversion automatique en dark mode par le système
+        content: "light",
       },
       { title: "VENUS - The Creation Aura" },
       {
