@@ -29,22 +29,23 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 sm:items-center sm:p-4 backdrop-blur-sm">
       <div 
-        className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-lg border border-[#1C1B18]/20 p-6 shadow-2xl md:p-10"
+        className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-t-2xl sm:rounded-lg border border-[#1C1B18]/20 p-4 sm:p-6 md:p-10 shadow-2xl"
         style={{ backgroundColor: "#C3C2A9" }}
       >
-        {/* Bouton Fermer */}
+        {/* Bouton Fermer Fixe en Haut à Droite */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-2xl font-bold text-[#1C1B18] transition-opacity hover:opacity-70 z-10"
+          className="sticky top-0 float-right -mt-2 -mr-2 sm:absolute sm:top-4 sm:right-4 text-xl sm:text-2xl font-bold text-[#1C1B18] transition-opacity hover:opacity-70 z-20 bg-[#C3C2A9]/80 p-1.5 rounded-full backdrop-blur-sm"
+          aria-label="Fermer"
         >
           ✕
         </button>
 
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-6 sm:gap-8 md:grid-cols-2 clear-both">
           {/* Galerie Images */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div className="aspect-square overflow-hidden rounded border border-[#1C1B18]/15 bg-white/40 p-2 flex items-center justify-center">
               <img
                 src={selectedImage || product.images[0]}
@@ -55,12 +56,12 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
 
             {/* Vignettes */}
             {product.images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-2">
+              <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
                 {product.images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(img)}
-                    className={`h-16 w-16 shrink-0 overflow-hidden rounded border bg-white/30 p-1 transition-all ${
+                    className={`h-12 w-12 sm:h-16 sm:w-16 shrink-0 overflow-hidden rounded border bg-white/30 p-1 transition-all ${
                       selectedImage === img
                         ? "border-[#1C1B18] ring-2 ring-[#1C1B18]"
                         : "border-[#1C1B18]/20 opacity-70 hover:opacity-100"
@@ -75,7 +76,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
 
           {/* Détails du Produit */}
           <div className="flex flex-col justify-between">
-            <div className="space-y-3">
+            <div className="space-y-2.5 sm:space-y-3">
               {isSoldOut ? (
                 <span className="inline-block rounded bg-amber-800 px-2.5 py-1 text-[10px] font-bold text-white uppercase tracking-wider">
                   Rupture de stock
@@ -86,11 +87,11 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 </span>
               ) : null}
 
-              <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1C1B18]">
+              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#1C1B18]">
                 {product.name}
               </h2>
               
-              <p className="font-mono text-xl font-extrabold text-[#1C1B18]">
+              <p className="font-mono text-lg sm:text-xl font-extrabold text-[#1C1B18]">
                 {product.price.toLocaleString()} {product.currency}
               </p>
 
@@ -102,17 +103,17 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 )}
               </p>
 
-              <div className="my-4 h-px bg-[#1C1B18]/15" />
+              <div className="my-3 sm:my-4 h-px bg-[#1C1B18]/15" />
 
               <p className="text-xs leading-relaxed text-[#2C2B26]">
                 {product.description}
               </p>
 
               {product.details && product.details.length > 0 && (
-                <div className="mt-6 space-y-2">
-                  <h4 className="text-xs uppercase tracking-widest text-[#1C1B18] font-bold">
+                <div className="mt-4 sm:mt-6 space-y-1.5 sm:space-y-2">
+                  <h3 className="text-xs uppercase tracking-widest text-[#1C1B18] font-bold">
                     Détails du Produit :
-                  </h4>
+                  </h3>
                   <ul className="space-y-1 text-xs text-[#2C2B26] list-inside list-disc">
                     {product.details.map((item, i) => (
                       <li key={i}>{item}</li>
@@ -122,18 +123,19 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               )}
 
               {product.specs && (
-                <p className="mt-4 text-xs text-[#1C1B18]/80 italic">
+                <p className="mt-3 sm:mt-4 text-xs text-[#1C1B18]/80 italic">
                   <span className="font-bold uppercase not-italic">Spécifications : </span>
                   {product.specs}
                 </p>
               )}
             </div>
 
-            <div className="mt-8 pt-4 border-t border-[#1C1B18]/15">
+            {/* Boutons d'action */}
+            <div className="mt-6 sm:mt-8 pt-4 border-t border-[#1C1B18]/15">
               {isSoldOut ? (
                 <button
                   onClick={handleInquire}
-                  className="w-full rounded bg-[#1C1B18] py-4 text-xs font-bold tracking-[0.15em] text-[#F0EFDF] uppercase transition-all hover:bg-[#2C2B26] shadow-md flex items-center justify-center gap-2"
+                  className="w-full rounded bg-[#1C1B18] py-3.5 sm:py-4 text-xs font-bold tracking-[0.15em] text-[#F0EFDF] uppercase transition-all hover:bg-[#2C2B26] shadow-md flex items-center justify-center gap-2"
                 >
                   <span>💬 Demander la disponibilité</span>
                 </button>
@@ -143,7 +145,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                     onAddToCart(product);
                     onClose();
                   }}
-                  className="w-full rounded bg-[#D4AF37] py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md"
+                  className="w-full rounded bg-[#D4AF37] py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md"
                 >
                   Ajouter au Panier
                 </button>
@@ -152,8 +154,8 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
           </div>
         </div>
 
-        {/* Section Avis Clients Supabase */}
-        <div className="mt-10 pt-6 border-t border-[#1C1B18]/20">
+        {/* Section Avis Clients */}
+        <div className="mt-8 sm:mt-10 pt-4 sm:pt-6 border-t border-[#1C1B18]/20">
           <ProductReviews productId={product.id} />
         </div>
       </div>
