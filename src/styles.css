@@ -124,9 +124,22 @@
     border-color: var(--color-border);
   }
 
+  html {
+    min-height: 100dvh;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    min-height: 100dvh;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  header {
+    padding-top: env(safe-area-inset-top);
   }
 }
 
