@@ -371,23 +371,18 @@ export function Services() {
 
 export function About() {
   return (
-    <section id="apropos" className="border-y border-border/60 bg-secondary/40 py-28">
-      <div className="mx-auto max-w-3xl px-6 text-center">
-        <span className="eyebrow">À propos</span>
-        <h2 className="mt-4 text-4xl md:text-5xl">
-          Une aura de <span className="italic text-gilded">création</span>
-        </h2>
-        <div className="rule-gold mx-auto my-8 w-24" />
-        <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
-          VENUS est un atelier d'art dédié à la mémoire. Chaque œuvre naît d'une histoire
-          confiée, travaillée à la main avec des matériaux nobles, jusqu'à devenir une
-          pièce unique que le temps ne peut plus effacer.
-        </p>
-      </div>
+    <section id="apropos" className="mx-auto max-w-7xl px-6 py-28 text-center">
+      <span className="eyebrow">À Propos</span>
+      <h2 className="mt-4 text-4xl leading-tight md:text-5xl">
+        Une aura de <span className="italic text-gilded">création et d'émancipation</span>
+      </h2>
+      <div className="rule-gold mx-auto my-8 w-24" />
+      <p className="mx-auto max-w-3xl text-sm leading-relaxed text-muted-foreground">
+        VENUS est bien plus qu'un atelier d'art dédié à la mémoire : c'est un écosystème vivant et un tremplin pour la communauté artistique. Notre ambition est de faire prospérer chaque talent, en offrant un espace d'expression et de collaboration où les artistes peuvent s'élever ensemble et donner à leurs œuvres une résonance éternelle.
+      </p>
     </section>
   );
 }
-
 export function Footer() {
   return (
     <footer className="mx-auto max-w-7xl px-6 py-14 text-center">
