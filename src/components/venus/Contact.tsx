@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import emailjs from "@emailjs/browser";
 
 const services = [
   "Portrait sur toile",
@@ -11,11 +12,52 @@ const field =
   "w-full border-b border-border bg-transparent py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold";
 
 export function Contact() {
+  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+  });
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    setLoading(true);
+
+    const templateParams = {
+      from_name: formData.fullName,
+      from_email: formData.email,
+      phone: formData.phone || "Non renseigné",
+      service: formData.service,
+      message: formData.message,
+    };
+
+    emailjs
+      .send(
+        "service_9zijue7",
+        "template_8ku3p4j",
+        templateParams,
+        "0i5_D3MDwthapN0bI"
+      )
+      .then(() => {
+        setLoading(false);
+        setSent(true);
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+      })
+      .catch((err) => {
+        console.error("Erreur d'envoi EmailJS :", err);
+        setLoading(false);
+        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+      });
   }
 
   return (
@@ -58,7 +100,7 @@ export function Contact() {
                 </a>
                 <span>|</span>
                 <a
-                  href="https://tiktok.com" /* Coller votre lien TikTok ici */
+                  href="https://tiktok.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
@@ -76,26 +118,63 @@ export function Contact() {
 
         <form onSubmit={submit} className="card-lux space-y-7 p-8 md:p-12">
           <div className="grid gap-7 sm:grid-cols-2">
-            <input required placeholder="Nom complet" className={field} />
-            <input required type="email" placeholder="Email" className={field} />
+            <input
+              required
+              placeholder="Nom complet"
+              className={field}
+              value={formData.fullName}
+              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+            />
+            <input
+              required
+              type="email"
+              placeholder="Email"
+              className={field}
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
           </div>
           <div className="grid gap-7 sm:grid-cols-2">
-            <input placeholder="Téléphone" className={field} />
-            <select required defaultValue="" className={field}>
+            <input
+              placeholder="Téléphone"
+              className={field}
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            />
+            <select
+              required
+              className={field}
+              value={formData.service}
+              onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+            >
               <option value="" disabled>
                 Service souhaité
               </option>
               {services.map((s) => (
-                <option key={s}>{s}</option>
+                <option key={s} value={s}>
+                  {s}
+                </option>
               ))}
             </select>
           </div>
-          <textarea rows={4} placeholder="Décrivez votre projet" className={field} />
+          <textarea
+            required
+            rows={4}
+            placeholder="Décrivez votre projet"
+            className={field}
+            value={formData.message}
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          />
           <button
             type="submit"
-            className="w-full bg-primary px-8 py-4 text-[0.65rem] tracking-[0.3em] text-primary-foreground uppercase transition-colors hover:bg-gold hover:text-foreground"
+            disabled={loading}
+            className="w-full bg-primary px-8 py-4 text-[0.65rem] tracking-[0.3em] text-primary-foreground uppercase transition-colors hover:bg-gold hover:text-foreground disabled:opacity-50"
           >
-            {sent ? "Demande envoyée — merci" : "Envoyer ma demande"}
+            {loading
+              ? "Envoi en cours..."
+              : sent
+              ? "Demande envoyée — merci"
+              : "Envoyer ma demande"}
           </button>
           {sent && (
             <p className="text-center text-xs text-muted-foreground">
