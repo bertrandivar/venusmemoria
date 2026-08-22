@@ -18,7 +18,7 @@ export const agrafeuseJauneProduct: Product = {
   stockQuantity: 0,
   images: [J1, J2, J3, J4, J5
   ],
-  specifications: [
+   specs: [
     "Finition jaune haute visibilité",
     "Poignée ergonomique confort",
     "Système anti-enrayement",
