@@ -3,6 +3,7 @@ import { GLOVES_PRODUCTS } from "./products/gants";
 import { ERASER_PRODUCTS } from "./products/gommes";
 import { BRUSH_PRODUCTS } from "./products/pinceaux";
 import { VASE_PRODUCTS } from "./products/vases";
+import { outillageProducts } from "./products/outillage";
 
 export interface Product {
   id: string;
@@ -20,6 +21,8 @@ export interface Product {
     | "gants"
     | "decor"
     | "supports";
+    | "outillage";
+  
   price: number;
   currency: string;
   images: string[];
@@ -42,6 +45,7 @@ export const SHOP_CATEGORIES = [
   { id: "vases", label: "Vases & Décoration", icon: "🏺" },
   { id: "gants", label: "Gants d'Artiste", icon: "🧤" },
   { id: "supports", label: "Supports", icon: "🖼️" },
+  {id: "outillage", label: "Matériel & Outillage", icon: "🛠️",},
 ];
 
 // Regroupement de tous les tableaux de produits
@@ -50,4 +54,5 @@ export const PRODUCTS: Product[] = [
   ...BRUSH_PRODUCTS,
   ...VASE_PRODUCTS,
   ...ERASER_PRODUCTS,
+  ...outillageProducts,
 ];
