@@ -10,7 +10,7 @@ export const agrafeuseNoireProduct: Product = {
   id: "agrafeuse-murale-acier-noir",
   name: "Agrafeuse Murale Professionnelle (Acier & Noir)",
   category: "outillage",
-  price: 8500,
+  price: 35000,
   currency: "BIF",
   description: "Agrafeuse manuelle robuste en acier idéale pour le montage de toiles sur châssis, le tapissage et l'encadrement.",
   badge: "Recommandé",
