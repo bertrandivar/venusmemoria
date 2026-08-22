@@ -45,7 +45,7 @@ export const SHOP_CATEGORIES = [
   { id: "vases", label: "Vases & Décoration", icon: "🏺" },
   { id: "gants", label: "Gants d'Artiste", icon: "🧤" },
   { id: "supports", label: "Supports", icon: "🖼️" },
-  {id: "outillage", label: "Matériel & Outillage", icon: "🛠️",},
+  {id: "outillage", label: "Matériel & Outillage", icon: "🛠️"},
 ];
 
 // Regroupement de tous les tableaux de produits
