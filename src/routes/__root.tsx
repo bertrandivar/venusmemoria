@@ -82,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         name: "theme-color",
-        content: "#FAF8F5", // Harmonie de la barre du navigateur mobile avec le fond du site
+        content: "#FAF8F5",
       },
       {
         name: "color-scheme",
@@ -106,6 +106,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Montserrat:wght@300;400;500;600&display=swap",
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+    ],
+    // AJOUT DE GOOGLE ANALYTICS ICI 
+    scripts: [
+      {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-SRB6GSEFYD",
+        async: true,
+      },
+      {
+        children: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-SRB6GSEFYD');
+        `,
+      },
     ],
   }),
 
