@@ -11,14 +11,13 @@ export const agrafeuseJauneProduct: Product = {
   id: "agrafeuse-murale-jaune",
   name: "Agrafeuse Murale Ergonomique (Jaune)",
   category: "outillage",
-  price: 35000, // Ajustez le prix
+  price: 35000,
   currency: "BIF",
   description: "Agrafeuse manuelle avec finition haute visibilité jaune, parfaite pour l'atelier, la tension de toile et le bricolage d'art.",
   badge: "Nouveau",
   stockQuantity: 0,
-  images: [J1, J2, J3, J4, J5
-  ],
-   specs: [
+  images: [J1, J2, J3, J4, J5],
+  details: [
     "Finition jaune haute visibilité",
     "Poignée ergonomique confort",
     "Système anti-enrayement",
