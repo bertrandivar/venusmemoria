@@ -4,6 +4,7 @@ import { ERASER_PRODUCTS } from "./products/gommes";
 import { BRUSH_PRODUCTS } from "./products/pinceaux";
 import { VASE_PRODUCTS } from "./products/vases";
 import { outillageProducts } from "./products/outillage";
+import { artCulinaireProducts } from "./products/artCulinaire";
 
 export interface Product {
   id: string;
@@ -54,4 +55,5 @@ export const PRODUCTS: Product[] = [
   ...VASE_PRODUCTS,
   ...ERASER_PRODUCTS,
   ...outillageProducts,
+  ...artCulinaireProducts,
 ];
