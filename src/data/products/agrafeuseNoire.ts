@@ -16,7 +16,7 @@ export const agrafeuseNoireProduct: Product = {
   badge: "Recommandé",
   stockQuantity: 0,
   images: [AG1, AG2, AG3, AG4],
-  specifications: [
+   specs: [
     "Corps en acier inoxydable renforcé",
     "Mécanisme de réglage de pression",
     "Dimensions : 15.8 cm x 11.2 cm",
