@@ -4,7 +4,7 @@ import { ERASER_PRODUCTS } from "./products/gommes";
 import { BRUSH_PRODUCTS } from "./products/pinceaux";
 import { VASE_PRODUCTS } from "./products/vases";
 import { outillageProducts } from "./products/outillage";
-import { artCulinaireProducts } from "./products/artCulinaire";
+import { artCulinaireProducts } from "./products/artCulinaire"; // <-- 1. Import de la catégorie culinaire
 
 export interface Product {
   id: string;
@@ -21,14 +21,14 @@ export interface Product {
     | "gants"
     | "decor"
     | "supports"
-    | "outillage"; // Point-virgule retiré de la ligne précédente
+    | "outillage";
   
   price: number;
   currency: string;
   images: string[];
   description: string;
   details?: string[];
-  specs?: string[]; // Corrigé en string[] au lieu de string
+  specs?: string[];
   stockQuantity: number;
   badge?: string;
 }
@@ -36,7 +36,7 @@ export interface Product {
 export const SHOP_CATEGORIES = [
   { id: "all", label: "Tous nos articles", icon: "✨" },
   { id: "beaute", label: "Beauté & Make-up", icon: "💄" },
-  { id: "cuisine", label: "Art Culinaire", icon: "🍳" },
+  { id: "cuisine", label: "Art Culinaire", icon: "🍳" }, // Déjà présent dans vos catégories !
   { id: "mode", label: "Mode & Design", icon: "✂️" },
   { id: "peinture", label: "Peintures", icon: "🎨" },
   { id: "gommes", label: "Gommes & Estompes", icon: "🧹" },
@@ -55,5 +55,5 @@ export const PRODUCTS: Product[] = [
   ...VASE_PRODUCTS,
   ...ERASER_PRODUCTS,
   ...outillageProducts,
-  ...artCulinaireProducts,
+  ...artCulinaireProducts, // <-- 2. Ajout au catalogue global
 ];
