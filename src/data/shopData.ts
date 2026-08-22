@@ -8,7 +8,6 @@ import { outillageProducts } from "./products/outillage";
 export interface Product {
   id: string;
   name: string;
-  // Ajout des nouvelles catégories
   category: 
     | "beaute"
     | "cuisine"
@@ -20,15 +19,15 @@ export interface Product {
     | "vases"
     | "gants"
     | "decor"
-    | "supports";
-    | "outillage";
+    | "supports"
+    | "outillage"; // Point-virgule retiré de la ligne précédente
   
   price: number;
   currency: string;
   images: string[];
   description: string;
   details?: string[];
-  specs?: string;
+  specs?: string[]; // Corrigé en string[] au lieu de string
   stockQuantity: number;
   badge?: string;
 }
@@ -45,7 +44,7 @@ export const SHOP_CATEGORIES = [
   { id: "vases", label: "Vases & Décoration", icon: "🏺" },
   { id: "gants", label: "Gants d'Artiste", icon: "🧤" },
   { id: "supports", label: "Supports", icon: "🖼️" },
-  {id: "outillage", label: "Matériel & Outillage", icon: "🛠️"},
+  { id: "outillage", label: "Matériel & Outillage", icon: "🛠️" },
 ];
 
 // Regroupement de tous les tableaux de produits
