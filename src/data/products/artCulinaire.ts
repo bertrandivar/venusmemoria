@@ -1,9 +1,7 @@
 import { Product } from "../shopData";
-import { icingPipingBagProduct } from "./icingPipingBag";
-import { nozzleIcePipingProduct } from "./nozzleIcePiping";
+import { douillePatis3dProduct } from "./douillePatis3d";
 
 export const artCulinaireProducts: Product[] = [
-  icingPipingBagProduct,
-  nozzleIcePipingProduct,
-  // Vous pourrez ajouter ici plus tard d'autres outils culinaires (moules, pinceaux alimentaires, etc.)
+  douillePatis3dProduct,
+  // Vous pourrez ajouter icingPipingBagProduct et nozzleIcePipingProduct dès que leurs images seront dans assets
 ];
