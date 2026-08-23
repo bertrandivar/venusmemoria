@@ -11,11 +11,11 @@ export const pinceauxFinsBleusProduct: Product = {
   id: "set-pinceaux-finesse-bleus",
   name: "Set de Pinceaux de Précision & Détails (Bleu Metallic)",
   category: "pinceaux",
-  price: 0, // Ajustez le prix selon vos besoins
+  price: 2500, // Ajustez le prix selon vos besoins
   currency: "BIF",
   description: "Set de pinceaux extra-fins conçus pour les travaux de haute précision, le miniature, la calligraphie, les détails en peinture acrylique/huile et le nail art.",
   badge: "Précision",
-  stockQuantity: 10,
+  stockQuantity: 0,
   images: [P1, P2, P3, P4, P5],
   details: [
     "Pointe ultra-fine pour lignes nettes et détails minutieux",
