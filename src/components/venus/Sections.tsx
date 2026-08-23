@@ -25,7 +25,7 @@ function FacePaintingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =
   if (!isOpen) return null;
 
   const handleBookWhatsApp = () => {
-    const phoneNumber = "257XXXXXXXX"; // Remplacez par votre numéro WhatsApp
+    const phoneNumber = "25761200101"; // Remplacez par votre numéro WhatsApp
     const text = encodeURIComponent(
       "Bonjour Venus Memoria ! 🎨 Je souhaite réserver votre service d'Event Face Painting.\n\n" +
       "- Type d’événement (Anniversaire, Gala, Festival, Corporate) : \n" +
