@@ -1,6 +1,6 @@
 import { Product } from "../shopData";
 
-// Importez vos images (ajustez le chemin selon l'emplacement de gg1.webp)
+// Ajout des extensions .webp aux imports d'images
 import GG1 from "@/assets/yellowgg/gg1.webp";
 import GG2 from "@/assets/yellowgg/gg2.webp";
 import GG3 from "@/assets/yellowgg/gg3.webp";
@@ -9,10 +9,10 @@ import GG5 from "@/assets/yellowgg/gg5.webp";
 import GG6 from "@/assets/yellowgg/gg6.webp";
 
 export const pistoletColleYellow: Product = {
-  id: "pistolet-a-colle",
+  id: "pistolet-a-colle-dingqi-25w",
   name: "Pistolet à Colle Chaude Professionnel",
   category: "outillage",
-  price: 18000, // Ajustez le prix selon votre tarif
+  price: 18000,
   currency: "BIF",
   description: "Pistolet à colle thermofusible 25W rapide et précis. Idéal pour les travaux de création, le collage de précision sur bois, tissu, plastique, verre et le bricolage d'art.",
   badge: "Indispensable",
