@@ -13,7 +13,7 @@ export const douille1M: Product = {
   currency: "BIF",
   description: "Douille professionnelle 1M en acier inoxydable sans soudure. L'outil indispensable pour réaliser de magnifiques rosettes, bordures de gâteaux, meringues et décors en crème au beurre.",
   badge: "Best-seller",
-  stockQuantity: 15,
+  stockQuantity: 0,
   images: [D1, D2, D3, D4],
   details: [
     "Modèle : 1M Étoile ouverte de précision",
