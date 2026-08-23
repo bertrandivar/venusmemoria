@@ -1,7 +1,7 @@
 import { Product } from "../shopData";
-import { douillePatis3dProduct } from "./douillePatis3d";
+import { douille1MProduct } from "./douille1M";
 
 export const artCulinaireProducts: Product[] = [
-  douillePatis3dProduct,
+  douille1MProduct,
   // Vous pourrez ajouter icingPipingBagProduct et nozzleIcePipingProduct dès que leurs images seront dans assets
 ];
