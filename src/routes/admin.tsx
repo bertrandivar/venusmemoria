@@ -1,17 +1,22 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { supabase, Review, replyToReview } from "../services/reviewService";
+import { supabase } from "../lib/supabase"; // Ajustez le chemin vers supabase si nécessaire
+import { Review, replyToReview } from "../services/reviewService";
 
-export default function AdminPage() {
+export const Route = createFileRoute("/admin")({
+  component: AdminPage,
+});
+
+function AdminPage() {
   const [session, setSession] = useState<any>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const [reviews, setReviews] = useState<Review[]>([]);
   const [replies, setReplies] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // 1. Vérifier la session actuelle
     supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -30,7 +35,7 @@ export default function AdminPage() {
     setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
-    
+
     if (error) alert("Erreur de connexion : " + error.message);
     else setSession(data.session);
   };
@@ -44,7 +49,7 @@ export default function AdminPage() {
     try {
       const replyText = replies[reviewId];
       if (!replyText) return;
-      
+
       await replyToReview(reviewId, replyText);
       alert("Réponse enregistrée avec succès !");
       fetchAllReviews();
@@ -53,7 +58,6 @@ export default function AdminPage() {
     }
   };
 
-  // --- FORMULAIRE DE CONNEXION ---
   if (!session) {
     return (
       <div className="max-w-md mx-auto my-16 p-6 bg-white border rounded-xl shadow-sm space-y-4">
@@ -79,8 +83,8 @@ export default function AdminPage() {
               required
             />
           </div>
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={loading}
             className="w-full py-2 bg-black text-white rounded font-medium text-sm hover:opacity-90 transition"
           >
@@ -91,7 +95,6 @@ export default function AdminPage() {
     );
   }
 
-  // --- DASHBOARD DE GESTION DES AVIS ---
   return (
     <div className="max-w-4xl mx-auto my-8 p-6 space-y-6">
       <div className="flex justify-between items-center border-b pb-4">
@@ -99,7 +102,7 @@ export default function AdminPage() {
           <h1 className="text-2xl font-bold">Panneau Administrateur</h1>
           <p className="text-sm text-gray-500">Gestion des avis & réponses clients</p>
         </div>
-        <button 
+        <button
           onClick={() => supabase.auth.signOut()}
           className="text-xs bg-red-50 text-red-600 px-3 py-2 rounded font-semibold hover:bg-red-100 transition"
         >
@@ -116,7 +119,7 @@ export default function AdminPage() {
               <div className="flex justify-between items-center">
                 <div>
                   <span className="font-bold text-sm">{rev.user_name}</span>
-                  <span className="text-xs text-gray-400 ml-2">(Produit: {rev.product_id})</span>
+                  <span className="text-xs text-gray-400 ml-2">(Produit ID: {rev.product_id})</span>
                 </div>
                 <span className="text-amber-500 font-bold">{"★".repeat(rev.rating)}</span>
               </div>
@@ -128,12 +131,12 @@ export default function AdminPage() {
                 <textarea
                   placeholder="Écrivez votre réponse ici..."
                   defaultValue={rev.admin_reply || ""}
-                  onChange={(e) => setReplies({ ...replies, [rev.id]: e.target.value })}
+                  onChange={(e) => setReplies({ ...replies, [rev.id!]: e.target.value })}
                   className="w-full p-2 border rounded text-sm bg-white"
                   rows={2}
                 />
                 <button
-                  onClick={() => handleSendReply(rev.id)}
+                  onClick={() => handleSendReply(rev.id!)}
                   className="px-3 py-1.5 bg-black text-white rounded text-xs font-semibold hover:opacity-90 transition"
                 >
                   {rev.admin_reply ? "Mettre à jour la réponse" : "Publier la réponse"}
