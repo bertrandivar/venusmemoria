@@ -1,12 +1,12 @@
 import { Product } from "../shopData";
 
 // Importez vos images (ajustez le chemin selon l'emplacement de gg1.webp)
-import GG1 from "@/assets/yellowgg/gg1";
-import GG2 from "@/assets/yellowgg/gg2";
-import GG3 from "@/assets/yellowgg/gg3";
-import GG4 from "@/assets/yellowgg/gg4";
-import GG5 from "@/assets/yellowgg/gg5";
-import GG6 from "@/assets/yellowgg/gg6";
+import GG1 from "@/assets/yellowgg/gg1.webp";
+import GG2 from "@/assets/yellowgg/gg2.webp";
+import GG3 from "@/assets/yellowgg/gg3.webp";
+import GG4 from "@/assets/yellowgg/gg4.webp";
+import GG5 from "@/assets/yellowgg/gg5.webp";
+import GG6 from "@/assets/yellowgg/gg6.webp";
 
 export const pistoletColleYellow: Product = {
   id: "pistolet-a-colle",
