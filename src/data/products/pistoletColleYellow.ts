@@ -8,7 +8,7 @@ import GG4 from "@/assets/yellowgg/gg4";
 import GG5 from "@/assets/yellowgg/gg5";
 import GG6 from "@/assets/yellowgg/gg6";
 
-export const pistoletColle25wProduct: Product = {
+export const pistoletColleYellow: Product = {
   id: "pistolet-a-colle",
   name: "Pistolet à Colle Chaude Professionnel",
   category: "outillage",
