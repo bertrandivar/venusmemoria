@@ -124,6 +124,14 @@ export function ProductReviews({ productId }: Props) {
                 <span className="text-amber-500 font-bold">{"★".repeat(rev.rating)}</span>
               </div>
               <p className="text-sm text-gray-600">{rev.comment}</p>
+
+              {/* Bloc de réponse Administrateur */}
+              {rev.admin_reply && (
+                <div className="mt-2 ml-4 p-3 bg-amber-50 border-l-4 border-amber-500 rounded-r-md space-y-1">
+                  <p className="text-xs font-bold text-amber-900">Réponse de Venus Memoria :</p>
+                  <p className="text-xs text-amber-800">{rev.admin_reply}</p>
+                </div>
+              )}
             </div>
           ))}
         </div>
