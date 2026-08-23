@@ -22,7 +22,7 @@ export function CartDrawer({
   onUpdateQuantity,
   onRemoveItem,
   onClearCart,
-  whatsappNumber = "25700000000", // Remplacez par le numéro direct de l'Atelier
+  whatsappNumber = "25761200101", // Remplacez par le numéro direct de l'Atelier
 }: CartDrawerProps) {
   if (!isOpen) return null;
 
