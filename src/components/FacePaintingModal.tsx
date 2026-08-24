@@ -7,6 +7,7 @@ interface FacePaintingModalProps {
 
 // Images dans le dossier public
 const FACE_PAINTING_IMAGES = [
+  "/kids0.webp",
   "/kids1.webp",
   "/kids2.webp",
   "/kids3.webp",
