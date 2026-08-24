@@ -4,6 +4,7 @@ import resin from "@/assets/resin.jpg";
 
 /* --- COMPOSANT MODALE EVENT FACE PAINTING --- */
 const FACE_PAINTING_IMAGES = [
+  "/kids0.webp",
   "/kids1.webp",
   "/kids2.webp",
   "/kids3.webp",
