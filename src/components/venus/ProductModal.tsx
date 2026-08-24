@@ -21,7 +21,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
   }, [product]);
 
   const handleInquire = () => {
-    const phoneNumber = "257XXXXXXXX"; // Remplacez par votre numéro WhatsApp
+    const phoneNumber = "25761200101"; // Remplacez par votre numéro WhatsApp
     const message = encodeURIComponent(
       `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité future du produit : "${product.name}".`
     );
