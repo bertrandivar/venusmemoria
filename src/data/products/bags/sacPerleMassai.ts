@@ -17,5 +17,5 @@ export const sacPerleMassaiProduct: Product = {
     "Perles solides tissées haute densité",
     "Doublure intérieure avec fermeture éclair",
   ],
-  specs: "Perles synthétiques & Doublure tissu",
+  specs: ["Perles synthétiques & Doublure tissu"],
 };
