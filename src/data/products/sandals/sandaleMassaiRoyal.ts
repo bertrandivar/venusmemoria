@@ -1,8 +1,7 @@
 import { Product } from "../../shopData";
 
 // Importez vos images directement ici
-// import S1 from "@/assets/sandals/massai1.webp";
-// import S2 from "@/assets/sandals/massai2.webp";
+import S1 from "@/assets/sandals/massai1.jfif";
 
 export const sandaleMassaiRoyalProduct: Product = {
   id: "sandale-massai-royal",
@@ -13,9 +12,7 @@ export const sandaleMassaiRoyalProduct: Product = {
   description: "Sandales artisanales Massai authentiques venues du Kenya, confectionnées avec des perles fines aux motifs traditionnels.",
   badge: "Kenya Art",
   stockQuantity: 5,
-  images: [
-    "https://via.placeholder.com/600?text=Sandale+Massai+1",
-    "https://via.placeholder.com/600?text=Sandale+Massai+2",
+  images: [S1
   ],
   details: [
     "Fait main au Kenya par des artisanes Massai",
