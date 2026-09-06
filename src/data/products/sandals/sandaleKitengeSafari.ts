@@ -17,5 +17,5 @@ export const sandaleKitengeSafariProduct: Product = {
     "Semelle confortable et antidérapante",
     "Design coloré et unique",
   ],
-  specs: "Cuir & Tissu Kitenge",
+  specs: ["Cuir & Tissu Kitenge"],
 };
