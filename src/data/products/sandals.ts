@@ -2,8 +2,7 @@ import { Product } from "../shopData";
 import { sandaleMassaiRoyalProduct } from "./sandals/sandaleMassaiRoyal";
 import { sandaleKitengeSafariProduct } from "./sandals/sandaleKitengeSafari";
 
-export const sandalsProducts: Product[] = [
+export const SANDALS_PRODUCTS: Product[] = [
   sandaleMassaiRoyalProduct,
   sandaleKitengeSafariProduct,
-  // Vous ajouterez vos futures sandales ici facilement !
 ];
