@@ -4,7 +4,7 @@ import { ERASER_PRODUCTS } from "./products/gommes";
 import { BRUSH_PRODUCTS } from "./products/pinceaux";
 import { VASE_PRODUCTS } from "./products/vases";
 import { outillageProducts } from "./products/outillage";
-import { artCulinaireProducts } from "./products/artCulinaire"; // <-- 1. Import de la catégorie culinaire
+import { artCulinaireProducts } from "./products/artCulinaire";
 import { SANDALS_PRODUCTS } from "./products/sandals";
 import { HANDMADE_BAGS_PRODUCTS } from "./products/handmadeBags";
 
@@ -23,9 +23,9 @@ export interface Product {
     | "gants"
     | "decor"
     | "supports"
-    | "outillage";
-    | "sandals"      // Nouvelle catégorie
-    | "bags";        // Nouvelle catégorie
+    | "outillage"
+    | "sandals"
+    | "bags";
   
   price: number;
   currency: string;
@@ -35,6 +35,7 @@ export interface Product {
   specs?: string[];
   stockQuantity: number;
   badge?: string;
+  subcategory?: string;
 }
 
 export const SHOP_CATEGORIES = [
