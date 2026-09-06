@@ -5,6 +5,8 @@ import { BRUSH_PRODUCTS } from "./products/pinceaux";
 import { VASE_PRODUCTS } from "./products/vases";
 import { outillageProducts } from "./products/outillage";
 import { artCulinaireProducts } from "./products/artCulinaire"; // <-- 1. Import de la catégorie culinaire
+import { SANDALS_PRODUCTS } from "./products/sandals";
+import { HANDMADE_BAGS_PRODUCTS } from "./products/handmadeBags";
 
 export interface Product {
   id: string;
@@ -22,6 +24,8 @@ export interface Product {
     | "decor"
     | "supports"
     | "outillage";
+    | "sandals"      // Nouvelle catégorie
+    | "bags";        // Nouvelle catégorie
   
   price: number;
   currency: string;
@@ -35,8 +39,10 @@ export interface Product {
 
 export const SHOP_CATEGORIES = [
   { id: "all", label: "Tous nos articles", icon: "✨" },
+  { id: "sandals", label: "Slippers & Sandals", icon: "👡" },
+  { id: "bags", label: "Artisanal Handmade Bags", icon: "👜" },
   { id: "beaute", label: "Beauté & Make-up", icon: "💄" },
-  { id: "cuisine", label: "Art Culinaire", icon: "🍳" }, // Déjà présent dans vos catégories !
+  { id: "cuisine", label: "Art Culinaire", icon: "🍳" },
   { id: "mode", label: "Mode & Design", icon: "✂️" },
   { id: "peinture", label: "Peintures", icon: "🎨" },
   { id: "gommes", label: "Gommes & Estompes", icon: "🧹" },
@@ -50,10 +56,12 @@ export const SHOP_CATEGORIES = [
 
 // Regroupement de tous les tableaux de produits
 export const PRODUCTS: Product[] = [
+  ...SANDALS_PRODUCTS,
+  ...HANDMADE_BAGS_PRODUCTS,
   ...GLOVES_PRODUCTS,
   ...BRUSH_PRODUCTS,
   ...VASE_PRODUCTS,
   ...ERASER_PRODUCTS,
   ...outillageProducts,
-  ...artCulinaireProducts, // <-- 2. Ajout au catalogue global
+  ...artCulinaireProducts,
 ];
