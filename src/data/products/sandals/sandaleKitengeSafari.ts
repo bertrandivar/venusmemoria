@@ -8,7 +8,7 @@ export const sandaleKitengeSafariProduct: Product = {
   currency: "BIF",
   description: "Sandales légères mariant le cuir souple et le tissu Kitenge coloré pour un style estival affirmé.",
   badge: "Artisanat",
-  stockQuantity: 3,
+  stockQuantity: 0,
   images: [
     "https://via.placeholder.com/600?text=Sandale+Kitenge+1",
   ],
