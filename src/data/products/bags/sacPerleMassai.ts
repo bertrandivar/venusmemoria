@@ -8,7 +8,7 @@ export const sacPerleMassaiProduct: Product = {
   currency: "BIF",
   description: "Sac à main entièrement perlé à la main par des artisanes du Kenya avec doublure intérieure haute qualité.",
   badge: "Pièce Unique",
-  stockQuantity: 2,
+  stockQuantity: 0,
   images: [
     "https://via.placeholder.com/600?text=Sac+Perle+1",
   ],
