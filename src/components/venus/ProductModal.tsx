@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { Product } from "@/data/shopData";
 import { ProductReviews } from "../ProductReviews";
+import { CountdownTimer } from "@/components/ui/CountdownTimer";
 
 interface ProductModalProps {
   product: Product | null;
@@ -21,7 +22,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
   }, [product]);
 
   const handleInquire = () => {
-    const phoneNumber = "25761200101"; // Remplacez par votre numéro WhatsApp
+    const phoneNumber = "25776247789"; // Votre numéro WhatsApp
     const message = encodeURIComponent(
       `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité future du produit : "${product.name}".`
     );
@@ -91,15 +92,38 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 {product.name}
               </h2>
               
-              <p className="font-mono text-lg sm:text-xl font-extrabold text-[#1C1B18]">
-                {product.price.toLocaleString()} {product.currency}
-              </p>
+              {/* Affichage des prix et du compte à rebours */}
+              {product.isPreOrder && product.preOrderPrice ? (
+                <div className="space-y-2">
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="font-mono text-xl sm:text-2xl font-extrabold text-[#1C1B18]">
+                      {product.preOrderPrice.toLocaleString()} {product.currency}
+                    </span>
+                    <span className="font-mono text-sm line-through text-[#1C1B18]/50">
+                      {product.price.toLocaleString()} {product.currency}
+                    </span>
+                    <span className="text-[11px] bg-[#1C1B18] text-[#D4AF37] font-semibold px-2 py-0.5 rounded">
+                      Économie: {(product.price - product.preOrderPrice).toLocaleString()} {product.currency}
+                    </span>
+                  </div>
+
+                  {product.preOrderEndDate && (
+                    <CountdownTimer targetDate={product.preOrderEndDate} />
+                  )}
+                </div>
+              ) : (
+                <p className="font-mono text-lg sm:text-xl font-extrabold text-[#1C1B18]">
+                  {product.price.toLocaleString()} {product.currency}
+                </p>
+              )}
 
               <p className="text-xs font-semibold">
                 {isSoldOut ? (
                   <span className="text-amber-900">Cet article est actuellement épuisé</span>
                 ) : (
-                  <span className="text-[#1C1B18]/70">En stock : {product.stockQuantity} pièces</span>
+                  <span className="text-[#1C1B18]/70">
+                    {product.isPreOrder ? "Places disponibles en précommande" : "En stock"} : {product.stockQuantity} pièces
+                  </span>
                 )}
               </p>
 
@@ -125,7 +149,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               {product.specs && (
                 <p className="mt-3 sm:mt-4 text-xs text-[#1C1B18]/80 italic">
                   <span className="font-bold uppercase not-italic">Spécifications : </span>
-                  {product.specs}
+                  {Array.isArray(product.specs) ? product.specs.join(" • ") : product.specs}
                 </p>
               )}
             </div>
@@ -145,9 +169,9 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                     onAddToCart(product);
                     onClose();
                   }}
-                  className="w-full rounded bg-[#D4AF37] py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md"
+                  className="w-full rounded bg-[#D4AF37] py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md flex items-center justify-center gap-2"
                 >
-                  Ajouter au Panier
+                  {product.isPreOrder ? "Réserver en Précommande 🚀" : "Ajouter au Panier"}
                 </button>
               )}
             </div>
