@@ -28,6 +28,10 @@ export interface Product {
     | "bags";
   
   price: number;
+  preOrderPrice?: number;      // Prix réduit durant la précommande
+  isPreOrder?: boolean;        // Active le mode précommande
+  preOrderEndDate?: string;    // Date limite (ex: "2026-10-10T23:59:59Z")
+  
   currency: string;
   images: string[];
   description: string;
@@ -47,7 +51,7 @@ export const SHOP_CATEGORIES = [
   { id: "mode", label: "Mode & Design", icon: "✂️" },
   { id: "peinture", label: "Peintures", icon: "🎨" },
   { id: "gommes", label: "Gommes & Estompes", icon: "🧹" },
-  { id: "crayons", label: "Crayons", icon: "✏️" },
+  { id: "crayons", label: "Crayons & Fusains", icon: "✏️" },
   { id: "pinceaux", label: "Pinceaux", icon: "🖌️" },
   { id: "vases", label: "Vases & Décoration", icon: "🏺" },
   { id: "gants", label: "Gants d'Artiste", icon: "🧤" },
