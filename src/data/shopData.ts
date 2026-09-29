@@ -7,6 +7,7 @@ import { outillageProducts } from "./products/outillage";
 import { artCulinaireProducts } from "./products/artCulinaire";
 import { SANDALS_PRODUCTS } from "./products/sandals";
 import { HANDMADE_BAGS_PRODUCTS } from "./products/handmadeBags";
+import { CRAYONS_PRODUCTS } from "./products/crayons";
 
 export interface Product {
   id: string;
@@ -30,7 +31,7 @@ export interface Product {
   price: number;
   preOrderPrice?: number;      // Prix réduit durant la précommande
   isPreOrder?: boolean;        // Active le mode précommande
-  preOrderEndDate?: string;    // Date limite (ex: "2026-10-10T23:59:59Z")
+  preOrderEndDate?: string;    // Date limite
   
   currency: string;
   images: string[];
@@ -46,12 +47,12 @@ export const SHOP_CATEGORIES = [
   { id: "all", label: "Tous nos articles", icon: "✨" },
   { id: "sandals", label: "Slippers & Sandals", icon: "👡" },
   { id: "bags", label: "Artisanal Handmade Bags", icon: "👜" },
+  { id: "crayons", label: "Crayons & Fusains", icon: "✏️" },
   { id: "beaute", label: "Beauté & Make-up", icon: "💄" },
   { id: "cuisine", label: "Art Culinaire", icon: "🍳" },
   { id: "mode", label: "Mode & Design", icon: "✂️" },
   { id: "peinture", label: "Peintures", icon: "🎨" },
   { id: "gommes", label: "Gommes & Estompes", icon: "🧹" },
-  { id: "crayons", label: "Crayons & Fusains", icon: "✏️" },
   { id: "pinceaux", label: "Pinceaux", icon: "🖌️" },
   { id: "vases", label: "Vases & Décoration", icon: "🏺" },
   { id: "gants", label: "Gants d'Artiste", icon: "🧤" },
@@ -61,6 +62,7 @@ export const SHOP_CATEGORIES = [
 
 // Regroupement de tous les tableaux de produits
 export const PRODUCTS: Product[] = [
+  ...CRAYONS_PRODUCTS,
   ...SANDALS_PRODUCTS,
   ...HANDMADE_BAGS_PRODUCTS,
   ...GLOVES_PRODUCTS,
