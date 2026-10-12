@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Product, LipShade } from "@/data/shopData";
+import type { Product, LipShade, VolumeOption } from "@/data/shopData";
 import { ProductReviews } from "../ProductReviews";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { supabase } from "@/lib/supabase";
@@ -16,13 +16,14 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [liveProduct, setLiveProduct] = useState<Product>(product);
   const [selectedShade, setSelectedShade] = useState<LipShade | null>(null);
+  const [selectedVolume, setSelectedVolume] = useState<VolumeOption | null>(null);
 
   useEffect(() => {
     if (product?.images?.length) {
       setSelectedImage(product.images[0]);
     }
 
-    // Sélection de la première teinte en stock par défaut (si le produit possède des shades)
+    // Gestion des teintes par défaut (ex: Rhode Lip Tint)
     if (product?.shades && product.shades.length > 0) {
       const defaultShade = product.shades.find((s) => s.inStock) || product.shades[0];
       setSelectedShade(defaultShade);
@@ -31,6 +32,14 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
       }
     } else {
       setSelectedShade(null);
+    }
+
+    // Gestion des volumes par défaut (ex: Fixative Spray)
+    if (product?.volumeOptions && product.volumeOptions.length > 0) {
+      const defaultVolume = product.volumeOptions.find((v) => v.inStock) || product.volumeOptions[0];
+      setSelectedVolume(defaultVolume);
+    } else {
+      setSelectedVolume(null);
     }
 
     // Récupération des données dynamiques depuis Supabase
@@ -57,7 +66,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
     fetchLiveStock();
   }, [product]);
 
-  // Changement de teinte au clic sur une pastille
+  // Changement de teinte au clic
   const handleShadeSelect = (shade: LipShade) => {
     setSelectedShade(shade);
     if (shade.shadeImage) {
@@ -65,24 +74,37 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
     }
   };
 
-  // Détermination de la disponibilité (Prend en compte la teinte ou le stock global)
+  // Changement de volume au clic
+  const handleVolumeSelect = (volume: VolumeOption) => {
+    setSelectedVolume(volume);
+  };
+
+  // Calcul dynamique du prix (en fonction du volume sélectionné ou du prix de base)
+  const currentPrice = selectedVolume ? selectedVolume.price : liveProduct.price;
+  const currentPreOrderPrice = liveProduct.preOrderPrice ? liveProduct.preOrderPrice : null;
+
+  // Détermination de la rupture de stock
   const isShadeSoldOut = selectedShade ? !selectedShade.inStock : false;
-  const isSoldOut = isShadeSoldOut || liveProduct.stockQuantity === 0;
+  const isVolumeSoldOut = selectedVolume ? !selectedVolume.inStock : false;
+  const isSoldOut = isShadeSoldOut || isVolumeSoldOut || liveProduct.stockQuantity === 0;
 
   const handleInquire = () => {
     const phoneNumber = "25776247789"; // Votre numéro WhatsApp
     const shadeInfo = selectedShade ? ` (Teinte : ${selectedShade.name})` : "";
+    const volumeInfo = selectedVolume ? ` (Format : ${selectedVolume.label})` : "";
     const message = encodeURIComponent(
-      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité du produit : "${liveProduct.name}"${shadeInfo}.`
+      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité du produit : "${liveProduct.name}"${shadeInfo}${volumeInfo}.`
     );
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
   };
 
   const handleAddToCartAction = () => {
-    // Transmet au panier le produit enrichi avec la teinte sélectionnée
+    // Transmet au panier le produit enrichi avec les sélections
     const productToAdd: Product = {
       ...liveProduct,
+      price: currentPrice, // Ajuste le prix du panier selon le volume choisi
       selectedShade: selectedShade || undefined,
+      selectedVolume: selectedVolume || undefined,
     };
     onAddToCart(productToAdd);
     onClose();
@@ -168,29 +190,36 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 {liveProduct.name}
               </h2>
               
-              {/* Affichage des prix et du compte à rebours */}
-              {liveProduct.isPreOrder && liveProduct.preOrderPrice ? (
-                <div className="space-y-2">
-                  <div className="flex items-baseline gap-2.5">
-                    <span className="font-mono text-xl sm:text-2xl font-extrabold text-[#1C1B18]">
-                      {liveProduct.preOrderPrice.toLocaleString()} {liveProduct.currency}
-                    </span>
-                    <span className="font-mono text-sm line-through text-[#1C1B18]/50">
-                      {liveProduct.price.toLocaleString()} {liveProduct.currency}
-                    </span>
-                    <span className="text-[11px] bg-[#1C1B18] text-[#D4AF37] font-semibold px-2 py-0.5 rounded">
-                      Économie: {(liveProduct.price - liveProduct.preOrderPrice).toLocaleString()} {liveProduct.currency}
-                    </span>
-                  </div>
+              {/* Affichage dynamique des prix */}
+              <p className="font-mono text-lg sm:text-xl font-extrabold text-[#1C1B18]">
+                {currentPrice.toLocaleString()} {liveProduct.currency}
+              </p>
 
-                  {liveProduct.preOrderEndDate && (
-                    <CountdownTimer targetDate={liveProduct.preOrderEndDate} />
-                  )}
+              {/* SÉLECTEUR DE VOLUMES / CONTENANCES (ex: Fixative Spray 50ml, 180ml, 300ml) */}
+              {liveProduct.volumeOptions && liveProduct.volumeOptions.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-[#1C1B18]/15 space-y-2">
+                  <span className="text-xs font-bold text-[#1C1B18] uppercase tracking-wider">
+                    Format / Contenance : <span className="font-extrabold text-[#733222]">{selectedVolume?.label}</span>
+                  </span>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {liveProduct.volumeOptions.map((vol) => {
+                      const isSelected = selectedVolume?.id === vol.id;
+                      return (
+                        <button
+                          key={vol.id}
+                          onClick={() => handleVolumeSelect(vol)}
+                          className={`px-3 py-1.5 rounded text-xs font-bold transition-all border ${
+                            isSelected
+                              ? "bg-[#1C1B18] text-[#F0EFDF] border-[#1C1B18] shadow-md"
+                              : "bg-white/40 text-[#1C1B18] border-[#1C1B18]/20 hover:bg-white/60"
+                          }`}
+                        >
+                          {vol.label} {!vol.inStock && "(Épuisé)"}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              ) : (
-                <p className="font-mono text-lg sm:text-xl font-extrabold text-[#1C1B18]">
-                  {liveProduct.price.toLocaleString()} {liveProduct.currency}
-                </p>
               )}
 
               {/* SÉLECTEUR DE TEINTES (SHADES) */}
@@ -238,11 +267,15 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               <p className="text-xs font-semibold pt-1">
                 {isSoldOut ? (
                   <span className="text-amber-900">
-                    {selectedShade ? `La teinte "${selectedShade.name}" est épuisée` : "Cet article est actuellement épuisé"}
+                    {selectedVolume && !selectedVolume.inStock 
+                      ? `Le format "${selectedVolume.label}" est actuellement épuisé`
+                      : selectedShade && !selectedShade.inStock
+                      ? `La teinte "${selectedShade.name}" est épuisée`
+                      : "Cet article est actuellement épuisé"}
                   </span>
                 ) : (
                   <span className="text-[#1C1B18]/70">
-                    {liveProduct.isPreOrder ? "Places disponibles en précommande" : "En stock"} : {liveProduct.stockQuantity} pièces
+                    En stock : {liveProduct.stockQuantity} pièces
                   </span>
                 )}
               </p>
@@ -289,8 +322,8 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                   className="w-full rounded bg-[#D4AF37] py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md flex items-center justify-center gap-2"
                 >
                   {liveProduct.isPreOrder 
-                    ? `Réserver ${selectedShade ? `- ${selectedShade.name}` : ''} 🚀` 
-                    : `Ajouter au Panier ${selectedShade ? `(${selectedShade.name})` : ''}`}
+                    ? `Réserver 🚀` 
+                    : `Ajouter au Panier ${selectedVolume ? `(${selectedVolume.label})` : selectedShade ? `(${selectedShade.name})` : ''}`}
                 </button>
               )}
             </div>
