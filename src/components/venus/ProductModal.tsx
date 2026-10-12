@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import type { Product } from "@/data/shopData";
 import { ProductReviews } from "../ProductReviews";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
+import { supabase } from "@/lib/supabase";
 
 interface ProductModalProps {
   product: Product | null;
@@ -13,18 +14,44 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
   if (!product) return null;
 
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const isSoldOut = product.stockQuantity === 0;
+  const [liveProduct, setLiveProduct] = useState<Product>(product);
 
   useEffect(() => {
     if (product?.images?.length) {
       setSelectedImage(product.images[0]);
     }
+
+    // Récupération des données dynamiques depuis Supabase
+    const fetchLiveStock = async () => {
+      const { data } = await supabase
+        .from("product_stocks")
+        .select("*")
+        .eq("id", product.id)
+        .maybeSingle();
+
+      if (data) {
+        setLiveProduct({
+          ...product,
+          isPreOrder: data.is_pre_order,
+          preOrderPrice: data.pre_order_price,
+          preOrderEndDate: data.pre_order_end_date,
+          // Si la précommande n'est plus active dans Supabase, on désactive le badge "Précommande"
+          badge: data.is_pre_order ? (product.badge || "Précommande") : undefined,
+        });
+      } else {
+        setLiveProduct(product);
+      }
+    };
+
+    fetchLiveStock();
   }, [product]);
+
+  const isSoldOut = liveProduct.stockQuantity === 0;
 
   const handleInquire = () => {
     const phoneNumber = "25776247789"; // Votre numéro WhatsApp
     const message = encodeURIComponent(
-      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité future du produit : "${product.name}".`
+      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité future du produit : "${liveProduct.name}".`
     );
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
   };
@@ -49,16 +76,16 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
           <div className="space-y-3 sm:space-y-4">
             <div className="aspect-square overflow-hidden rounded border border-[#1C1B18]/15 bg-white/40 p-2 flex items-center justify-center">
               <img
-                src={selectedImage || product.images[0]}
-                alt={product.name}
+                src={selectedImage || liveProduct.images[0]}
+                alt={liveProduct.name}
                 className="h-full w-full object-contain transition-all duration-300"
               />
             </div>
 
             {/* Vignettes */}
-            {product.images.length > 1 && (
+            {liveProduct.images.length > 1 && (
               <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
-                {product.images.map((img, idx) => (
+                {liveProduct.images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(img)}
@@ -82,38 +109,38 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 <span className="inline-block rounded bg-amber-800 px-2.5 py-1 text-[10px] font-bold text-white uppercase tracking-wider">
                   Rupture de stock
                 </span>
-              ) : product.badge ? (
+              ) : liveProduct.badge ? (
                 <span className="inline-block rounded bg-[#1C1B18] px-2.5 py-1 text-[10px] font-bold text-[#F0EFDF] uppercase tracking-wider">
-                  {product.badge}
+                  {liveProduct.badge}
                 </span>
               ) : null}
 
               <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#1C1B18]">
-                {product.name}
+                {liveProduct.name}
               </h2>
               
               {/* Affichage des prix et du compte à rebours */}
-              {product.isPreOrder && product.preOrderPrice ? (
+              {liveProduct.isPreOrder && liveProduct.preOrderPrice ? (
                 <div className="space-y-2">
                   <div className="flex items-baseline gap-2.5">
                     <span className="font-mono text-xl sm:text-2xl font-extrabold text-[#1C1B18]">
-                      {product.preOrderPrice.toLocaleString()} {product.currency}
+                      {liveProduct.preOrderPrice.toLocaleString()} {liveProduct.currency}
                     </span>
                     <span className="font-mono text-sm line-through text-[#1C1B18]/50">
-                      {product.price.toLocaleString()} {product.currency}
+                      {liveProduct.price.toLocaleString()} {liveProduct.currency}
                     </span>
                     <span className="text-[11px] bg-[#1C1B18] text-[#D4AF37] font-semibold px-2 py-0.5 rounded">
-                      Économie: {(product.price - product.preOrderPrice).toLocaleString()} {product.currency}
+                      Économie: {(liveProduct.price - liveProduct.preOrderPrice).toLocaleString()} {liveProduct.currency}
                     </span>
                   </div>
 
-                  {product.preOrderEndDate && (
-                    <CountdownTimer targetDate={product.preOrderEndDate} />
+                  {liveProduct.preOrderEndDate && (
+                    <CountdownTimer targetDate={liveProduct.preOrderEndDate} />
                   )}
                 </div>
               ) : (
                 <p className="font-mono text-lg sm:text-xl font-extrabold text-[#1C1B18]">
-                  {product.price.toLocaleString()} {product.currency}
+                  {liveProduct.price.toLocaleString()} {liveProduct.currency}
                 </p>
               )}
 
@@ -122,7 +149,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                   <span className="text-amber-900">Cet article est actuellement épuisé</span>
                 ) : (
                   <span className="text-[#1C1B18]/70">
-                    {product.isPreOrder ? "Places disponibles en précommande" : "En stock"} : {product.stockQuantity} pièces
+                    {liveProduct.isPreOrder ? "Places disponibles en précommande" : "En stock"} : {liveProduct.stockQuantity} pièces
                   </span>
                 )}
               </p>
@@ -130,26 +157,26 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               <div className="my-3 sm:my-4 h-px bg-[#1C1B18]/15" />
 
               <p className="text-xs leading-relaxed text-[#2C2B26]">
-                {product.description}
+                {liveProduct.description}
               </p>
 
-              {product.details && product.details.length > 0 && (
+              {liveProduct.details && liveProduct.details.length > 0 && (
                 <div className="mt-4 sm:mt-6 space-y-1.5 sm:space-y-2">
                   <h3 className="text-xs uppercase tracking-widest text-[#1C1B18] font-bold">
                     Détails du Produit :
                   </h3>
                   <ul className="space-y-1 text-xs text-[#2C2B26] list-inside list-disc">
-                    {product.details.map((item, i) => (
+                    {liveProduct.details.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {product.specs && (
+              {liveProduct.specs && (
                 <p className="mt-3 sm:mt-4 text-xs text-[#1C1B18]/80 italic">
                   <span className="font-bold uppercase not-italic">Spécifications : </span>
-                  {Array.isArray(product.specs) ? product.specs.join(" • ") : product.specs}
+                  {Array.isArray(liveProduct.specs) ? liveProduct.specs.join(" • ") : liveProduct.specs}
                 </p>
               )}
             </div>
@@ -166,12 +193,12 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
               ) : (
                 <button
                   onClick={() => {
-                    onAddToCart(product);
+                    onAddToCart(liveProduct);
                     onClose();
                   }}
                   className="w-full rounded bg-[#D4AF37] py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md flex items-center justify-center gap-2"
                 >
-                  {product.isPreOrder ? "Réserver en Précommande 🚀" : "Ajouter au Panier"}
+                  {liveProduct.isPreOrder ? "Réserver en Précommande 🚀" : "Ajouter au Panier"}
                 </button>
               )}
             </div>
@@ -180,7 +207,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
 
         {/* Section Avis Clients */}
         <div className="mt-8 sm:mt-10 pt-4 sm:pt-6 border-t border-[#1C1B18]/20">
-          <ProductReviews productId={product.id} />
+          <ProductReviews productId={liveProduct.id} />
         </div>
       </div>
     </div>
