@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { supabase } from "../lib/supabase"; // Ajustez le chemin vers supabase si nécessaire
+import { supabase } from "../lib/supabase";
 import { Review, replyToReview } from "../services/reviewService";
+import { PreOrderManager } from "../components/admin/PreOrderManager";
 
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
@@ -12,6 +13,8 @@ function AdminPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [activeTab, setActiveTab] = useState<"preorders" | "reviews">("preorders");
+
   const [reviews, setReviews] = useState<Review[]>([]);
   const [replies, setReplies] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(false);
@@ -19,7 +22,9 @@ function AdminPage() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
 
@@ -27,8 +32,8 @@ function AdminPage() {
   }, []);
 
   useEffect(() => {
-    if (session) fetchAllReviews();
-  }, [session]);
+    if (session && activeTab === "reviews") fetchAllReviews();
+  }, [session, activeTab]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,11 +101,12 @@ function AdminPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto my-8 p-6 space-y-6">
+    <div className="max-w-5xl mx-auto my-8 p-4 sm:p-6 space-y-6">
+      {/* En-tête */}
       <div className="flex justify-between items-center border-b pb-4">
         <div>
-          <h1 className="text-2xl font-bold">Panneau Administrateur</h1>
-          <p className="text-sm text-gray-500">Gestion des avis & réponses clients</p>
+          <h1 className="text-2xl font-bold font-serif text-[#1C1B18]">Panneau Administrateur</h1>
+          <p className="text-sm text-gray-500">Espace de gestion Venus Memoria</p>
         </div>
         <button
           onClick={() => supabase.auth.signOut()}
@@ -110,42 +116,71 @@ function AdminPage() {
         </button>
       </div>
 
-      <div className="space-y-4">
-        {reviews.length === 0 ? (
-          <p className="text-sm text-gray-500 italic">Aucun avis enregistré pour le moment.</p>
-        ) : (
-          reviews.map((rev) => (
-            <div key={rev.id} className="p-4 border rounded-xl bg-white space-y-3 shadow-sm">
-              <div className="flex justify-between items-center">
-                <div>
-                  <span className="font-bold text-sm">{rev.user_name}</span>
-                  <span className="text-xs text-gray-400 ml-2">(Produit ID: {rev.product_id})</span>
-                </div>
-                <span className="text-amber-500 font-bold">{"★".repeat(rev.rating)}</span>
-              </div>
-
-              <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">{rev.comment}</p>
-
-              <div className="pt-2 border-t space-y-2">
-                <label className="text-xs font-semibold text-gray-600">Votre réponse officielle :</label>
-                <textarea
-                  placeholder="Écrivez votre réponse ici..."
-                  defaultValue={rev.admin_reply || ""}
-                  onChange={(e) => setReplies({ ...replies, [rev.id!]: e.target.value })}
-                  className="w-full p-2 border rounded text-sm bg-white"
-                  rows={2}
-                />
-                <button
-                  onClick={() => handleSendReply(rev.id!)}
-                  className="px-3 py-1.5 bg-black text-white rounded text-xs font-semibold hover:opacity-90 transition"
-                >
-                  {rev.admin_reply ? "Mettre à jour la réponse" : "Publier la réponse"}
-                </button>
-              </div>
-            </div>
-          ))
-        )}
+      {/* Navigation par Onglets */}
+      <div className="flex gap-2 border-b">
+        <button
+          onClick={() => setActiveTab("preorders")}
+          className={`pb-2.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-colors ${
+            activeTab === "preorders"
+              ? "border-[#1C1B18] text-[#1C1B18]"
+              : "border-transparent text-gray-500 hover:text-gray-800"
+          }`}
+        >
+          📦 Précommandes & Stocks
+        </button>
+        <button
+          onClick={() => setActiveTab("reviews")}
+          className={`pb-2.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-colors ${
+            activeTab === "reviews"
+              ? "border-[#1C1B18] text-[#1C1B18]"
+              : "border-transparent text-gray-500 hover:text-gray-800"
+          }`}
+        >
+          💬 Avis Clients
+        </button>
       </div>
+
+      {/* Contenu selon l'onglet actif */}
+      {activeTab === "preorders" ? (
+        <PreOrderManager />
+      ) : (
+        <div className="space-y-4">
+          {reviews.length === 0 ? (
+            <p className="text-sm text-gray-500 italic">Aucun avis enregistré pour le moment.</p>
+          ) : (
+            reviews.map((rev) => (
+              <div key={rev.id} className="p-4 border rounded-xl bg-white space-y-3 shadow-sm">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="font-bold text-sm">{rev.user_name}</span>
+                    <span className="text-xs text-gray-400 ml-2">(Produit ID: {rev.product_id})</span>
+                  </div>
+                  <span className="text-amber-500 font-bold">{"★".repeat(rev.rating)}</span>
+                </div>
+
+                <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">{rev.comment}</p>
+
+                <div className="pt-2 border-t space-y-2">
+                  <label className="text-xs font-semibold text-gray-600">Votre réponse officielle :</label>
+                  <textarea
+                    placeholder="Écrivez votre réponse ici..."
+                    defaultValue={rev.admin_reply || ""}
+                    onChange={(e) => setReplies({ ...replies, [rev.id!]: e.target.value })}
+                    className="w-full p-2 border rounded text-sm bg-white"
+                    rows={2}
+                  />
+                  <button
+                    onClick={() => handleSendReply(rev.id!)}
+                    className="px-3 py-1.5 bg-black text-white rounded text-xs font-semibold hover:opacity-90 transition"
+                  >
+                    {rev.admin_reply ? "Mettre à jour la réponse" : "Publier la réponse"}
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }
