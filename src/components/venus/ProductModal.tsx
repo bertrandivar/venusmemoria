@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Product } from "@/data/shopData";
+import type { Product, LipShade } from "@/data/shopData";
 import { ProductReviews } from "../ProductReviews";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { supabase } from "@/lib/supabase";
@@ -15,10 +15,22 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
 
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [liveProduct, setLiveProduct] = useState<Product>(product);
+  const [selectedShade, setSelectedShade] = useState<LipShade | null>(null);
 
   useEffect(() => {
     if (product?.images?.length) {
       setSelectedImage(product.images[0]);
+    }
+
+    // Sélection de la première teinte en stock par défaut (si le produit possède des shades)
+    if (product?.shades && product.shades.length > 0) {
+      const defaultShade = product.shades.find((s) => s.inStock) || product.shades[0];
+      setSelectedShade(defaultShade);
+      if (defaultShade?.shadeImage) {
+        setSelectedImage(defaultShade.shadeImage);
+      }
+    } else {
+      setSelectedShade(null);
     }
 
     // Récupération des données dynamiques depuis Supabase
@@ -35,7 +47,6 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
           isPreOrder: data.is_pre_order,
           preOrderPrice: data.pre_order_price,
           preOrderEndDate: data.pre_order_end_date,
-          // Si la précommande n'est plus active dans Supabase, on désactive le badge "Précommande"
           badge: data.is_pre_order ? (product.badge || "Précommande") : undefined,
         });
       } else {
@@ -46,14 +57,35 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
     fetchLiveStock();
   }, [product]);
 
-  const isSoldOut = liveProduct.stockQuantity === 0;
+  // Changement de teinte au clic sur une pastille
+  const handleShadeSelect = (shade: LipShade) => {
+    setSelectedShade(shade);
+    if (shade.shadeImage) {
+      setSelectedImage(shade.shadeImage);
+    }
+  };
+
+  // Détermination de la disponibilité (Prend en compte la teinte ou le stock global)
+  const isShadeSoldOut = selectedShade ? !selectedShade.inStock : false;
+  const isSoldOut = isShadeSoldOut || liveProduct.stockQuantity === 0;
 
   const handleInquire = () => {
     const phoneNumber = "25776247789"; // Votre numéro WhatsApp
+    const shadeInfo = selectedShade ? ` (Teinte : ${selectedShade.name})` : "";
     const message = encodeURIComponent(
-      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité future du produit : "${liveProduct.name}".`
+      `Bonjour Venus Memoria ! Je souhaite me renseigner sur la disponibilité du produit : "${liveProduct.name}"${shadeInfo}.`
     );
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  };
+
+  const handleAddToCartAction = () => {
+    // Transmet au panier le produit enrichi avec la teinte sélectionnée
+    const productToAdd: Product = {
+      ...liveProduct,
+      selectedShade: selectedShade || undefined,
+    };
+    onAddToCart(productToAdd);
+    onClose();
   };
 
   return (
@@ -72,17 +104,34 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
         </button>
 
         <div className="grid gap-6 sm:gap-8 md:grid-cols-2 clear-both">
-          {/* Galerie Images */}
+          {/* Galerie Images & Overlay Modèle */}
           <div className="space-y-3 sm:space-y-4">
-            <div className="aspect-square overflow-hidden rounded border border-[#1C1B18]/15 bg-white/40 p-2 flex items-center justify-center">
+            <div className="relative aspect-square overflow-hidden rounded border border-[#1C1B18]/15 bg-white/40 p-2 flex items-center justify-center">
               <img
                 src={selectedImage || liveProduct.images[0]}
                 alt={liveProduct.name}
                 className="h-full w-full object-contain transition-all duration-300"
               />
+
+              {/* Tag / Badge de Référence du Modèle en incrustation */}
+              {selectedShade?.modelImage && (
+                <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-[#1C1B18]/90 text-[#F0EFDF] p-1.5 rounded-lg shadow-lg border border-white/20 backdrop-blur-md max-w-[170px]">
+                  <img
+                    src={selectedShade.modelImage}
+                    alt={selectedShade.modelName || "Aperçu Modèle"}
+                    className="h-10 w-10 rounded-md object-cover border border-white/30 shrink-0"
+                  />
+                  <div className="text-[10px] leading-tight overflow-hidden">
+                    <p className="font-bold text-[#D4AF37] truncate">
+                      {selectedShade.modelName || "Rendu Modèle"}
+                    </p>
+                    <p className="text-[9px] opacity-80 truncate">{selectedShade.name}</p>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Vignettes */}
+            {/* Vignettes secondaires */}
             {liveProduct.images.length > 1 && (
               <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
                 {liveProduct.images.map((img, idx) => (
@@ -144,9 +193,53 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 </p>
               )}
 
-              <p className="text-xs font-semibold">
+              {/* SÉLECTEUR DE TEINTES (SHADES) */}
+              {liveProduct.shades && liveProduct.shades.length > 0 && (
+                <div className="mt-4 pt-3 border-t border-[#1C1B18]/15 space-y-2">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-[#1C1B18] uppercase tracking-wider">
+                      Teinte : <span className="font-extrabold text-[#733222]">{selectedShade?.name}</span>
+                    </span>
+                    {selectedShade?.description && (
+                      <span className="text-[11px] text-[#1C1B18]/70 italic truncate max-w-[180px]">
+                        {selectedShade.description}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Pastilles Cliquables */}
+                  <div className="flex flex-wrap gap-2.5 pt-1">
+                    {liveProduct.shades.map((shade) => {
+                      const isSelected = selectedShade?.id === shade.id;
+                      return (
+                        <button
+                          key={shade.id}
+                          onClick={() => handleShadeSelect(shade)}
+                          title={`${shade.name} ${!shade.inStock ? '(Épuisé)' : ''}`}
+                          className={`group relative flex items-center justify-center p-1 rounded-full transition-all ${
+                            isSelected
+                              ? "ring-2 ring-[#1C1B18] ring-offset-2 scale-110"
+                              : "hover:scale-105 opacity-80 hover:opacity-100"
+                          }`}
+                        >
+                          <span
+                            className="h-7 w-7 rounded-full border border-black/20 shadow-inner flex items-center justify-center text-[10px] font-bold text-white"
+                            style={{ backgroundColor: shade.hexColor }}
+                          >
+                            {!shade.inStock && "✕"}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              <p className="text-xs font-semibold pt-1">
                 {isSoldOut ? (
-                  <span className="text-amber-900">Cet article est actuellement épuisé</span>
+                  <span className="text-amber-900">
+                    {selectedShade ? `La teinte "${selectedShade.name}" est épuisée` : "Cet article est actuellement épuisé"}
+                  </span>
                 ) : (
                   <span className="text-[#1C1B18]/70">
                     {liveProduct.isPreOrder ? "Places disponibles en précommande" : "En stock"} : {liveProduct.stockQuantity} pièces
@@ -192,13 +285,12 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 </button>
               ) : (
                 <button
-                  onClick={() => {
-                    onAddToCart(liveProduct);
-                    onClose();
-                  }}
+                  onClick={handleAddToCartAction}
                   className="w-full rounded bg-[#D4AF37] py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md flex items-center justify-center gap-2"
                 >
-                  {liveProduct.isPreOrder ? "Réserver en Précommande 🚀" : "Ajouter au Panier"}
+                  {liveProduct.isPreOrder 
+                    ? `Réserver ${selectedShade ? `- ${selectedShade.name}` : ''} 🚀` 
+                    : `Ajouter au Panier ${selectedShade ? `(${selectedShade.name})` : ''}`}
                 </button>
               )}
             </div>
