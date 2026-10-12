@@ -9,6 +9,18 @@ import { SANDALS_PRODUCTS } from "./products/sandals";
 import { HANDMADE_BAGS_PRODUCTS } from "./products/handmadeBags";
 import { CRAYONS_PRODUCTS } from "./products/crayons";
 
+// Structure d'une teinte (Shade) avec référence modèle
+export interface LipShade {
+  id: string;
+  name: string;             // ex: "Ribbon", "Toast"
+  hexColor: string;         // Code couleur pour la pastille (ex: "#E28B8C")
+  shadeImage: string;       // Image du tube / produit dans cette teinte
+  modelName?: string;       // Référence/Nom du modèle (ex: "Ref. M-01 - Ribbon Look")
+  modelImage?: string;      // Image du rendu porté sur le modèle
+  description?: string;     // Courte description du rendu
+  inStock: boolean;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -41,6 +53,10 @@ export interface Product {
   stockQuantity: number;
   badge?: string;
   subcategory?: string;
+
+  // Variantes / Teintes optionnelles
+  shades?: LipShade[];
+  selectedShade?: LipShade;   // Teinte sélectionnée lors de l'ajout au panier
 }
 
 export const SHOP_CATEGORIES = [
