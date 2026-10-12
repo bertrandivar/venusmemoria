@@ -9,6 +9,7 @@ import { SANDALS_PRODUCTS } from "./products/sandals";
 import { HANDMADE_BAGS_PRODUCTS } from "./products/handmadeBags";
 import { CRAYONS_PRODUCTS } from "./products/crayons";
 import { RHODE_LIP_GLOSS_PRODUCT } from "./products/rhodeLipGloss";
+import { FIXATIVE_SPRAY_PRODUCT } from "./products/fixativeSpray";
 
 // Structure d'une teinte (Shade) avec référence modèle
 export interface LipShade {
@@ -20,6 +21,14 @@ export interface LipShade {
   modelImage?: string;      // Image du rendu porté sur le modèle
   description?: string;     // Courte description du rendu
   inStock: boolean;
+}
+
+// Structure d'une déclinaison de contenance / volume
+export interface VolumeOption {
+  id: string;
+  label: string;            // ex: "50ml", "180ml", "300ml"
+  price: number;            // Prix selon la contenance
+  inStock: boolean;         // Statut du stock pour ce volume
 }
 
 export interface Product {
@@ -58,6 +67,10 @@ export interface Product {
   // Variantes / Teintes optionnelles
   shades?: LipShade[];
   selectedShade?: LipShade;   // Teinte sélectionnée lors de l'ajout au panier
+
+  // Variantes de Contenance / Volume
+  volumeOptions?: VolumeOption[];
+  selectedVolume?: VolumeOption; // Volume sélectionné lors de l'ajout au panier
 }
 
 export const SHOP_CATEGORIES = [
@@ -80,6 +93,7 @@ export const SHOP_CATEGORIES = [
 // Regroupement de tous les tableaux de produits
 export const PRODUCTS: Product[] = [
   RHODE_LIP_GLOSS_PRODUCT,
+  FIXATIVE_SPRAY_PRODUCT,
   ...CRAYONS_PRODUCTS,
   ...SANDALS_PRODUCTS,
   ...HANDMADE_BAGS_PRODUCTS,
