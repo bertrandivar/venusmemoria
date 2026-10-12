@@ -8,6 +8,7 @@ import { artCulinaireProducts } from "./products/artCulinaire";
 import { SANDALS_PRODUCTS } from "./products/sandals";
 import { HANDMADE_BAGS_PRODUCTS } from "./products/handmadeBags";
 import { CRAYONS_PRODUCTS } from "./products/crayons";
+import { RHODE_LIP_GLOSS_PRODUCT } from "./products/rhodeLipGloss";
 
 // Structure d'une teinte (Shade) avec référence modèle
 export interface LipShade {
@@ -78,6 +79,7 @@ export const SHOP_CATEGORIES = [
 
 // Regroupement de tous les tableaux de produits
 export const PRODUCTS: Product[] = [
+  RHODE_LIP_GLOSS_PRODUCT,
   ...CRAYONS_PRODUCTS,
   ...SANDALS_PRODUCTS,
   ...HANDMADE_BAGS_PRODUCTS,
