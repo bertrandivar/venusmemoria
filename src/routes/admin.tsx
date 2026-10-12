@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { supabase } from "../lib/supabase";
-import { Review, replyToReview } from "../services/reviewService";
-import { PreOrderManager } from "../components/admin/PreOrderManager";
+import { supabase } from "@/lib/supabase";
+import { Review, replyToReview } from "@/services/reviewService";
+import { PreOrderManager } from "@/components/admin/PreOrderManager";
 
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
