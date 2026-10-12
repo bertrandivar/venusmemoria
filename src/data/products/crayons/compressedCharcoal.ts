@@ -1,6 +1,5 @@
 import { Product } from "../../shopData";
 
-// Importation des images WebP
 import Charcoal1 from "@/assets/charcoal/charcoal1.webp";
 import Charcoal2 from "@/assets/charcoal/charcoal2.webp";
 import Charcoal3 from "@/assets/charcoal/charcoal3.webp";
@@ -10,11 +9,11 @@ export const COMPRESSED_CHARCOAL_PRODUCT: Product = {
   name: "Bâtons de Fusain Comprimé (Compressed Charcoal) - Set de 6",
   category: "crayons",
   price: 35000,
-  preOrderPrice: 30000,
-  isPreOrder: true,
-  preOrderEndDate: "2026-10-10T23:59:59Z",
+  preOrderPrice: null,
+  isPreOrder: false,
+  preOrderEndDate: null,
   currency: "BIF",
-  badge: "Précommande",
+  badge: undefined,
   stockQuantity: 15,
   images: [
     Charcoal1,
