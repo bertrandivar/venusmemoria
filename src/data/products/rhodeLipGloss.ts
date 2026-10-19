@@ -11,7 +11,7 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
   category: "beaute",
   price: 45000,
   currency: "BIF",
-  stockQuantity: 20,
+  stockQuantity: 0,
   images: [
     "/assets/rhode/rhode-main.webp",
   ],
