@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { Review, replyToReview } from "@/services/reviewService";
 import { PreOrderManager } from "@/components/admin/PreOrderManager";
+import { StockManager } from "@/components/admin/StockManager";
 
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
@@ -13,7 +14,7 @@ function AdminPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [activeTab, setActiveTab] = useState<"preorders" | "reviews">("preorders");
+  const [activeTab, setActiveTab] = useState<"preorders" | "stocks" | "reviews">("preorders");
 
   const [reviews, setReviews] = useState<Review[]>([]);
   const [replies, setReplies] = useState<{ [key: string]: string }>({});
@@ -117,20 +118,30 @@ function AdminPage() {
       </div>
 
       {/* Navigation par Onglets */}
-      <div className="flex gap-2 border-b">
+      <div className="flex gap-2 border-b overflow-x-auto pb-1">
         <button
           onClick={() => setActiveTab("preorders")}
-          className={`pb-2.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-colors ${
+          className={`pb-2.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-colors whitespace-nowrap ${
             activeTab === "preorders"
               ? "border-[#1C1B18] text-[#1C1B18]"
               : "border-transparent text-gray-500 hover:text-gray-800"
           }`}
         >
-          📦 Précommandes & Stocks
+          📦 Précommandes
+        </button>
+        <button
+          onClick={() => setActiveTab("stocks")}
+          className={`pb-2.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-colors whitespace-nowrap ${
+            activeTab === "stocks"
+              ? "border-[#1C1B18] text-[#1C1B18]"
+              : "border-transparent text-gray-500 hover:text-gray-800"
+          }`}
+        >
+          📊 Quantités en Stock
         </button>
         <button
           onClick={() => setActiveTab("reviews")}
-          className={`pb-2.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-colors ${
+          className={`pb-2.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-colors whitespace-nowrap ${
             activeTab === "reviews"
               ? "border-[#1C1B18] text-[#1C1B18]"
               : "border-transparent text-gray-500 hover:text-gray-800"
@@ -143,6 +154,8 @@ function AdminPage() {
       {/* Contenu selon l'onglet actif */}
       {activeTab === "preorders" ? (
         <PreOrderManager />
+      ) : activeTab === "stocks" ? (
+        <StockManager />
       ) : (
         <div className="space-y-4">
           {reviews.length === 0 ? (
