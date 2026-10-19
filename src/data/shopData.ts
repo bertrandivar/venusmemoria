@@ -10,13 +10,15 @@ import { HANDMADE_BAGS_PRODUCTS } from "./products/handmadeBags";
 import { CRAYONS_PRODUCTS } from "./products/crayons";
 import { RHODE_LIP_GLOSS_PRODUCT } from "./products/rhodeLipGloss";
 import { FIXATIVE_SPRAY_PRODUCT } from "./products/fixativeSpray";
+import { BRASS_RINGS_PRODUCTS } from "./products/brassRings";
 
 // Structure d'une teinte (Shade) avec référence modèle
 export interface LipShade {
   id: string;
   name: string;             // ex: "Ribbon", "Toast"
-  hexColor: string;         // Code couleur pour la pastille (ex: "#E28B8C")
-  shadeImage: string;       // Image du tube / produit dans cette teinte
+  hexColor?: string;        // Code couleur pour la pastille (ex: "#E28B8C")
+  colorCode?: string;       // Code couleur alternatif pour les bijoux/pierres
+  shadeImage?: string;      // Image du tube / produit dans cette teinte
   modelName?: string;       // Référence/Nom du modèle (ex: "Ref. M-01 - Ribbon Look")
   modelImage?: string;      // Image du rendu porté sur le modèle
   description?: string;     // Courte description du rendu
@@ -94,6 +96,7 @@ export const SHOP_CATEGORIES = [
 export const PRODUCTS: Product[] = [
   RHODE_LIP_GLOSS_PRODUCT,
   FIXATIVE_SPRAY_PRODUCT,
+  ...BRASS_RINGS_PRODUCTS,
   ...CRAYONS_PRODUCTS,
   ...SANDALS_PRODUCTS,
   ...HANDMADE_BAGS_PRODUCTS,
