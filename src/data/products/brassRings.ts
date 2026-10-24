@@ -128,7 +128,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
     category: "mode",
     price: 25000,
     currency: "BIF",
-    stockQuantity: 6,
+    stockQuantity: 1,
     images: [RingSpiralesYeux],
     description: "Double bague en volute ornée de pierres étincelantes aux extrémités.",
     details: [
