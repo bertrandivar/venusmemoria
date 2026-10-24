@@ -22,10 +22,14 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
     description: "Bague ouverte artisanale en laiton ornée d'une grande pierre ronde translucide et d'une bille dorée.",
     details: [
       "Fait main en laiton pur",
-      "Pierre ronde translucide",
+      "Pierre ronde translucide au choix",
       "Taille ajustable",
     ],
     specs: ["Laiton pur", "Taille ajustable"],
+    shades: [
+      { id: "vert-eau", name: "Vert Eau Translucide", hexColor: "#70A389", inStock: true },
+      { id: "ambre-miel", name: "Ambre Miel", hexColor: "#D4A359", inStock: true },
+    ],
   },
   {
     id: "brass-ring-disque-coquillage",
@@ -54,10 +58,15 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
     description: "Bague géométrique à anneaux concentriques sertis de cabochons en pierre colorée.",
     details: [
       "Anneaux géométriques entrelacés",
-      "Pierres aux nuances variées",
+      "Pierres aux nuances variées au choix",
       "Conception artisanale durable",
     ],
     specs: ["Laiton géométrique", "Taille ajustable"],
+    shades: [
+      { id: "bleu-pervenche", name: "Bleu Pervenche", hexColor: "#6C7AFA", inStock: true },
+      { id: "vert-pomme", name: "Vert Pastel", hexColor: "#A3D977", inStock: true },
+      { id: "ambre-jaune", name: "Jaune Ambré", hexColor: "#E6C229", inStock: true },
+    ],
   },
   {
     id: "brass-ring-spirale-solaire",
@@ -85,11 +94,17 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
     images: [RingPierreRose],
     description: "Bague élégante arborant un cabochon rond miroitant aux reflets intenses.",
     details: [
-      "Cabochon miroir unique",
+      "Cabochon miroir au choix",
       "Sertissage circulaire en laiton",
       "Adaptable à tous les doigts",
     ],
     specs: ["Laiton pur", "Taille ajustable"],
+    shades: [
+      { id: "fuchsia", name: "Rose Fuchsia", hexColor: "#E6007E", inStock: true },
+      { id: "vert-emeraude", name: "Vert Émeraude", hexColor: "#00A86B", inStock: true },
+      { id: "orange-ambre", name: "Orange Solaire", hexColor: "#FF7F00", inStock: true },
+      { id: "rouge-rubis", name: "Rouge Deep", hexColor: "#9B111E", inStock: true },
+    ],
   },
   {
     id: "brass-ring-arbre-de-vie",
@@ -118,10 +133,14 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
     description: "Double bague en volute ornée de pierres étincelantes aux extrémités.",
     details: [
       "Design en deux spirales élégantes",
-      "Pierres lumineuses",
+      "Pierres lumineuses au choix",
       "S'ajuste facilement à la phalange",
     ],
     specs: ["Laiton pur", "Taille ajustable"],
+    shades: [
+      { id: "bleu-azur", name: "Bleu Azur", hexColor: "#00A8E8", inStock: true },
+      { id: "bleu-turquoise", name: "Bleu Turquoise", hexColor: "#48CAE4", inStock: true },
+    ],
   },
   {
     id: "brass-ring-carte-afrique",
