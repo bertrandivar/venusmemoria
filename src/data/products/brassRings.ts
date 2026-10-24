@@ -4,11 +4,13 @@ import { Product } from "../shopData";
 import RingPierreVerte from "@/assets/rings/ring-pierre-verte.webp.webp";
 import RingCoquillage from "@/assets/rings/ring-coquillage.webp.webp";
 import RingAnneauxMulti from "@/assets/rings/ring-anneaux-multi.webp.webp";
-import RingSpiraleMartelee from "@/assets/rings/ring-spirale-martelee.webp.webp";
+import RingSpiraleMartelee from "@/assets/rings/IMG-20261019-WA0006.webp";
 import RingPierreRose from "@/assets/rings/ring-pierre-rose.webp.webp";
 import RingArbreVie from "@/assets/rings/ring-arbre-vie.webp.webp";
 import RingSpiralesYeux from "@/assets/rings/ring-spirales-yeux.webp.webp";
 import RingAfrique from "@/assets/rings/ring-afrique.webp.webp";
+import RingDoubleSpirale from "@/assets/rings/spirale2x.webp";
+import RingDoubleCauris from "@/assets/rings/doublecauris.webp";
 
 export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
@@ -141,6 +143,38 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
       { id: "bleu-azur", name: "Bleu Azur", hexColor: "#00A8E8", inStock: true },
       { id: "bleu-turquoise", name: "Bleu Turquoise", hexColor: "#48CAE4", inStock: true },
     ],
+  },
+  {
+    id: "brass-ring-double-spirale-laiton",
+    name: "Bague Laiton - Double Spirale Graphique",
+    category: "mode",
+    price: 25000,
+    currency: "BIF",
+    stockQuantity: 1,
+    images: [RingDoubleSpirale],
+    description: "Superbe bague verticale dotée de deux doubles spirales en relief martelé en pur laiton.",
+    details: [
+      "Fait main en laiton massif",
+      "Design graphique double spirale",
+      "Confortable et ajustable",
+    ],
+    specs: ["Laiton pur", "Taille ajustable"],
+  },
+  {
+    id: "brass-ring-double-cauris",
+    name: "Bague Laiton - Double Cauris Ancestral",
+    category: "mode",
+    price: 25000,
+    currency: "BIF",
+    stockQuantity: 1,
+    images: [RingDoubleCauris],
+    description: "Bague unique ornée de deux véritables coquillages cauris naturels sertis sur une monture en laiton.",
+    details: [
+      "Véritables coquillages cauris naturels",
+      "Monture artisanale en laiton",
+      "Symbole de prospérité et d'histoire",
+    ],
+    specs: ["Laiton et Cauris", "Taille ajustable"],
   },
   {
     id: "brass-ring-carte-afrique",
