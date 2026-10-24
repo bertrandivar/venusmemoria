@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Product, LipShade, VolumeOption } from "@/data/shopData";
 import { ProductReviews } from "../ProductReviews";
-import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { supabase } from "@/lib/supabase";
 
 interface ProductModalProps {
@@ -13,28 +12,39 @@ interface ProductModalProps {
 export function ProductModal({ product, onClose, onAddToCart }: ProductModalProps) {
   if (!product) return null;
 
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [liveProduct, setLiveProduct] = useState<Product>(product);
   const [selectedShade, setSelectedShade] = useState<LipShade | null>(null);
   const [selectedVolume, setSelectedVolume] = useState<VolumeOption | null>(null);
 
-  useEffect(() => {
-    if (product?.images?.length) {
-      setSelectedImage(product.images[0]);
-    }
+  // Détermination des images actives (soit les images de la teinte sélectionnée, soit les images de base)
+  const activeImages = selectedShade?.images && selectedShade.images.length > 0
+    ? selectedShade.images
+    : selectedShade?.shadeImage
+    ? [selectedShade.shadeImage, ...(selectedShade.modelImages || [])]
+    : liveProduct.images;
 
+  const [selectedImage, setSelectedImage] = useState<string>(activeImages[0] || product.images[0]);
+
+  useEffect(() => {
     // Gestion des teintes par défaut (ex: Rhode Lip Tint)
     if (product?.shades && product.shades.length > 0) {
       const defaultShade = product.shades.find((s) => s.inStock) || product.shades[0];
       setSelectedShade(defaultShade);
-      if (defaultShade?.shadeImage) {
+      if (defaultShade?.images && defaultShade.images.length > 0) {
+        setSelectedImage(defaultShade.images[0]);
+      } else if (defaultShade?.shadeImage) {
         setSelectedImage(defaultShade.shadeImage);
+      } else if (product.images?.length) {
+        setSelectedImage(product.images[0]);
       }
     } else {
       setSelectedShade(null);
+      if (product?.images?.length) {
+        setSelectedImage(product.images[0]);
+      }
     }
 
-    // Gestion des volumes par défaut (ex: Fixative Spray)
+    // Gestion des volumes par défaut
     if (product?.volumeOptions && product.volumeOptions.length > 0) {
       const defaultVolume = product.volumeOptions.find((v) => v.inStock) || product.volumeOptions[0];
       setSelectedVolume(defaultVolume);
@@ -66,11 +76,15 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
     fetchLiveStock();
   }, [product]);
 
-  // Changement de teinte au clic
+  // Changement de teinte au clic : met à jour automatiquement sur la première image de la nouvelle teinte
   const handleShadeSelect = (shade: LipShade) => {
     setSelectedShade(shade);
-    if (shade.shadeImage) {
+    if (shade.images && shade.images.length > 0) {
+      setSelectedImage(shade.images[0]);
+    } else if (shade.shadeImage) {
       setSelectedImage(shade.shadeImage);
+    } else if (liveProduct.images?.length) {
+      setSelectedImage(liveProduct.images[0]);
     }
   };
 
@@ -79,9 +93,15 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
     setSelectedVolume(volume);
   };
 
-  // Calcul dynamique du prix (en fonction du volume sélectionné ou du prix de base)
+  // S'assurer que l'image sélectionnée reste valide si activeImages change
+  useEffect(() => {
+    if (activeImages.length > 0 && !activeImages.includes(selectedImage)) {
+      setSelectedImage(activeImages[0]);
+    }
+  }, [activeImages, selectedImage]);
+
+  // Calcul dynamique du prix
   const currentPrice = selectedVolume ? selectedVolume.price : liveProduct.price;
-  const currentPreOrderPrice = liveProduct.preOrderPrice ? liveProduct.preOrderPrice : null;
 
   // Détermination de la rupture de stock
   const isShadeSoldOut = selectedShade ? !selectedShade.inStock : false;
@@ -99,10 +119,9 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
   };
 
   const handleAddToCartAction = () => {
-    // Transmet au panier le produit enrichi avec les sélections
     const productToAdd: Product = {
       ...liveProduct,
-      price: currentPrice, // Ajuste le prix du panier selon le volume choisi
+      price: currentPrice,
       selectedShade: selectedShade || undefined,
       selectedVolume: selectedVolume || undefined,
     };
@@ -126,37 +145,20 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
         </button>
 
         <div className="grid gap-6 sm:gap-8 md:grid-cols-2 clear-both">
-          {/* Galerie Images & Overlay Modèle */}
+          {/* Galerie Images & Carrousel Grand Format */}
           <div className="space-y-3 sm:space-y-4">
             <div className="relative aspect-square overflow-hidden rounded border border-[#1C1B18]/15 bg-white/40 p-2 flex items-center justify-center">
               <img
-                src={selectedImage || liveProduct.images[0]}
+                src={selectedImage || activeImages[0]}
                 alt={liveProduct.name}
                 className="h-full w-full object-contain transition-all duration-300"
               />
-
-              {/* Tag / Badge de Référence du Modèle en incrustation */}
-              {selectedShade?.modelImage && (
-                <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-[#1C1B18]/90 text-[#F0EFDF] p-1.5 rounded-lg shadow-lg border border-white/20 backdrop-blur-md max-w-[170px]">
-                  <img
-                    src={selectedShade.modelImage}
-                    alt={selectedShade.modelName || "Aperçu Modèle"}
-                    className="h-10 w-10 rounded-md object-cover border border-white/30 shrink-0"
-                  />
-                  <div className="text-[10px] leading-tight overflow-hidden">
-                    <p className="font-bold text-[#D4AF37] truncate">
-                      {selectedShade.modelName || "Rendu Modèle"}
-                    </p>
-                    <p className="text-[9px] opacity-80 truncate">{selectedShade.name}</p>
-                  </div>
-                </div>
-              )}
             </div>
 
-            {/* Vignettes secondaires */}
-            {liveProduct.images.length > 1 && (
+            {/* Vignettes secondaires / Carrousel grand format */}
+            {activeImages.length > 1 && (
               <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
-                {liveProduct.images.map((img, idx) => (
+                {activeImages.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(img)}
@@ -195,7 +197,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 {currentPrice.toLocaleString()} {liveProduct.currency}
               </p>
 
-              {/* SÉLECTEUR DE VOLUMES / CONTENANCES (ex: Fixative Spray 50ml, 180ml, 300ml) */}
+              {/* SÉLECTEUR DE VOLUMES / CONTENANCES */}
               {liveProduct.volumeOptions && liveProduct.volumeOptions.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-[#1C1B18]/15 space-y-2">
                   <span className="text-xs font-bold text-[#1C1B18] uppercase tracking-wider">
@@ -282,7 +284,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
 
               <div className="my-3 sm:my-4 h-px bg-[#1C1B18]/15" />
 
-              <p className="text-xs leading-relaxed text-[#2C2B26]">
+              <p className="text-xs leading-relaxed text-[#2C2B26] whitespace-pre-line">
                 {liveProduct.description}
               </p>
 
@@ -311,6 +313,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
             <div className="mt-6 sm:mt-8 pt-4 border-t border-[#1C1B18]/15">
               {isSoldOut ? (
                 <button
+                  key="inquire-btn"
                   onClick={handleInquire}
                   className="w-full rounded bg-[#1C1B18] py-3.5 sm:py-4 text-xs font-bold tracking-[0.15em] text-[#F0EFDF] uppercase transition-all hover:bg-[#2C2B26] shadow-md flex items-center justify-center gap-2"
                 >
@@ -318,6 +321,7 @@ export function ProductModal({ product, onClose, onAddToCart }: ProductModalProp
                 </button>
               ) : (
                 <button
+                  key="add-to-cart-btn"
                   onClick={handleAddToCartAction}
                   className="w-full rounded bg-[#D4AF37] py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] text-[#1C1B18] uppercase transition-all hover:bg-[#c4a02e] shadow-md flex items-center justify-center gap-2"
                 >
