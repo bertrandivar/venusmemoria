@@ -12,15 +12,17 @@ import { RHODE_LIP_GLOSS_PRODUCT } from "./products/rhodeLipGloss";
 import { FIXATIVE_SPRAY_PRODUCT } from "./products/fixativeSpray";
 import { BRASS_RINGS_PRODUCTS } from "./products/brassRings";
 
-// Structure d'une teinte (Shade) avec référence modèle
+// Structure d'une teinte (Shade) avec références modèles & carrousel d'images
 export interface LipShade {
   id: string;
-  name: string;             // ex: "Ribbon", "Toast"
+  name: string;             // ex: "Espresso ☕", "Ribbon 🎀"
   hexColor?: string;        // Code couleur pour la pastille (ex: "#E28B8C")
   colorCode?: string;       // Code couleur alternatif pour les bijoux/pierres
   shadeImage?: string;      // Image du tube / produit dans cette teinte
-  modelName?: string;       // Référence/Nom du modèle (ex: "Ref. M-01 - Ribbon Look")
-  modelImage?: string;      // Image du rendu porté sur le modèle
+  images?: string[];        // Galerie d'images grand format (Tube + Modèles)
+  modelName?: string;       // Référence/Nom du modèle (ex: "Porté selon la carnation")
+  modelImage?: string;      // Image principale du rendu sur modèle
+  modelImages?: string[];   // Liste des images modèles si plusieurs carnations (ex: foncée & claire)
   description?: string;     // Courte description du rendu
   inStock: boolean;
 }
@@ -51,7 +53,7 @@ export interface Product {
     | "outillage"
     | "sandals"
     | "bags"
-    | "rings"; // <-- Ajout du type de catégorie "rings"
+    | "rings";
   
   price: number;
   preOrderPrice?: number;      // Prix réduit durant la précommande
@@ -78,7 +80,7 @@ export interface Product {
 
 export const SHOP_CATEGORIES = [
   { id: "all", label: "Tous nos articles", icon: "✨" },
-  { id: "rings", label: "Bagues & Bijoux", icon: "💍" }, // <-- Raccourci ajouté dans le menu latéral
+  { id: "rings", label: "Bagues & Bijoux", icon: "💍" },
   { id: "sandals", label: "Slippers & Sandals", icon: "👡" },
   { id: "bags", label: "Artisanal Handmade Bags", icon: "👜" },
   { id: "crayons", label: "Crayons & Fusains", icon: "✏️" },
