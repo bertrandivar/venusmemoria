@@ -47,9 +47,9 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
   id: "rhode-peptide-lip-tint",
   name: "Rhode - Peptide Lip Tint",
   category: "beaute",
-  price: 45000,
+  price: 35000,
   currency: "BIF",
-  stockQuantity: 20,
+  stockQuantity: 0, // Total global des pièces disponibles
   images: [EspressoProduct, EspressoModel, EspressoModel1], // Galerie grand format par défaut
   description:
     "Un soin pour les lèvres teinté, ultra-nourrissant enrichi en peptides. Apporte une couleur gourmande, une brillance miroir et une hydratation intense.\n\n*Note : Les visuels d'illustration des teintes et modèles sont la propriété exclusive de Rhode Skin par Hailey Bieber et sont utilisés uniquement à des fins de démonstration du rendu sur différentes carnations.*",
@@ -65,7 +65,7 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
     "Visuels d'illustration non contractuels (droits réservés à Rhode Skin)",
   ],
 
-  // Configuration de la collection de teintes (Shades) avec galeries grand format
+  // Configuration de la collection de teintes (Shades) avec stock individuel
   shades: [
     {
       id: "espresso",
@@ -75,9 +75,10 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       modelName: "Rendu selon la carnation",
       modelImage: EspressoModel,
       modelImages: [EspressoModel, EspressoModel1],
-      images: [EspressoProduct, EspressoModel, EspressoModel1], // Carrousel grand format (Product + 2 Modèles)
+      images: [EspressoProduct, EspressoModel, EspressoModel1],
       description: "Brun chocolat intense et sophistiqué",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Quantité spécifique pour Espresso
     },
     {
       id: "cinnamon",
@@ -86,9 +87,10 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       modelName: "Rendu selon la carnation",
       modelImage: CinnamonModel,
       modelImages: [CinnamonModel, CinnamonModel1],
-      images: [CinnamonModel, CinnamonModel1], // Carrousel grand format (2 Modèles)
+      images: [CinnamonModel, CinnamonModel1],
       description: "Épice cannelle chaude avec reflets cuivrés",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Quantité spécifique pour Cinnamon
     },
     {
       id: "bubblegum",
@@ -97,9 +99,10 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       shadeImage: BubblegumProduct,
       modelName: "Rendu du Modèle",
       modelImage: BubblegumModel,
-      images: [BubblegumProduct, BubblegumModel], // Carrousel grand format (Product + Modèle)
+      images: [BubblegumProduct, BubblegumModel],
       description: "Rose bonbon gourmand et lumineux",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Quantité spécifique pour Bubblegum
     },
     {
       id: "ribbon",
@@ -108,9 +111,10 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       shadeImage: RibbonProduct,
       modelName: "Rendu du Modèle",
       modelImage: RibbonModel,
-      images: [RibbonProduct, RibbonModel], // Carrousel grand format (Product + Modèle)
+      images: [RibbonProduct, RibbonModel],
       description: "Rose ballerine transparent et délicat",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Quantité spécifique pour Ribbon
     },
     {
       id: "lemon-tint",
@@ -119,9 +123,10 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       shadeImage: LemonProduct,
       modelName: "Rendu du Modèle",
       modelImage: LemonModel,
-      images: [LemonProduct, LemonModel], // Carrousel grand format (Product + Modèle)
+      images: [LemonProduct, LemonModel],
       description: "Teinte zeste de citron subtile et ultra-brillante",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Quantité spécifique pour Lemon Tint
     },
     {
       id: "raspberry-jelly",
@@ -131,28 +136,32 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       modelName: "Rendu du Modèle",
       images: [RaspberryProduct],
       description: "Rouge baie profond et juteux",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Quantité spécifique pour Raspberry Jelly
     },
     {
       id: "salty-rose",
       name: "Salty Rose 🌹",
       hexColor: "#D66874",
       description: "Rose pétale élégant aux reflets naturels",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Indisponible
     },
     {
       id: "toast",
       name: "Toast 🍞",
       hexColor: "#A66E5B",
       description: "Nude taupe chaud, effet lèvres mordues",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Indisponible
     },
     {
       id: "pbj",
       name: "PBJ 🥜",
       hexColor: "#9C523B",
       description: "Nude praliné chaleureux et profond",
-      inStock: true,
+      inStock: false,
+      stockQuantity: 0, // Indisponible
     },
   ],
 };
