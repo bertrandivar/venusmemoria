@@ -1,14 +1,14 @@
 import { Product } from "../shopData";
 
 // Importation des images depuis votre dossier assets
-import RingPierreVerte from "@/assets/rings/ring-pierre-verte.webp";
-import RingCoquillage from "@/assets/rings/ring-coquillage.webp";
-import RingAnneauxMulti from "@/assets/rings/ring-anneaux-multi.webp";
-import RingSpiraleMartelee from "@/assets/rings/ring-spirale-martelee.webp";
-import RingPierreRose from "@/assets/rings/ring-pierre-rose.webp";
-import RingArbreVie from "@/assets/rings/ring-arbre-vie.webp";
-import RingSpiralesYeux from "@/assets/rings/ring-spirales-yeux.webp";
-import RingAfrique from "@/assets/rings/ring-afrique.webp";
+import RingPierreVerte from "@/assets/rings/ring-pierre-verte.webp.webp";
+import RingCoquillage from "@/assets/rings/ring-coquillage.webp.webp";
+import RingAnneauxMulti from "@/assets/rings/ring-anneaux-multi.webp.webp";
+import RingSpiraleMartelee from "@/assets/rings/ring-spirale-martelee.webp.webp";
+import RingPierreRose from "@/assets/rings/ring-pierre-rose.webp.webp";
+import RingArbreVie from "@/assets/rings/ring-arbre-vie.webp.webp";
+import RingSpiralesYeux from "@/assets/rings/ring-spirales-yeux.webp.webp";
+import RingAfrique from "@/assets/rings/ring-afrique.webp.webp";
 
 export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
