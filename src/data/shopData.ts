@@ -50,7 +50,8 @@ export interface Product {
     | "supports"
     | "outillage"
     | "sandals"
-    | "bags";
+    | "bags"
+    | "rings"; // <-- Ajout du type de catégorie "rings"
   
   price: number;
   preOrderPrice?: number;      // Prix réduit durant la précommande
@@ -77,6 +78,7 @@ export interface Product {
 
 export const SHOP_CATEGORIES = [
   { id: "all", label: "Tous nos articles", icon: "✨" },
+  { id: "rings", label: "Bagues & Bijoux", icon: "💍" }, // <-- Raccourci ajouté dans le menu latéral
   { id: "sandals", label: "Slippers & Sandals", icon: "👡" },
   { id: "bags", label: "Artisanal Handmade Bags", icon: "👜" },
   { id: "crayons", label: "Crayons & Fusains", icon: "✏️" },
