@@ -25,6 +25,7 @@ export interface LipShade {
   modelImages?: string[];   // Liste des images modèles si plusieurs carnations (ex: foncée & claire)
   description?: string;     // Courte description du rendu
   inStock: boolean;
+  stockQuantity?: number;   // Quantité exacte disponible pour cette teinte spécifique
 }
 
 // Structure d'une déclinaison de contenance / volume
