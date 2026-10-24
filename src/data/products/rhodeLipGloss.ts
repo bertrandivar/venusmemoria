@@ -14,7 +14,7 @@ import BubblegumModel from "@/assets/rhode/bubblegum-model.webp";
 import CinnamonModel from "@/assets/rhode/cinnamon-model.webp";
 import CinnamonModel1 from "@/assets/rhode/cinnamon1-model.webp";
 
-// --- Espresso (2 Modèles) ---
+// --- Espresso (Product + 2 Modèles) ---
 import EspressoProduct from "@/assets/rhode/espresso-product.webp";
 import EspressoModel from "@/assets/rhode/espresso-model.webp";
 import EspressoModel1 from "@/assets/rhode/espresso1-model.webp";
@@ -50,7 +50,7 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
   price: 45000,
   currency: "BIF",
   stockQuantity: 20,
-  images: [BubblegumProduct], // Utilise l'image disponible comme visuel principal par défaut
+  images: [EspressoProduct, EspressoModel, EspressoModel1], // Galerie grand format par défaut
   description:
     "Un soin pour les lèvres teinté, ultra-nourrissant enrichi en peptides. Apporte une couleur gourmande, une brillance miroir et une hydratation intense.\n\n*Note : Les visuels d'illustration des teintes et modèles sont la propriété exclusive de Rhode Skin par Hailey Bieber et sont utilisés uniquement à des fins de démonstration du rendu sur différentes carnations.*",
   details: [
@@ -65,8 +65,31 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
     "Visuels d'illustration non contractuels (droits réservés à Rhode Skin)",
   ],
 
-  // Configuration de la collection de teintes (Shades)
+  // Configuration de la collection de teintes (Shades) avec galeries grand format
   shades: [
+    {
+      id: "espresso",
+      name: "Espresso ☕",
+      hexColor: "#5C3A31",
+      shadeImage: EspressoProduct,
+      modelName: "Rendu selon la carnation",
+      modelImage: EspressoModel,
+      modelImages: [EspressoModel, EspressoModel1],
+      images: [EspressoProduct, EspressoModel, EspressoModel1], // Carrousel grand format (Product + 2 Modèles)
+      description: "Brun chocolat intense et sophistiqué",
+      inStock: true,
+    },
+    {
+      id: "cinnamon",
+      name: "Cinnamon 🌶️",
+      hexColor: "#B5432A",
+      modelName: "Rendu selon la carnation",
+      modelImage: CinnamonModel,
+      modelImages: [CinnamonModel, CinnamonModel1],
+      images: [CinnamonModel, CinnamonModel1], // Carrousel grand format (2 Modèles)
+      description: "Épice cannelle chaude avec reflets cuivrés",
+      inStock: true,
+    },
     {
       id: "bubblegum",
       name: "Bubblegum 🍬",
@@ -74,6 +97,7 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       shadeImage: BubblegumProduct,
       modelName: "Rendu du Modèle",
       modelImage: BubblegumModel,
+      images: [BubblegumProduct, BubblegumModel], // Carrousel grand format (Product + Modèle)
       description: "Rose bonbon gourmand et lumineux",
       inStock: true,
     },
@@ -84,6 +108,7 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       shadeImage: RibbonProduct,
       modelName: "Rendu du Modèle",
       modelImage: RibbonModel,
+      images: [RibbonProduct, RibbonModel], // Carrousel grand format (Product + Modèle)
       description: "Rose ballerine transparent et délicat",
       inStock: true,
     },
@@ -94,18 +119,8 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       shadeImage: LemonProduct,
       modelName: "Rendu du Modèle",
       modelImage: LemonModel,
+      images: [LemonProduct, LemonModel], // Carrousel grand format (Product + Modèle)
       description: "Teinte zeste de citron subtile et ultra-brillante",
-      inStock: true,
-    },
-    {
-      id: "espresso",
-      name: "Espresso ☕",
-      hexColor: "#5C3A31",
-      shadeImage: EspressoProduct,
-      modelName: "Rendu selon la carnation",
-      modelImage: EspressoModel,
-      modelImages: [EspressoModel, EspressoModel1],
-      description: "Brun chocolat intense et sophistiqué",
       inStock: true,
     },
     {
@@ -114,27 +129,14 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       hexColor: "#8D2B43",
       shadeImage: RaspberryProduct,
       modelName: "Rendu du Modèle",
-      // modelImage: RaspberryModel,
+      images: [RaspberryProduct],
       description: "Rouge baie profond et juteux",
-      inStock: true,
-    },
-    {
-      id: "cinnamon",
-      name: "Cinnamon 🌶️",
-      hexColor: "#B5432A",
-      // shadeImage: CinnamonProduct,
-      modelName: "Rendu selon la carnation",
-      modelImage: CinnamonModel,
-      modelImages: [CinnamonModel, CinnamonModel1],
-      description: "Épice cannelle chaude avec reflets cuivrés",
       inStock: true,
     },
     {
       id: "salty-rose",
       name: "Salty Rose 🌹",
       hexColor: "#D66874",
-      // shadeImage: SaltyRoseProduct,
-      // modelImage: SaltyRoseModel,
       description: "Rose pétale élégant aux reflets naturels",
       inStock: true,
     },
@@ -142,8 +144,6 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       id: "toast",
       name: "Toast 🍞",
       hexColor: "#A66E5B",
-      // shadeImage: ToastProduct,
-      // modelImage: ToastModel,
       description: "Nude taupe chaud, effet lèvres mordues",
       inStock: true,
     },
@@ -151,8 +151,6 @@ export const RHODE_LIP_GLOSS_PRODUCT: Product = {
       id: "pbj",
       name: "PBJ 🥜",
       hexColor: "#9C523B",
-      // shadeImage: PBJProduct,
-      // modelImage: PBJModel,
       description: "Nude praliné chaleureux et profond",
       inStock: true,
     },
