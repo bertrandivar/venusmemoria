@@ -16,7 +16,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-solitaire-pierre-verte",
     name: "Bague Laiton - Solitaire Pierre & Bille",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 1,
@@ -36,7 +36,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-disque-coquillage",
     name: "Bague Laiton - Disque Texturé Coquillage",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 1,
@@ -52,7 +52,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-orbite-multicouleurs",
     name: "Bague Laiton - Orbite Planétaire (Pierres Colorées)",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 1,
@@ -73,7 +73,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-spirale-solaire",
     name: "Bague Laiton - Disque Spirale Solaire",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 1,
@@ -89,7 +89,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-solitaire-rond",
     name: "Bague Laiton - Solitaire Miroir",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 1,
@@ -111,7 +111,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-arbre-de-vie",
     name: "Bague Laiton - L'Arbre de Vie Sacré",
-    category: "mode",
+    category: "rings",
     price: 15000,
     currency: "BIF",
     stockQuantity: 1,
@@ -127,7 +127,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-double-spirale-bleue",
     name: "Bague Laiton - Doubles Spirales & Pierres Ovale",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 1,
@@ -147,7 +147,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-double-spirale-laiton",
     name: "Bague Laiton - Double Spirale Graphique",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 1,
@@ -163,7 +163,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-double-cauris",
     name: "Bague Laiton - Double Cauris Ancestral",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 1,
@@ -179,7 +179,7 @@ export const BRASS_RINGS_PRODUCTS: Product[] = [
   {
     id: "brass-ring-carte-afrique",
     name: "Bague Laiton - Carte de l'Afrique",
-    category: "mode",
+    category: "rings",
     price: 25000,
     currency: "BIF",
     stockQuantity: 0,
