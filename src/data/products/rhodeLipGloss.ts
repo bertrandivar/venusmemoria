@@ -10,7 +10,7 @@ import BubblegumProduct from "@/assets/rhode/Bubblegum-product.webp";
 import BubblegumModel from "@/assets/rhode/bubblegum-model.webp";
 
 // --- Cinnamon (2 Modèles) ---
-// import CinnamonProduct from "@/assets/rhode/cinnamon-product.webp";
+import CinnamonProduct from "@/assets/rhode/cinnamon-product.webp";
 import CinnamonModel from "@/assets/rhode/cinnamon-model.webp";
 import CinnamonModel1 from "@/assets/rhode/cinnamon1-model.webp";
 
