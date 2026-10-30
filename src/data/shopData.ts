@@ -11,6 +11,7 @@ import { CRAYONS_PRODUCTS } from "./products/crayons";
 import { RHODE_LIP_GLOSS_PRODUCT } from "./products/rhodeLipGloss";
 import { FIXATIVE_SPRAY_PRODUCT } from "./products/fixativeSpray";
 import { BRASS_RINGS_PRODUCTS } from "./products/brassRings";
+import { RING_DROP_2_PRODUCTS } from "./products/ringDrop2";
 
 // Structure d'une teinte (Shade) avec références modèles & carrousel d'images
 export interface LipShade {
@@ -102,6 +103,7 @@ export const PRODUCTS: Product[] = [
   RHODE_LIP_GLOSS_PRODUCT,
   FIXATIVE_SPRAY_PRODUCT,
   ...BRASS_RINGS_PRODUCTS,
+  ...RING_DROP_2_PRODUCTS,
   ...CRAYONS_PRODUCTS,
   ...SANDALS_PRODUCTS,
   ...HANDMADE_BAGS_PRODUCTS,
